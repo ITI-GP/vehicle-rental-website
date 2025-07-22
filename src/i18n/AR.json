@@ -1,0 +1,16 @@
+{
+  "header": {
+    "title": "أجر عربيتك",
+    "subtitle": " أجر عربيتك دلوقت",
+    "searchTitle": "البحث في ARADRAMA",
+    "searchPlaceholder": "ابدأ البحث..."
+  },
+  "menu": {
+    "home": "الرئيسية",
+    "newEpisodes": "الحلقات الجديدة",
+    "dramaList": "قائمة الدراما"
+  },
+  "home": {
+    "welcome": "مرحبًا بكم في الصفحة الرئيسية"
+  }
+}
