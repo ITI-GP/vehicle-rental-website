@@ -5,6 +5,12 @@
     "searchTitle": "Search on RentYourCar",
     "searchPlaceholder": "Start searching..."
   },
+  "footer": {
+    "contactUs": "Contact Us",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "followUs": "Follow Us"
+  },
   "menu": {
     "home": "Home",
     "newEpisodes": "New Episodes",
@@ -24,4 +30,13 @@
   "home": {
     "welcome": "Welcome to the homepage"
   }
+  ,
+  
+  "hero": {
+    "title": "ACCOMPANY YOUR JOURNEY WITH COMFORTABLE CARS",
+    "description": "Car rental made easy.",
+    "learnMore": "Get Started"
+  }
 }
+
+
