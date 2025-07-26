@@ -16,9 +16,11 @@ const Hero = () => {
             <Button className={styles.heroBtn}>{t("hero.learnMore")}</Button>
           </div>
         </div>
-        <div className={styles.heroImageWrapper}>
+        <div className="d-none d-xl-flex">
+          <div className= {styles.heroImageWrapper}>
           <div className={styles.absoluteBackground}></div>
           <img src={carImage} alt="Hero Vehicle" className={styles.heroImage} />
+        </div>
         </div>
       </div>
     </div>
