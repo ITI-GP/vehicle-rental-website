@@ -1,10 +1,14 @@
 {
-  "header": {
-    "title": "rent your car",
-    "subtitle": "Find the best deals on car rentals.",
-    "searchTitle": "Search on RentYourCar",
-    "searchPlaceholder": "Start searching..."
-  },
+ 
+"header": {
+  "home": "Home",
+  "vehicles": "Vehicles",
+  "details": "Details",
+  "about": "About Us",
+  "contact": "Contact Us",
+  "signin": "Sign In"
+}
+,
   "menu": {
     "home": "Home",
     "newEpisodes": "New Episodes",

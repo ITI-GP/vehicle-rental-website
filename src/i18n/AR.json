@@ -1,10 +1,14 @@
 {
-  "header": {
-    "title": "أجر عربيتك",
-    "subtitle": " أجر عربيتك دلوقت",
-    "searchTitle": "البحث في ARADRAMA",
-    "searchPlaceholder": "ابدأ البحث..."
-  },
+ 
+"header": {
+  "home": "الرئيسية",
+  "vehicles": "المركبات",
+  "details": "التفاصيل",
+  "about": "من نحن",
+  "contact": "اتصل بنا",
+  "signin": "تسجيل دخول"
+}
+,
   "menu": {
     "home": "الرئيسية",
     "newEpisodes": "الحلقات الجديدة",
