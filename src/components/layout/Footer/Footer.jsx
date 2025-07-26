@@ -20,7 +20,7 @@ export default function Footer() {
       <div className="flex justify-center items-center px-[72px] pt-[60px] pb-[40px] w-full max-w-[1920px] mx-auto">
         <div className="flex flex-wrap justify-between gap-[80px] w-[1296px]">
           {/* Column 1 */}
-          <div className="w-[280px] min-h-[171px] flex flex-col justify-between">
+          <div className="w-[280px] min-h-[171px] flex flex-col justify-between mx-auto">
 
             <div className="logo flex items-center gap-2" >
               <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto " />
@@ -42,7 +42,7 @@ export default function Footer() {
           </div>
 
           {/* Column 2 */}
-          <div className="w-[180px] min-h-[166px] flex flex-col gap-[24px]">
+          <div className="w-[180px] min-h-[166px] flex flex-col gap-[24px]  mx-auto">
 
           <div className="flex items-start gap-3" >
                 <img
@@ -60,7 +60,7 @@ export default function Footer() {
 
 
             <div>
-              <h3 className="text-base font-semibold mb-2">{t("footer.usefulLinks")}</h3>
+              <h3 className="text-base font-semibold mb-2 ">{t("footer.usefulLinks")}</h3>
               <ul className="space-y-1 text-sm">
                 <li>{t("footer.aboutUs")}</li>
                 <li>{t("footer.contactUs")}</li>
@@ -70,7 +70,7 @@ export default function Footer() {
           </div>
 
           {/* Column 3 */}
-          <div className="w-[180px] min-h-[166px] flex flex-col gap-[24px]">
+          <div className="w-[180px] min-h-[166px] flex flex-col gap-[24px]  mx-auto">
             <div className="flex items-start gap-3">
               <img src={EmailIcon} alt="Email Icon" className="w-6 h-6 mt-[10px]" />
               <div>
@@ -89,7 +89,7 @@ export default function Footer() {
           </div>
 
           {/* Column 4 */}
-          <div className="w-[180px] min-h-[171px] flex flex-col gap-[24px]">
+          <div className="w-[180px] min-h-[171px] flex flex-col gap-[24px]  mx-auto">
             <div className="flex items-start gap-3">
               <img src={PhoneIcon} alt="Phone Icon" className="w-6 h-6 mt-[10px]" />
               <div>

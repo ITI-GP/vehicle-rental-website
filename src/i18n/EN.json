@@ -48,5 +48,32 @@
     "specialOffers": "Special Offers",
     "downloadApp": "Download App",
     "companyDescription": "Faucibus faucibus pellentesque dictum turpis. Id pellentesque turpis massa a id iaculis lorem turpis euismod. Purus at quisque integer sit..."
+  },
+  
+  "howToUse": {
+    "steps": [
+      {
+        "number": "1",
+        "title": "Erat at semper",
+        "desc": "Non amet fermentum est in enim at sit ullamcorper. Sit elementum rhoncus nullam feugiat. Risus sem fermentum."
+      },
+      {
+        "number": "2",
+        "title": "Urna nec vivamus risus duis arcu",
+        "desc": "Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor tristique et gravida. Quis nunc interdum gravida ullamcorper."
+      },
+      {
+        "number": "3",
+        "title": "Lobortis euismod imperdiet tempus",
+        "desc": "Viverra scelerisque mauris et nullam molestie et. Augue adipiscing praesent nisl cras nunc luctus viverra nisi."
+      },
+      {
+        "number": "4",
+        "title": "Cras nulla aliquet nam eleifend amet",
+        "desc": "Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor tristique et gravida. Quis nunc interdum gravida ullamcorper sed integer. Quisque eleifend tincidunt vulputate libero."
+      }
+    ]
   }
 }
+
+
