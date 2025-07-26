@@ -17,10 +17,12 @@
   -moz-osx-font-smoothing: grayscale;
 } */
 
-*,
-body {
-  margin: 0;
-  padding: 0;
+@base {
+  *,
+  body {
+    margin: 0;
+    padding: 0;
+  }
 }
 /* Customized thems */
 
@@ -70,4 +72,14 @@ body {
   --ease-fluid: cubic-bezier(0.3, 0, 0, 1);
   --ease-snappy: cubic-bezier(0.2, 0, 0, 1);
   /* ... */
+}
+
+.row{
+    @apply flex flex-wrap  items-center  p-6;
+}
+
+ul{
+  margin: 0;
+  padding: 0;
+
 }
