@@ -83,3 +83,13 @@ ul{
   padding: 0;
 
 }
+
+.active{
+  background-color: var(--color-primary-500);
+  color: white;
+  padding-block: 5px;
+  padding-inline: 10px;
+  border-radius: 5px;
+  font-weight: 500;
+  transition: all .5s;
+}

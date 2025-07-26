@@ -14,6 +14,7 @@
     "@tailwindcss/vite": "^4.1.11",
     "bootstrap": "^5.3.7",
     "bootstrap-icons": "^1.13.1",
+    "generate-react-cli": "^8.4.9",
     "i18next": "^25.3.2",
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
