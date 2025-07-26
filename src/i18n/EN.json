@@ -5,12 +5,7 @@
     "searchTitle": "Search on RentYourCar",
     "searchPlaceholder": "Start searching..."
   },
-  "footer": {
-    "contactUs": "Contact Us",
-    "privacyPolicy": "Privacy Policy",
-    "termsOfService": "Terms of Service",
-    "followUs": "Follow Us"
-  },
+ 
   "menu": {
     "home": "Home",
     "newEpisodes": "New Episodes",
@@ -37,6 +32,26 @@
     "description": "Car rental made easy.",
     "learnMore": "Get Started"
   }
+  ,
+ "footer": {
+  "rightsReserved": "© {{year}} Vehicle Rental. All rights reserved.",
+  "name":"vehicle rental",
+  "address": "Address",
+   "addressDescription":"Cairo , Tanat",
+  "email": "Email",
+  "phone": "Phone",
+  "usefulLinks": "Useful Links",
+  "aboutUs": "About Us",
+  "contactUs": "Contact Us",
+  "gallery": "Gallery",
+  "vehicles": "Vehicles",
+  "carList": "Car List",
+  "motorbikes": "Motorbikes",
+  "specialOffers": "Special Offers",
+  "downloadApp": "Download App",
+  "companyDescription": "Faucibus faucibus pellentesque dictum turpis. Id pellentesque turpis massa a id iaculis lorem turpis euismod. Purus at quisque integer sit..."
+}
+
 }
 
 
