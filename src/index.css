@@ -30,6 +30,7 @@
   --font-display: "Satoshi", "sans-serif";
   /* the system colors */
   /* Primary */
+  --color-primary:#ff9e0c;
   --color-primary-50: #d1faf4;
   --color-primary-100: #b4fdf2;
   --color-primary-200: #83fcea;
@@ -85,11 +86,11 @@ ul{
 }
 
 .active{
-  background-color: var(--color-primary-500);
+  background-color: var(--color-primary);
   color: white;
   padding-block: 5px;
   padding-inline: 10px;
   border-radius: 5px;
-  font-weight: 500;
-  transition: all .5s;
+  transition: all .3s;
 }
+
