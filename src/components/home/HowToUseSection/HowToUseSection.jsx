@@ -8,7 +8,7 @@ export default function Header() {
   return (
     <div className="flex flex-wrap justify-between items-center pt-[50px]">
       <div className="image max-w-[550px] max-h-[549px] mb-3 mx-auto">
-        <img src={HowToUse} alt="How To Use" />
+        <img src={HowToUse} alt="How To Use" className="rounded" />
       </div>
 
       <div className="Info w-full md:w-1/2 mx-auto">
