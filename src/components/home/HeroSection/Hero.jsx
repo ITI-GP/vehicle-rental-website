@@ -7,7 +7,7 @@ import { useTranslation } from "react-i18next";
 const Hero = () => {
   const { t } = useTranslation();
   return (
-    <div className={styles.heroWrapper}>
+    <div className={`${styles.heroWrapper} bg-gray-50`} >
       <div className={styles.heroContainer}>
         <div className={styles.heroContent}>
           <h1 className={styles.heroTitle}>{t("hero.title")}</h1>

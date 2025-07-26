@@ -1,8 +1,11 @@
 .heroWrapper {
   /* background-color: #f7f7f7; */
-  padding: 5rem 2rem;
+  /* padding: 5rem 2rem; */
+ 
+  padding-bottom: 3.5rem;
   position: relative;
   overflow: hidden;
+  border-radius: 5px;
 }
 
 .heroContainer {
@@ -49,7 +52,7 @@
   font-weight: 700;
   border: none;
   border-radius: 14px;
-  background: linear-gradient(to right, #ff8a00, #ff8a00);
+  background: linear-gradient(to right, var(--color-primary), var(--color-primary));
   color: #fff;
   padding: 1rem 2.5rem;
   animation: jump 2.5s infinite ease-in-out;
@@ -87,7 +90,7 @@
   top: 80px;
   width: 75%;
   height: 50%;
-  background-color: #ff8a00;
+  background-color: var(--color-primary);
   border-radius: 50px 40px 40px 100px;
   z-index: 0;
 }
