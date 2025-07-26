@@ -14,6 +14,7 @@
   flex-wrap: wrap;
   position: relative;
   z-index: 2;
+
 }
 
 .heroContent {
@@ -22,7 +23,6 @@
   padding: 1rem;
 }
 
-/* Unified typography style */
 .heroTitle,
 .heroDescription {
   font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
