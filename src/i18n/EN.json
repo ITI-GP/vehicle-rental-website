@@ -49,7 +49,6 @@
     "downloadApp": "Download App",
     "companyDescription": "Faucibus faucibus pellentesque dictum turpis. Id pellentesque turpis massa a id iaculis lorem turpis euismod. Purus at quisque integer sit..."
   },
-  
   "howToUse": {
     "steps": [
       {
@@ -74,14 +73,8 @@
       }
     ]
   },
-  
   "downloadAppTitle": "Download mobile app",
-  "downloadAppDescription": "Imperdiet ut tristique viverra nunc. Ultrices orci vel auctor cursus turpis nibh placerat massa. Fermentum urna ut at et in. Turpis aliquet cras hendrerit enim condimentum. Condimentum interdum risus bibendum urna. Augue aliquet varius faucibus ut integer tristique ut...."
-
-}
-
-  }
-  ,
+  "downloadAppDescription": "Imperdiet ut tristique viverra nunc. Ultrices orci vel auctor cursus turpis nibh placerat massa. Fermentum urna ut at et in. Turpis aliquet cras hendrerit enim condimentum. Condimentum interdum risus bibendum urna. Augue aliquet varius faucibus ut integer tristique ut....",
   "features": {
     "availabilityTitle": "Availability",
     "availabilityDesc": "Diam tincidunt tincidunt erat at semper fermentum. Id ultricies quis",
@@ -89,21 +82,16 @@
     "comfortDesc": "Gravida auctor fermentum morbi vulputate ac egestas orcietium convallis",
     "savingsTitle": "Savings",
     "savingsDesc": "Pretium convallis id diam sed commodo vestibulum lobortis volutpat"
-  }
-  ,
-  
-  "facts": {
-  "title": {
-    "part1": "Facts in",
-    "part2": "Numbers"
   },
-  "subtitle": "Amet cras hac orci lacus. Faucibus ipsum arcu lectus nibh sapien bibendum ullamcorper in. Diam tincidunt tincidunt erat at semper fermentum.",
-  "cars": "Cars",
-  "buses": "Buses",
-  "bikes": "Bikes",
-  "scooters": "Scooters"
+  "facts": {
+    "title": {
+      "part1": "Facts in",
+      "part2": "Numbers"
+    },
+    "subtitle": "Amet cras hac orci lacus. Faucibus ipsum arcu lectus nibh sapien bibendum ullamcorper in. Diam tincidunt tincidunt erat at semper fermentum.",
+    "cars": "Cars",
+    "buses": "Buses",
+    "bikes": "Bikes",
+    "scooters": "Scooters"
+  }
 }
-
-}
-
-
