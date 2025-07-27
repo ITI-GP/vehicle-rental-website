@@ -7,14 +7,14 @@ const Facts = () => {
 
   return (
     <HeroWrapper>
-      <div className="max-w-6xl w-full mx-auto px-6 text-white">
+      <div className="max-w-6xl w-full mx-auto px-6 ">
         {/* Header */}
-        <div className="mb-10 bg-black/50 p-6">
-          <h2 className="text-4xl font-extrabold text-white">
+        <div className="mb-10  p-6">
+          <h2 className="text-4xl font-extrabold ">
             {t("facts.title.part1")}{" "}
             <span className="text-yellow-400">{t("facts.title.part2")}</span>
           </h2>
-          <p className="mt-2 text-gray-200 max-w-xl">{t("facts.subtitle")}</p>
+          <p className="mt-2 text-gray-600 max-w-xl">{t("facts.subtitle")}</p>
         </div>
 
         {/* Stats */}
