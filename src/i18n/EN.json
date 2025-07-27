@@ -80,4 +80,30 @@
 
 }
 
+  }
+  ,
+  "features": {
+    "availabilityTitle": "Availability",
+    "availabilityDesc": "Diam tincidunt tincidunt erat at semper fermentum. Id ultricies quis",
+    "comfortTitle": "Comfort",
+    "comfortDesc": "Gravida auctor fermentum morbi vulputate ac egestas orcietium convallis",
+    "savingsTitle": "Savings",
+    "savingsDesc": "Pretium convallis id diam sed commodo vestibulum lobortis volutpat"
+  }
+  ,
+  
+  "facts": {
+  "title": {
+    "part1": "Facts in",
+    "part2": "Numbers"
+  },
+  "subtitle": "Amet cras hac orci lacus. Faucibus ipsum arcu lectus nibh sapien bibendum ullamcorper in. Diam tincidunt tincidunt erat at semper fermentum.",
+  "cars": "Cars",
+  "buses": "Buses",
+  "bikes": "Bikes",
+  "scooters": "Scooters"
+}
+
+}
+
 
