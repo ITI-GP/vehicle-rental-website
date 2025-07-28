@@ -21,8 +21,8 @@ export default function Header() {
               <li className="font-medium"><NavLink to={'/'}>{t("header.home")}</NavLink></li>
               <li className="font-medium"><NavLink to={'/vehicles'}>{t("header.vehicles")}</NavLink></li>
               <li className="font-medium"><NavLink to={'/details'}>{t("header.details")}</NavLink></li>
-              <li className="font-medium"><NavLink to={'/contactus'}>{t("header.about")}</NavLink></li>
-              <li className="font-medium"><NavLink to={'/aboutus'}>{t("header.contact")}</NavLink></li>
+              <li className="font-medium"><NavLink to={'/aboutus'}>{t("header.about")}</NavLink></li>
+              <li className="font-medium"><NavLink to={'/contactus'}>{t("header.contact")}</NavLink></li>
             </ul>
 
            </div>

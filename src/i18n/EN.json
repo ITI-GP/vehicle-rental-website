@@ -93,5 +93,9 @@
     "buses": "Buses",
     "bikes": "Bikes",
     "scooters": "Scooters"
+  },
+  "aboutUs": {
+    "title": "About Us"
   }
+
 }
