@@ -93,5 +93,17 @@
     "buses": "Buses",
     "bikes": "Bikes",
     "scooters": "Scooters"
-  }
+  },
+  "contact": {
+  "title": "Contact Us",
+  "bookYourCar": "Book your car",
+  "openingHours": "Opening hours",
+  "hoursText": "Sun-Mon: 10am - 10pm",
+  "blogTitle": "Latest blog posts & news",
+  "blog1": "How to choose the right car",
+  "blog2": "Which plan is right for me?",
+  "blog3": "Enjoy Speed, Choice & Total Control",
+  "newsDate": "News / 12 April 2025"
+}
+
 }
