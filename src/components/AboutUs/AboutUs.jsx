@@ -8,6 +8,7 @@ export default function AboutUs() {
         <h1>sssssss</h1>
         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate quod, voluptatum quo minima aut nemo dicta modi unde temporibus sit, voluptates pariatur aliquid ea natus dolore possimus, ad tempora blanditiis!</p>
         <p>ayayayya</p>
+      
     </div>
     
   )

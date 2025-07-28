@@ -7,7 +7,7 @@ export default function Header() {
   return (
     <nav className="fixed z-50 top-0 right-0 left-0 " >
 
-     <div className="flex flex-wrap justify-between items-center px-[72px] pt-[25px] pb-[25px] w-full max-w-[1920px] mx-auto bg-white">
+     <div className="flex flex-wrap justify-between items-center px-[72px] pt-[25px] pb-[25px] w-full max-w-[1920px] mx-auto bg-white ">
 
            <div className="logo flex-wrap flex items-center gap-2 w-[180px]" >
               <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto " />
@@ -21,8 +21,8 @@ export default function Header() {
               <li className="font-medium"><NavLink to={'/'}>{t("header.home")}</NavLink></li>
               <li className="font-medium"><NavLink to={'/vehicles'}>{t("header.vehicles")}</NavLink></li>
               <li className="font-medium"><NavLink to={'/details'}>{t("header.details")}</NavLink></li>
-              <li className="font-medium"><NavLink to={'/aboutus'}>{t("header.about")}</NavLink></li>
-              <li className="font-medium"><NavLink to={'/contactus'}>{t("header.contact")}</NavLink></li>
+             <li className="font-medium"><NavLink to={'/contactus'}>{t("header.contact")}</NavLink></li>
+            <li className="font-medium"><NavLink to={'/aboutus'}>{t("header.about")}</NavLink></li>
             </ul>
 
            </div>
