@@ -1,10 +1,21 @@
-import React from 'react'
 import { useTranslation } from "react-i18next";
-export default function Vehicles() {
-      const { t } = useTranslation();
+import { useEffect, useState } from "react";
+import VehiclesCard from "../VehiclesCard/VehiclesCard";
+import vehicleData from "../../data/vehicles.json";
+
+export default function VehiclesPage() {
+  const { t } = useTranslation();
+  const [vehicles, setVehicles] = useState([]);
+  useEffect(() => {
+   
+    setVehicles(vehicleData);
+  }, []);
+
   return (
-    <div>
-      <h1>Vehicles</h1>
+    <div className="flex flex-wrap gap-6 justify-center px-4 pt-20">
+      {vehicles.map((vehicle) => (
+        <VehiclesCard key={vehicle.id} vehicle={vehicle} />
+      ))}
     </div>
-  )
+  );
 }

@@ -16,7 +16,7 @@ const router = createBrowserRouter(
     <Route path="/" element={<RootLayout />}>
       {/* Public Routes */}
       <Route index element={<HomePage />} />
-      <Route path="details" element={<Details/>}/>
+      <Route path="details/:id" element={<Details/>}/>
       <Route path="contactus" element={<ContactUs/>}/>
       <Route path="aboutus" element={<AboutUs/>}/>
       <Route path="vehicles" element={<Vehicles/>}/>

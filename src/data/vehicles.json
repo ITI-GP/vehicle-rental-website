@@ -1,0 +1,307 @@
+[
+  {
+    "id": 1,
+    "mainCategory": "Car",
+    "type": "Toyota Corolla",
+    "category": "Sedan",
+    "price": 700,
+    "manual": false,
+    "airCondition": true,
+    "fuel": "92",
+    "imageCover": "https://tse1.mm.bing.net/th/id/OIP.cAobzB0mBSlBjpBXbNRdSwHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
+    "images": [
+      "https://moneyinc.com/wp-content/uploads/2016/06/Alfa-Romeo-750x422.jpg",
+      "https://tse3.mm.bing.net/th/id/OIP.vFlRjXL8aKmLPxO3slZHCQAAAA?w=474&h=237&rs=1&pid=ImgDetMain&o=7&rm=3",
+      "https://wallpapercave.com/wp/wp13161502.jpg",
+      "https://tse2.mm.bing.net/th/id/OIP.3fHiE86UKDJhtiIUCAu9sQHaEo?w=1920&h=1200&rs=1&pid=ImgDetMain&o=7&rm=3"
+    ],
+    "description":"here are few things more frustrating than trying to describe a car without using adjectives. Whether you’re trying to sell your car or just describe it to a friend, you’ll need to find the right words to capture its essence. Unfortunately,",
+    "distance":"500",
+    "seats":"5",
+    "reviews": [
+      {
+        "user": "Ahmed Salah",
+        "rating": 5,
+        "reviewText": "Very smooth car and great air conditioning!",
+        "avatar":"https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?cs=srgb&dl=pexels-pixabay-220453.jpg&fm=jpg"
+      },
+      {
+        "user": "Mona Nabil",
+        "rating": 4,
+        "reviewText": "Clean and comfortable, but a bit expensive.",
+        "avatar":"https://tse4.mm.bing.net/th/id/OIP.vSdxxnm9VfmOIwFMOgRqWQAAAA?w=400&h=400&rs=1&pid=ImgDetMain&o=7&rm=3"
+      },
+      {
+        "user": "Ahmed Salah",
+        "rating": 5,
+        "reviewText": "Very smooth car and great air conditioning!"
+      },
+      {
+        "user": "Mona Nabil",
+        "rating": 4,
+        "reviewText": "Clean and comfortable, but a bit expensive."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "mainCategory": "Car",
+    "type": "Honda Civic",
+    "category": "Sedan",
+    "price": 750,
+    "manual": true,
+    "airCondition": true,
+    "fuel": "95",
+    "imageCover": "https://tse3.mm.bing.net/th/id/OIP.f6ved8wranJjaO8g0qDStgHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+    "images": [
+      "https://images.pexels.com/photos/244212/pexels-photo-244212.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
+      "https://infinityarmour.com.au/wp-content/uploads/2021/05/slider2.jpg",
+      "https://tse4.mm.bing.net/th/id/OIP.XQ6CyncXgEdljRssh_LAIwHaEK?rs=1&pid=ImgDetMain&o=7&rm=3",
+      "https://parkers-images.bauersecure.com/gallery-image/wp-images/1290/static-exterior/1752x1168/audi-a5-sportback-(211).jpg"
+    ],
+    "reviews": [
+      {
+        "user": "Sara Adel",
+        "rating": 4,
+        "reviewText": "Good car for city driving."
+      },
+      {
+        "user": "Omar Khaled",
+        "rating": 3,
+        "reviewText": "Decent performance but noisy engine."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "mainCategory": "Motorcycle",
+    "type": "Yamaha YZF-R3",
+    "category": "Sport",
+    "price": 400,
+    "manual": true,
+    "airCondition": false,
+    "fuel": "Petrol",
+    "imageCover": "https://via.placeholder.com/400x250?text=Yamaha+Cover",
+    "images": [
+      "https://via.placeholder.com/400x250?text=Yamaha+1",
+      "https://via.placeholder.com/400x250?text=Yamaha+2",
+      "https://via.placeholder.com/400x250?text=Yamaha+3",
+      "https://via.placeholder.com/400x250?text=Yamaha+4"
+    ],
+    "reviews": [
+      {
+        "user": "Ali Hassan",
+        "rating": 5,
+        "reviewText": "Super fast and agile!"
+      },
+      {
+        "user": "Nour Samir",
+        "rating": 4,
+        "reviewText": "Perfect for beginners."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "mainCategory": "Car",
+    "type": "Ford Mustang",
+    "category": "Sports",
+    "price": 1200,
+    "manual": false,
+    "airCondition": true,
+    "fuel": "95",
+    "imageCover": "https://via.placeholder.com/400x250?text=Ford+Cover",
+    "images": [
+      "https://via.placeholder.com/400x250?text=Ford+1",
+      "https://via.placeholder.com/400x250?text=Ford+2",
+      "https://via.placeholder.com/400x250?text=Ford+3",
+      "https://via.placeholder.com/400x250?text=Ford+4"
+    ],
+    "reviews": [
+      {
+        "user": "Laila Fathy",
+        "rating": 5,
+        "reviewText": "Powerful engine and sleek design."
+      },
+      {
+        "user": "Hassan Mostafa",
+        "rating": 4,
+        "reviewText": "A bit pricey but worth it."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "mainCategory": "Motorcycle",
+    "type": "Kawasaki Ninja 400",
+    "category": "Sport",
+    "price": 450,
+    "manual": true,
+    "airCondition": false,
+    "fuel": "Petrol",
+    "imageCover": "https://via.placeholder.com/400x250?text=Kawasaki+Cover",
+    "images": [
+      "https://via.placeholder.com/400x250?text=Kawasaki+1",
+      "https://via.placeholder.com/400x250?text=Kawasaki+2",
+      "https://via.placeholder.com/400x250?text=Kawasaki+3",
+      "https://via.placeholder.com/400x250?text=Kawasaki+4"
+    ],
+    "reviews": [
+      {
+        "user": "Mona Ali",
+        "rating": 5,
+        "reviewText": "Amazing bike for city rides."
+      },
+      {
+        "user": "Youssef Gamal",
+        "rating": 3,
+        "reviewText": "Good performance but fuel consumption is high."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "mainCategory": "Car",
+    "type": "BMW X5",
+    "category": "SUV",
+    "price": 1300,
+    "manual": false,
+    "airCondition": true,
+    "fuel": "95",
+    "imageCover": "https://via.placeholder.com/400x250?text=BMW+Cover",
+    "images": [
+      "https://via.placeholder.com/400x250?text=BMW+1",
+      "https://via.placeholder.com/400x250?text=BMW+2",
+      "https://via.placeholder.com/400x250?text=BMW+3",
+      "https://via.placeholder.com/400x250?text=BMW+4"
+    ],
+    "reviews": [
+      {
+        "user": "Karim Salah",
+        "rating": 5,
+        "reviewText": "Luxurious and very comfortable."
+      },
+      {
+        "user": "Dina Safan",
+        "rating": 4,
+        "reviewText": "Great for family trips."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "mainCategory": "Car",
+    "type": "Mercedes C-Class",
+    "category": "Sedan",
+    "price": 1100,
+    "manual": false,
+    "airCondition": true,
+    "fuel": "95",
+    "imageCover": "https://via.placeholder.com/400x250?text=Mercedes+Cover",
+    "images": [
+      "https://via.placeholder.com/400x250?text=Mercedes+1",
+      "https://via.placeholder.com/400x250?text=Mercedes+2",
+      "https://via.placeholder.com/400x250?text=Mercedes+3",
+      "https://via.placeholder.com/400x250?text=Mercedes+4"
+    ],
+    "reviews": [
+      {
+        "user": "Sara Nabil",
+        "rating": 5,
+        "reviewText": "Smooth ride and very stylish."
+      },
+      {
+        "user": "Amr Hamdy",
+        "rating": 3,
+        "reviewText": "Good car but maintenance is expensive."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "mainCategory": "Motorcycle",
+    "type": "Ducati Monster",
+    "category": "Naked",
+    "price": 500,
+    "manual": true,
+    "airCondition": false,
+    "fuel": "Petrol",
+    "imageCover": "https://via.placeholder.com/400x250?text=Ducati+Cover",
+    "images": [
+      "https://via.placeholder.com/400x250?text=Ducati+1",
+      "https://via.placeholder.com/400x250?text=Ducati+2",
+      "https://via.placeholder.com/400x250?text=Ducati+3",
+      "https://via.placeholder.com/400x250?text=Ducati+4"
+    ],
+    "reviews": [
+      {
+        "user": "Hany Adel",
+        "rating": 5,
+        "reviewText": "Superb bike with amazing handling."
+      },
+      {
+        "user": "Layla Hassan",
+        "rating": 4,
+        "reviewText": "Looks great and rides smoothly."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "mainCategory": "Car",
+    "type": "Hyundai Elantra",
+    "category": "Sedan",
+    "price": 650,
+    "manual": true,
+    "airCondition": true,
+    "fuel": "92",
+    "imageCover": "https://via.placeholder.com/400x250?text=Hyundai+Cover",
+    "images": [
+      "https://via.placeholder.com/400x250?text=Hyundai+1",
+      "https://via.placeholder.com/400x250?text=Hyundai+2",
+      "https://via.placeholder.com/400x250?text=Hyundai+3",
+      "https://via.placeholder.com/400x250?text=Hyundai+4"
+    ],
+    "reviews": [
+      {
+        "user": "Nada Ali",
+        "rating": 4,
+        "reviewText": "Reliable car with good mileage."
+      },
+      {
+        "user": "Omar Said",
+        "rating": 3,
+        "reviewText": "Average performance but comfortable seats."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "mainCategory": "Car",
+    "type": "Jeep Wrangler",
+    "category": "SUV",
+    "price": 1000,
+    "manual": true,
+    "airCondition": true,
+    "fuel": "95",
+    "imageCover": "https://via.placeholder.com/400x250?text=Jeep+Cover",
+    "images": [
+      "https://via.placeholder.com/400x250?text=Jeep+1",
+      "https://via.placeholder.com/400x250?text=Jeep+2",
+      "https://via.placeholder.com/400x250?text=Jeep+3",
+      "https://via.placeholder.com/400x250?text=Jeep+4"
+    ],
+    "reviews": [
+      {
+        "user": "Sara Mohamed",
+        "rating": 5,
+        "reviewText": "Perfect for off-road adventures."
+      },
+      {
+        "user": "Khaled Omar",
+        "rating": 4,
+        "reviewText": "Strong build and very reliable."
+      }
+    ]
+  }
+]
