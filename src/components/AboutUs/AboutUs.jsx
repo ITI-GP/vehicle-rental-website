@@ -1,15 +1,25 @@
-import React from 'react'
+import React from "react";
 import { useTranslation } from "react-i18next";
+import AboutInfo from "./AboutInfo";
+import Memories from "./Memories";
+import Reviews from "./ReviewForm";
+import Video from "./Video";
+import ReviewForm from "./ReviewForm";
+import AboutHero from "./AboutHero";
+import Question from "./Question";
 export default function AboutUs() {
-      const { t } = useTranslation();
+  const { t } = useTranslation();
+
   return (
-    <div className=" my-12  flex items-center justify-center h-screen bg-gray-100">
-        <h1>{t("About Us")}</h1>
-        <h1>sssssss</h1>
-        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate quod, voluptatum quo minima aut nemo dicta modi unde temporibus sit, voluptates pariatur aliquid ea natus dolore possimus, ad tempora blanditiis!</p>
-        <p>ayayayya</p>
+    <div>
+      <Video className="mb-10" />
+      <AboutInfo className="mb-10" />
+      <Memories className="mb-10" />
+      <ReviewForm className="mb-10"/>
+      <AboutHero className="mb-10" />
+      <Question className="mb-10" />
+      
       
     </div>
-    
-  )
+  );
 }
