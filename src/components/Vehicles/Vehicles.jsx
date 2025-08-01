@@ -1,94 +1,60 @@
-// import { useTranslation } from "react-i18next";
-// import { useEffect, useState } from "react";
-// import VehiclesCard from "../VehiclesCard/VehiclesCard";
-// import vehicleData from "../../data/vehicles.json";
 
-// export default function VehiclesPage() {
-//   const { t } = useTranslation();
-//   const [vehicles, setVehicles] = useState([]);
-//   useEffect(() => {
-   
-//     setVehicles(vehicleData);
-//   }, []);
-
-//   return (
-//     <div className="flex flex-wrap gap-6 justify-center px-4 pt-20">
-//       {vehicles.map((vehicle) => (
-//         <VehiclesCard key={vehicle.id} vehicle={vehicle} />
-//       ))}
-//     </div>
-//   );
-// }
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
-import VehiclesCard from "../VehiclesCard/VehiclesCard";
 import vehicleData from "../../data/vehicles.json";
+import CategoryFilter from "./CategoryFilter/CategoryFilter";
+import VehiclesList from "./VehiclesList/VehiclesList";
+
 
 export default function VehiclesPage() {
   const { t } = useTranslation();
-
   const [vehicles, setVehicles] = useState([]);
   const [filteredVehicles, setFilteredVehicles] = useState([]);
   const [mainCategories, setMainCategories] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setVehicles(vehicleData);
+    const sortedVehicles = [...vehicleData].sort((a, b) => b.rate - a.rate);
+    setVehicles(sortedVehicles);
 
-    // جلب الـ main categories بدون تكرار
-    const categories = Array.from(new Set(vehicleData.map(v => v.mainCategory)));
+    const categories = Array.from(
+      new Set(vehicleData.map((v) => v.mainCategory))
+    );
     setMainCategories(categories);
 
-    setFilteredVehicles(vehicleData); // بدايةً عرض كل العربيات
+    setFilteredVehicles(sortedVehicles);
   }, []);
 
-  // دالة اختيار فلتر حسب main category
-  function handleCategoryClick(category) {
+  const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+    setCurrentPage(1);
+
     if (category === "All") {
       setFilteredVehicles(vehicles);
     } else {
-      const filtered = vehicles.filter(v => v.mainCategory === category);
+      const filtered = vehicles.filter((v) => v.mainCategory === category);
       setFilteredVehicles(filtered);
     }
-  }
+  };
 
   return (
     <div className="px-4 pt-10">
-       <h2 className="text-4xl font-bold mb-8 text-center ">    {t("vehicles.header")}</h2>
-      {/* الأزرار */}
-      <div className="flex gap-4 justify-center mb-8 flex-wrap">
-        <button
-          onClick={() => handleCategoryClick("All")}
-          className={`px-8 py-2 rounded-2xl ${
-            selectedCategory === "All" ? "bg-primary text-white" : "bg-gray-50"
-          }`}
-        >
-          {t("vehicles.all", "All")}
-        </button>
-        {mainCategories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => handleCategoryClick(cat)}
-            className={`px-8 py-2 rounded-2xl ${
-              selectedCategory === cat ? "bg-primary text-white" : "bg-gray-50"
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
+      <h2 className="text-4xl font-bold mb-8 text-center">
+        {t("vehicles.header")}
+      </h2>
 
-      {/* عرض العربيات */}
-      <div className="flex flex-wrap gap-6 justify-center">
-        {filteredVehicles.length > 0 ? (
-          filteredVehicles.map((vehicle) => (
-            <VehiclesCard key={vehicle.id} vehicle={vehicle} />
-          ))
-        ) : (
-          <p>{t("vehicles.noVehicles", "No vehicles found.")}</p>
-        )}
-      </div>
+      <CategoryFilter
+        categories={mainCategories}
+        selected={selectedCategory}
+        onChange={handleCategoryClick}
+      />
+
+      <VehiclesList
+        vehicles={filteredVehicles}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+      />
     </div>
   );
 }

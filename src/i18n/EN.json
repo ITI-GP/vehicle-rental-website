@@ -76,7 +76,8 @@
     "entertainmentShows": "Entertainment Shows"
   },
   "home": {
-    "welcome": "Welcome to the homepage"
+    "welcome": "Welcome to the homepage",
+    "cardshome":"  Choose the vehicle that suits you"
   },
   "hero": {
     "title": "ACCOMPANY YOUR JOURNEY WITH COMFORTABLE CARS",
