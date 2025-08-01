@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { supabase } from "./../../Lib/supabaseClient";
+import car from "./../../assets/login.jpg";
+import { useNavigate } from "react-router-dom";
 
-export default function Register() {
+export default function RegisterPage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -11,14 +13,67 @@ export default function Register() {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState("male");
   const [message, setMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const navigate = useNavigate();
+
+  const getPasswordStrength = (pass) => {
+    let score = 0;
+    if (pass.length >= 6) score++;
+    if (/[A-Z]/.test(pass)) score++;
+    if (/[0-9]/.test(pass)) score++;
+    if (/[^A-Za-z0-9]/.test(pass)) score++;
+    return score;
+  };
+
+  const getStrengthColor = (score) => {
+    switch (score) {
+      case 1:
+        return "bg-red-500 w-1/4";
+      case 2:
+        return "bg-yellow-400 w-1/2";
+      case 3:
+        return "bg-blue-500 w-3/4";
+      case 4:
+        return "bg-green-500 w-full";
+      default:
+        return "bg-gray-300 w-0";
+    }
+  };
+
+  const validateInputs = () => {
+    if (!name || !email || !phone || !password || !rePassword || !address || !dateOfBirth) {
+      setMessage("Please fill out all fields.");
+      return false;
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setMessage("Invalid email format.");
+      return false;
+    }
+
+    if (!/^\d{10,}$/.test(phone)) {
+      setMessage("Phone number must contain at least 10 digits.");
+      return false;
+    }
+
+    if (password !== rePassword) {
+      setMessage("Passwords do not match.");
+      return false;
+    }
+
+    if (getPasswordStrength(password) < 2) {
+      setMessage("Password is too weak.");
+      return false;
+    }
+
+    return true;
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
 
-    if (password !== rePassword) {
-      setMessage("Passwords do not match.");
-      return;
-    }
+    if (!validateInputs()) return;
 
     const { data, error } = await supabase.auth.signUp({
       email,
@@ -38,96 +93,141 @@ export default function Register() {
       setMessage(error.message);
     } else {
       setMessage("Check your email to confirm registration.");
+      navigate("/login");
     }
   };
 
+  const strengthScore = getPasswordStrength(password);
+  const strengthBarColor = getStrengthColor(strengthScore);
+
   return (
-    <div className="max-w-md mx-auto p-6 bg-white shadow rounded-lg">
-      <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
-      <form onSubmit={handleRegister} className="space-y-4">
-        <input
-          type="text"
-          placeholder="Full Name"
-          className="w-full p-2 border rounded"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-          required
+    <div className="relative w-full overflow-hidden">
+      {/* Background Image */}
+      <div className="flex justify-center items-center">
+        <img
+          src={car}
+          alt="Login Background"
+          className="z-0"
+          style={{ maxWidth: "100%", height: "auto" }}
         />
+      </div>
 
-        <input
-          type="tel"
-          placeholder="Phone Number"
-          className="w-full p-2 border rounded"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-          required
-        />
-
-        <input
-          type="email"
-          placeholder="Email"
-          className="w-full p-2 border rounded"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-
-        <input
-          type="text"
-          placeholder="Address"
-          className="w-full p-2 border rounded"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-          required
-        />
-
-        <input
-          type="date"
-          className="w-full p-2 border rounded"
-          value={dateOfBirth}
-          onChange={(e) => setDateOfBirth(e.target.value)}
-          required
-        />
-
-        <select
-          value={gender}
-          onChange={(e) => setGender(e.target.value)}
-          className="w-full p-2 border rounded"
-          required
-        >
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-        </select>
-
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full p-2 border rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-
-        <input
-          type="password"
-          placeholder="Confirm Password"
-          className="w-full p-2 border rounded"
-          value={rePassword}
-          onChange={(e) => setRePassword(e.target.value)}
-          required
-        />
-
+      {/* Register Button */}
+      <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 z-20">
         <button
-          type="submit"
-          className="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700"
+          onClick={() => setShowModal(true)}
+          className="bg-red-500 text-white px-6 py-3 font-semibold text-lg rounded-full shadow-lg hover:scale-105 hover:bg-red-600 transition duration-300 animate-bounce"
         >
-          Register
+          Register Now
         </button>
+      </div>
 
-        {message && (
-          <p className="text-center text-sm text-red-600">{message}</p>
-        )}
-      </form>
+      {/* Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-2">
+          <div className="relative bg-white w-full max-w-md p-5 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto animate-fadeInUp">
+            {/* Close Button */}
+            <button
+              onClick={() => setShowModal(false)}
+              className="absolute top-3 right-4 text-gray-400 hover:text-red-500 text-xl font-bold"
+              aria-label="Close Modal"
+            >
+              &times;
+            </button>
+
+            <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
+              Create an Account
+            </h2>
+
+            {/* Form */}
+            <form onSubmit={handleRegister} className="space-y-3">
+              <input
+                type="text"
+                placeholder="Full Name"
+                className="w-full p-2 border rounded-md"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                required
+              />
+              <input
+                type="tel"
+                placeholder="Phone"
+                className="w-full p-2 border rounded-md"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+                required
+              />
+              <input
+                type="email"
+                placeholder="Email"
+                className="w-full p-2 border rounded-md"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+              <input
+                type="text"
+                placeholder="Address"
+                className="w-full p-2 border rounded-md"
+                value={address}
+                onChange={(e) => setAddress(e.target.value)}
+                required
+              />
+              <input
+                type="date"
+                className="w-full p-2 border rounded-md"
+                value={dateOfBirth}
+                onChange={(e) => setDateOfBirth(e.target.value)}
+                required
+              />
+              <select
+                className="w-full p-2 border rounded-md"
+                value={gender}
+                onChange={(e) => setGender(e.target.value)}
+              >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+
+              {/* Password */}
+              <input
+                type="password"
+                placeholder="Password"
+                className="w-full p-2 border rounded-md"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+              {/* Password Strength Bar */}
+              {password && (
+                <div className="h-2 w-full bg-gray-200 rounded-md overflow-hidden">
+                  <div className={`h-full ${strengthBarColor} transition-all duration-300`} />
+                </div>
+              )}
+
+              <input
+                type="password"
+                placeholder="Confirm Password"
+                className="w-full p-2 border rounded-md"
+                value={rePassword}
+                onChange={(e) => setRePassword(e.target.value)}
+                required
+              />
+
+              <button
+                type="submit"
+                className="w-full bg-red-500 text-white py-2 rounded-md font-semibold hover:bg-red-600 transition"
+              >
+                Register
+              </button>
+
+              {message && (
+                <p className="text-center text-sm text-red-600 mt-2">{message}</p>
+              )}
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
