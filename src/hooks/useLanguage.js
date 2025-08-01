@@ -3,4 +3,4 @@ import { LanguageContext } from '../context/LanguageContext';
 
 export const useLanguage = () => {
   return useContext(LanguageContext);
-};
+}

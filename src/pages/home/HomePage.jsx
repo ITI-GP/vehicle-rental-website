@@ -1,14 +1,16 @@
-import { useTranslation } from "react-i18next";
-import Card from "../../components/card/Card";
+import Hero from "../../components/home/HeroSection/hero";
+import HowToUseSection from "../../components/home/HowToUseSection/HowToUseSection";
+import DownloadApp from "../../components/home/DownloadAPP/DownloadAPP";
+import Featuers from "../../components/home/Features";
+import Facts from "../../components/home/Facts/Facts";
 export default function HomePage() {
-  const { t } = useTranslation();
-
   return (
     <div>
-      <Card />
-      <h1 className="text-3xl font-bold text-center my-8">
-        {t("home.welcome")}
-      </h1>
+      <Hero />
+      <Featuers />
+      <HowToUseSection />
+      <Facts />
+      <DownloadApp />
     </div>
   );
 }
