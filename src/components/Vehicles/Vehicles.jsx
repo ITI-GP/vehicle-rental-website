@@ -7,7 +7,7 @@
 //   const { t } = useTranslation();
 //   const [vehicles, setVehicles] = useState([]);
 //   useEffect(() => {
-   
+
 //     setVehicles(vehicleData);
 //   }, []);
 
@@ -36,7 +36,9 @@ export default function VehiclesPage() {
     setVehicles(vehicleData);
 
     // جلب الـ main categories بدون تكرار
-    const categories = Array.from(new Set(vehicleData.map(v => v.mainCategory)));
+    const categories = Array.from(
+      new Set(vehicleData.map((v) => v.mainCategory))
+    );
     setMainCategories(categories);
 
     setFilteredVehicles(vehicleData); // بدايةً عرض كل العربيات
@@ -48,7 +50,7 @@ export default function VehiclesPage() {
     if (category === "All") {
       setFilteredVehicles(vehicles);
     } else {
-      const filtered = vehicles.filter(v => v.mainCategory === category);
+      const filtered = vehicles.filter((v) => v.mainCategory === category);
       setFilteredVehicles(filtered);
     }
   }

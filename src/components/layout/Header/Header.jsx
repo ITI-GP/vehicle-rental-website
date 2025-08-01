@@ -13,7 +13,6 @@
 //               <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto " />
 //               <h3 className="font-bold text-[16px]  font-inter"> {t("footer.name")}</h3>
 //        </div>
-        
 
 //         <div className="links  ">
 
@@ -38,7 +37,7 @@
 
 // </div>
 //     </nav>
-    
+
 //   );
 // }import { useState } from "react";
 import React, { useState } from "react";
@@ -58,9 +57,10 @@ export default function Header() {
         {/* Logo Left */}
         <Link to="/" className="flex items-center gap-2">
           <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto" />
-          <h3 className="font-bold text-[16px] font-inter">{t("footer.name")}</h3>
+          <h3 className="font-bold text-[16px] font-inter">
+            {t("footer.name")}
+          </h3>
         </Link>
-       
 
         {/* Burger (only < md) */}
         <button
@@ -74,16 +74,35 @@ export default function Header() {
         <div className="hidden md:flex justify-between items-center flex-1 ml-6">
           {/* Center Links */}
           <ul className="flex flex-1 justify-center gap-6">
-            <li><NavLink to="/" className="font-medium">{t("header.home")}</NavLink></li>
-            <li><NavLink to="/vehicles" className="font-medium">{t("header.vehicles")}</NavLink></li>
+            <li>
+              <NavLink to="/" className="font-medium">
+                {t("header.home")}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/vehicles" className="font-medium">
+                {t("header.vehicles")}
+              </NavLink>
+            </li>
             {/* <li><NavLink to="/details" className="font-medium">{t("header.details")}</NavLink></li> */}
-            <li><NavLink to="/contactus" className="font-medium">{t("header.contact")}</NavLink></li>
-            <li><NavLink to="/aboutus" className="font-medium">{t("header.about")}</NavLink></li>
+            <li>
+              <NavLink to="/contactus" className="font-medium">
+                {t("header.contact")}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/aboutus" className="font-medium">
+                {t("header.about")}
+              </NavLink>
+            </li>
           </ul>
 
           {/* Right Icons */}
           <div className="flex items-center gap-4">
-            <Link className="flex items-center gap-1 text-gray-700 hover:text-black">
+            <Link
+              className="flex items-center gap-1 text-gray-700 hover:text-black"
+              to="/login"
+            >
               <i className="fa-solid fa-user" />
               <span>{t("header.signin")}</span>
             </Link>
@@ -101,16 +120,35 @@ export default function Header() {
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
             {/* Links */}
             <ul className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-              <li><NavLink to="/" onClick={() => setMenuOpen(false)}>{t("header.home")}</NavLink></li>
-              <li><NavLink to="/vehicles" onClick={() => setMenuOpen(false)}>{t("header.vehicles")}</NavLink></li>
+              <li>
+                <NavLink to="/" onClick={() => setMenuOpen(false)}>
+                  {t("header.home")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/vehicles" onClick={() => setMenuOpen(false)}>
+                  {t("header.vehicles")}
+                </NavLink>
+              </li>
               {/* <li><NavLink to="/details" onClick={() => setMenuOpen(false)}>{t("header.details")}</NavLink></li> */}
-              <li><NavLink to="/contactus" onClick={() => setMenuOpen(false)}>{t("header.contact")}</NavLink></li>
-              <li><NavLink to="/aboutus" onClick={() => setMenuOpen(false)}>{t("header.about")}</NavLink></li>
+              <li>
+                <NavLink to="/contactus" onClick={() => setMenuOpen(false)}>
+                  {t("header.contact")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/aboutus" onClick={() => setMenuOpen(false)}>
+                  {t("header.about")}
+                </NavLink>
+              </li>
             </ul>
 
             {/* Icons */}
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-              <Link  to="/login" className="flex items-center gap-1 text-gray-700 hover:text-black">
+              <Link
+                to="/login"
+                className="flex items-center gap-1 text-gray-700 hover:text-black"
+              >
                 <i className="fa-solid fa-user" />
                 <span>{t("header.signin")}</span>
               </Link>
