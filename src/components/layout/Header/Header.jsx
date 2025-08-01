@@ -56,10 +56,11 @@ export default function Header() {
       {/* Navbar Row */}
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         {/* Logo Left */}
-        <div className="flex items-center gap-2">
+        <Link to="/" className="flex items-center gap-2">
           <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto" />
           <h3 className="font-bold text-[16px] font-inter">{t("footer.name")}</h3>
-        </div>
+        </Link>
+       
 
         {/* Burger (only < md) */}
         <button
@@ -109,13 +110,15 @@ export default function Header() {
 
             {/* Icons */}
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-              <Link className="flex items-center gap-1 text-gray-700 hover:text-black">
+              <Link  to="/login" className="flex items-center gap-1 text-gray-700 hover:text-black">
                 <i className="fa-solid fa-user" />
                 <span>{t("header.signin")}</span>
               </Link>
-              <Link className="text-gray-700 hover:text-black">
+
+              <Link to="/login" className="text-gray-700 hover:text-black">
                 <i className="fa-solid fa-right-from-bracket" />
               </Link>
+
               <TransButton />
             </div>
           </div>
