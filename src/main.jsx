@@ -10,11 +10,15 @@ import "./index.css";
 import "@fortawesome/fontawesome-free/css/all.css";
 
 import App from "./App.jsx";
+import { Provider } from "react-redux";
+import { store } from "./redux/store";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <LanguageProvider>
-      <App />
+      <Provider store={store}>
+        <App />
+      </Provider>
     </LanguageProvider>
   </StrictMode>
 );

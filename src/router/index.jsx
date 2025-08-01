@@ -5,7 +5,13 @@ import {
 } from "react-router-dom";
 
 import RootLayout from "../layout/RootLayout";
-import { HomePage, RentYourVehicle } from "../pages";
+import {
+  HomePage,
+  RentYourVehicle,
+  ChooseUserType,
+  RegisterCompany,
+  RegisterIndividual,
+} from "../pages";
 import Details from "../components/details/details";
 import ContactUs from "./../components/ContactUs/ContactUs";
 import AboutUs from "./../components/AboutUs/AboutUs";
@@ -27,11 +33,36 @@ const router = createBrowserRouter(
       <Route path="register" element={<Register />} />
 
       {/* protected routes */}
+
       <Route
         path="/RentYourVehicle"
         element={
           <ProtectUser requiredRole="admin">
             <RentYourVehicle />
+          </ProtectUser>
+        }
+      />
+      <Route
+        path="/ChooseUserType"
+        element={
+          <ProtectUser requiredRole="admin">
+            <ChooseUserType />
+          </ProtectUser>
+        }
+      />
+      <Route
+        path="/register/individual"
+        element={
+          <ProtectUser requiredRole="admin">
+            <RegisterIndividual />
+          </ProtectUser>
+        }
+      />
+      <Route
+        path="/register/company"
+        element={
+          <ProtectUser requiredRole="admin">
+            <RegisterCompany />
           </ProtectUser>
         }
       />

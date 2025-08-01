@@ -75,7 +75,8 @@
     "entertainmentShows": "Entertainment Shows"
   },
   "home": {
-    "welcome": "Welcome to the homepage"
+    "welcome": "Welcome to the homepage",
+    "cardshome": "  Choose the vehicle that suits you"
   },
   "hero": {
     "title": "ACCOMPANY YOUR JOURNEY WITH COMFORTABLE CARS",
@@ -176,6 +177,7 @@
       "SUV": "SUV",
       "Motorbike": "Motorbike"
     },
+    "header": "Select a vehicle group",
     "categories": {
       "Car": "Car",
       "Motorcycle": "Motorcycle"
@@ -210,8 +212,42 @@
     "get_started": "Get started",
     "insurance_provider": "Insurance Provider",
     "image_alt": "Turo host smiling in front of cars",
-    "description1": "Take control of your financial future while cultivating your entrepreneurial fire with Turo, the world’s largest car sharing marketplace.",
+    "description1": "Take control of your financial future while cultivating your entrepreneurial fire with us, the world’s largest car sharing marketplace.",
     "description2": "Turo gives budding entrepreneurs the tools and resources they need to build a small, successful portfolio of cars to share on the marketplace, and the opportunity to add thousands to their annual income.",
     "description3": "List your first car now to get started, then build your business plan and scale how you want!"
+  },
+
+  "benefits_section": {
+    "title": "Built-in infrastructure to",
+    "subtitle": "get you up & running",
+    "description": "us provides the tools to help hosts thrive",
+    "items": {
+      "insurance": {
+        "title": "Insurance included",
+        "description": "Rest easy knowing you’re covered with up to $750,000 in third-party liability insurance from Travelers, plus you choose from an array of protection plans that include varying levels of reimbursement for car repairs, up to your car’s actual cash value in case of damage during a trip.",
+        "learn_more": "Learn more about vehicle protection."
+      },
+      "safety": {
+        "title": "Safety & support",
+        "description": "Get access to 24/7 Customer Support, roadside assistance for your guests, an experienced trust and safety team to support you through thick and thin, and one-on-one business coaching to share market intelligence and help you build a savvy business."
+      },
+      "demand": {
+        "title": "Demand generation",
+        "description": "Get instant access to millions of active guests from around the world, plus marketing and advertising support from us, the world’s largest car sharing marketplace."
+      },
+      "app": {
+        "title": "An easy-to-use app",
+        "description": "Manage your business and your bookings seamlessly on the go — manage trips, tweak your pricing, message your guests, and more, all from your phone."
+      }
+    }
+  },
+  "choose_user_type": {
+    "title": "Choose your account type",
+    "description": "Please select the type that best describes you",
+    "individual": "Individual",
+    "individual_description": "For personal use, renting out vehicles",
+    "company": "Company",
+    "company_description": "For businesses or fleets with multiple vehicles",
+    "image_alt": "Choose account type"
   }
 }
