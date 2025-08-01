@@ -176,7 +176,8 @@
       "Sedan": "Sedan",
       "SUV": "SUV",
       "Motorbike": "Motorbike"
-    },
+    }, 
+    "header":"Select a vehicle group",
     "categories": {
       "Car": "Car",
       "Motorcycle": "Motorcycle"

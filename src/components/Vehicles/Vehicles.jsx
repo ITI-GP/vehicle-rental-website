@@ -55,6 +55,7 @@ export default function VehiclesPage() {
 
   return (
     <div className="px-4 pt-10">
+       <h2 className="text-4xl font-bold mb-8 text-center ">    {t("vehicles.header")}</h2>
       {/* الأزرار */}
       <div className="flex gap-4 justify-center mb-8 flex-wrap">
         <button
