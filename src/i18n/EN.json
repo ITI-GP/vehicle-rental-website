@@ -205,6 +205,13 @@
     "a5": "Yes, we offer multiple coverage plans to choose from at checkout."
   },
   "rent_your_vehicle": {
-    "title": "Rent Out Your Vehicle"
+    "title": "Rent your vehicle",
+    "subtitle": "Start a vehicle sharing business now!",
+    "get_started": "Get started",
+    "insurance_provider": "Insurance Provider",
+    "image_alt": "Turo host smiling in front of cars",
+    "description1": "Take control of your financial future while cultivating your entrepreneurial fire with Turo, the world’s largest car sharing marketplace.",
+    "description2": "Turo gives budding entrepreneurs the tools and resources they need to build a small, successful portfolio of cars to share on the marketplace, and the opportunity to add thousands to their annual income.",
+    "description3": "List your first car now to get started, then build your business plan and scale how you want!"
   }
 }
