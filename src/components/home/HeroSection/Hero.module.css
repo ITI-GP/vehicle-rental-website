@@ -1,23 +1,23 @@
 .heroWrapper {
   /* background-color: #f7f7f7; */
   /* padding: 5rem 2rem; */
- 
+
   padding-bottom: 3.5rem;
   position: relative;
   overflow: hidden;
   border-radius: 5px;
+  margin-top: 3rem;
 }
 
 .heroContainer {
   height: 60vh;
-  margin: 0 20px;
+  margin: 20px 20px;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
   flex-wrap: wrap;
   position: relative;
   z-index: 2;
-
 }
 
 .heroContent {
@@ -28,49 +28,73 @@
 
 .heroTitle,
 .heroDescription {
-  font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
-  font-weight: 800;
+  font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
   color: #333;
 }
 
-.heroTitle {
+/* .heroTitle {
   font-size: 2.5rem;
   margin-bottom: 1.2rem;
   line-height: 1.2;
+} */
+.heroTitle {
+  font-family: "Segoe UI", "Roboto", "Arial", sans-serif;
+  font-weight: 800;
+  color: #333;
+  /* Responsive font-size: min 1.8rem, preferred 5vw, max 3.5rem */
+  font-size: clamp(1.2rem, 5vw, 3rem);
+  margin-bottom: 1.2rem;
+  line-height: 1.2;
+  text-align: left;
 }
 
 .heroDescription {
-  font-size: 1.2rem;
+  font-size: clamp(1rem, 2.5vw, 1.3rem); /* responsive font size */
   color: #818181;
   margin-bottom: 2.2rem;
   max-width: 520px;
+  line-height: 1.6;
+  text-align: left;
+  font-weight: bold;
 }
 
 .heroButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Responsive button */
 .heroBtn {
-  font-size: 1.08rem;
+  font-size: clamp(
+    0.9rem,
+    2.5vw,
+    1.2rem
+  ); /* Min 0.9rem, prefer 2.5vw, max 1.2rem */
   font-weight: 700;
   border: none;
   border-radius: 14px;
-  background: linear-gradient(to right, var(--color-primary), var(--color-primary));
+  background: linear-gradient(
+    to right,
+    var(--color-primary),
+    var(--color-primary)
+  );
   color: #fff;
-  padding: 1rem 2.5rem;
+  padding: clamp(0.8rem, 2vw, 1.2rem) clamp(1.5rem, 5vw, 3rem); /* Responsive padding */
   animation: jump 2.5s infinite ease-in-out;
   transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
-  box-shadow: 0 8px 32px rgba(185, 0, 0, 0.18), 0 2px 8px rgba(0,0,0,0.10);
+  box-shadow: 0 8px 32px rgba(185, 0, 0, 0.18), 0 2px 8px rgba(0, 0, 0, 0.1);
   cursor: pointer;
   letter-spacing: 1.1px;
   outline: none;
   position: relative;
   overflow: hidden;
 }
-}
+
 .heroBtn:hover {
   background: transparent;
   color: #333;
 }
-
-
 
 /* Image & background bubble */
 .heroImageWrapper {
@@ -94,7 +118,6 @@
   border-radius: 50px 40px 40px 100px;
   z-index: 0;
 }
- 
 
 .heroImage {
   width: 150%;
@@ -102,12 +125,13 @@
   height: auto;
   z-index: 2;
   margin-right: 10px;
-    margin-top: 7%;
+  margin-top: 7%;
 }
 
 /* Button animation */
 @keyframes jump {
-  0%, 100% {
+  0%,
+  100% {
     transform: translateY(0);
   }
   40% {
