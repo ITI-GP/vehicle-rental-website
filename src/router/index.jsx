@@ -10,6 +10,8 @@ import Details from "../components/details/details";
 import ContactUs from './../components/ContactUs/ContactUs';
 import AboutUs from './../components/AboutUs/AboutUs';
 import Vehicles from './../components/Vehicles/Vehicles';
+import Login from './../Auth/Login/Login'
+import Register from './../Auth/Register/Register'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -20,6 +22,8 @@ const router = createBrowserRouter(
       <Route path="contactus" element={<ContactUs/>}/>
       <Route path="aboutus" element={<AboutUs/>}/>
       <Route path="vehicles" element={<Vehicles/>}/>
+      <Route path="login" element={<Login/>}/>
+      <Route path="register" element={<Register/>}/>
       
 
     </Route>
