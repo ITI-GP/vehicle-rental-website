@@ -2,7 +2,7 @@
   "aboutus": {
     "header": "About Us",
     "description": "We are committed to providing the best vehicle rental experience.",
-      
+
     "leftTitle": "Where every drive feels extraordinary",
     "middle1Title": "Variety Brands",
     "middle1Desc": "Platea non auctor fermentum sollicitudin. Eget adipiscing augue sit quam natoque ornare cursus viverra odio.",
@@ -22,34 +22,33 @@
   "memories": {
     "header": "Unlock unforgettable memories on the road",
     "description": "Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor tristique et gravida. Quis nunc interdum gravida ullamcorper",
-    "icon1":"Velit semper morbi. Purus non eu cursus porttitor tristique et gravida",
-    "icon2":"Purus non eu cursus porttitor tristique et gravida. Quis nunc interdum ",
-    "icon3":"Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor ",
-    "icon4":"Quis nunc interdum gravida ullamcorper"
+    "icon1": "Velit semper morbi. Purus non eu cursus porttitor tristique et gravida",
+    "icon2": "Purus non eu cursus porttitor tristique et gravida. Quis nunc interdum ",
+    "icon3": "Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor ",
+    "icon4": "Quis nunc interdum gravida ullamcorper"
   },
   "reviewForm": {
-  "header": "Reviews from our customers",
-  "addReviewButton": "Add Review",
-  "addNewReview": "Add New Review",
-  "name": "Name",
-  "namePlaceholder": "Enter your name",
-  "company": "Company",
-  "companyPlaceholder": "Enter your company",
-  "staticcompany1": "Kuphal LLC",
-  "staticcompany2": "Smith and Sons",
-  "staticcompany3": "Johnson Enterprises",
-  "review": "Review",
-  "reviewPlaceholder": "Write your review here...",
-  "image": "Image",
-  "submitButton": "Submit",
-  "closeButton": "Close",
-  "fillAllFields": "Please fill all fields and select an image.",
-  "deleteButton": "Delete review",
-  "staticReview1": "I had the best experience using this vehicle rental website! The site is incredibly user-friendly, and finding a rental car that suited my needs was a breeze. The booking process was seamless, and the prices were very competitive compared to other rental services.",
+    "header": "Reviews from our customers",
+    "addReviewButton": "Add Review",
+    "addNewReview": "Add New Review",
+    "name": "Name",
+    "namePlaceholder": "Enter your name",
+    "company": "Company",
+    "companyPlaceholder": "Enter your company",
+    "staticcompany1": "Kuphal LLC",
+    "staticcompany2": "Smith and Sons",
+    "staticcompany3": "Johnson Enterprises",
+    "review": "Review",
+    "reviewPlaceholder": "Write your review here...",
+    "image": "Image",
+    "submitButton": "Submit",
+    "closeButton": "Close",
+    "fillAllFields": "Please fill all fields and select an image.",
+    "deleteButton": "Delete review",
+    "staticReview1": "I had the best experience using this vehicle rental website! The site is incredibly user-friendly, and finding a rental car that suited my needs was a breeze. The booking process was seamless, and the prices were very competitive compared to other rental services.",
     "staticReview2": "What impressed me most was the wide range of vehicles available. Whether you need a compact car for city driving or a spacious SUV for a road trip, they have it all! The detailed descriptions and photos of each vehicle helped me make an informed choice.",
     "staticReview3": "Customer service was top-notch as well. I had a small issue with my initial booking, but the team was quick to respond and resolve the problem. They even offered an upgrade at no extra charge!"
-  
- },
+  },
 
   "header": {
     "home": "Home",
@@ -147,16 +146,16 @@
     "scooters": "Scooters"
   },
   "contact": {
-  "title": "Contact Us",
-  "bookYourCar": "Book your car",
-  "openingHours": "Opening hours",
-  "hoursText": "Sun-Mon: 10am - 10pm",
-  "blogTitle": "Latest blog posts & news",
-  "blog1": "How to choose the right car",
-  "blog2": "Which plan is right for me?",
-  "blog3": "Enjoy Speed, Choice & Total Control",
-  "newsDate": "News / 12 April 2025"
-},
+    "title": "Contact Us",
+    "bookYourCar": "Book your car",
+    "openingHours": "Opening hours",
+    "hoursText": "Sun-Mon: 10am - 10pm",
+    "blogTitle": "Latest blog posts & news",
+    "blog1": "How to choose the right car",
+    "blog2": "Which plan is right for me?",
+    "blog3": "Enjoy Speed, Choice & Total Control",
+    "newsDate": "News / 12 April 2025"
+  },
 
   "vehicles": {
     "perDay": "per day",
@@ -165,14 +164,14 @@
     "airCondition": "A/C",
     "noAirCondition": "No A/C",
     "rentNow": "Rent Now",
-      "fuelTypes": {
-    "80": "80",
-    "92": "92",
-    "95": "95",
-    "diesel": "Diesel",
-    "electric": "Electric"
-  },
-   "types": {
+    "fuelTypes": {
+      "80": "80",
+      "92": "92",
+      "95": "95",
+      "diesel": "Diesel",
+      "electric": "Electric"
+    },
+    "types": {
       "Sedan": "Sedan",
       "SUV": "SUV",
       "Motorbike": "Motorbike"
@@ -181,10 +180,8 @@
       "Car": "Car",
       "Motorcycle": "Motorcycle"
     }
+  },
 
-}
-
-,
   "aboutUs": {
     "title": "About Us"
   },
@@ -206,5 +203,8 @@
     "a4": "Most rental companies prohibit towing with rental vehicles.",
     "q5": "Does Car Rental offer coverage products for purchase with my rental?",
     "a5": "Yes, we offer multiple coverage plans to choose from at checkout."
+  },
+  "rent_your_vehicle": {
+    "title": "Rent Out Your Vehicle"
   }
 }
