@@ -123,7 +123,9 @@ export default function Header() {
                 <span>{t("header.signin")}</span>
               </Link>
 
-              <Link to="/login" className="text-gray-700 hover:text-black">
+              <Link 
+               
+               className="text-gray-700 hover:text-black">
                 <i className="fa-solid fa-right-from-bracket" />
               </Link>
 
