@@ -44,6 +44,11 @@ export default function Header() {
                 {t("header.vehicles")}
               </NavLink>
             </li>
+            <li>
+              <NavLink to="/RentYourVehicle" className="font-medium">
+                {t("header.rent_vehicle")}
+              </NavLink>
+            </li>
             {/* <li><NavLink to="/details" className="font-medium">{t("header.details")}</NavLink></li> */}
             <li>
               <NavLink to="/contactus" className="font-medium">
@@ -88,6 +93,11 @@ export default function Header() {
               <li>
                 <NavLink to="/vehicles" onClick={() => setMenuOpen(false)}>
                   {t("header.vehicles")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/RentYourVehicle" onClick={() => setMenuOpen(false)}>
+                  {t("header.rent_vehicle")}
                 </NavLink>
               </li>
               {/* <li><NavLink to="/details" onClick={() => setMenuOpen(false)}>{t("header.details")}</NavLink></li> */}
