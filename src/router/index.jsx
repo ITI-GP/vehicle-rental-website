@@ -19,7 +19,11 @@ import Vehicles from "./../components/Vehicles/Vehicles";
 import Login from "./../Auth/Login/Login";
 import Register from "./../Auth/Register/Register";
 import ProtectUser from "../Protector/ProtectUser";
+<<<<<<< HEAD
 import Profile from "../pages/Profile/Profile"
+=======
+import Dashboard from "../pages/Dashboard/Dashboard";
+>>>>>>> Task1aya
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -32,7 +36,11 @@ const router = createBrowserRouter(
       <Route path="vehicles" element={<Vehicles />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
+<<<<<<< HEAD
        <Route path="profile" element={<Profile/>} />
+=======
+      <Route path="dashboard" element={<Dashboard />} />
+>>>>>>> Task1aya
 
       {/* protected routes */}
 
