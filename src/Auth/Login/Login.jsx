@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import car from "./../../assets/login.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
@@ -15,12 +17,12 @@ export default function LoginPage() {
     e.preventDefault();
 
     if (!email || !email.includes("@")) {
-      toast.error("Please enter a valid email.");
+      toast.error(t("login.invalidEmail", "Please enter a valid email."));
       return;
     }
 
     if (!password || password.length < 6) {
-      toast.error("Password must be at least 6 characters.");
+      toast.error(t("login.invalidPassword", "Password must be at least 6 characters."));
       return;
     }
 
@@ -32,7 +34,7 @@ export default function LoginPage() {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success("Login successful!");
+      toast.success(t("login.success", "Login successful!"));
       setShowModal(false);
 
       // ✅ Get user data including role
@@ -63,7 +65,7 @@ export default function LoginPage() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ zIndex: 9999 }}
+        style={{ zIndex: 9999}}
       />
 
       <div className="relative w-full">
@@ -71,7 +73,7 @@ export default function LoginPage() {
         <div className="flex justify-center items-center ">
           <img
             src={car}
-            alt="Login Background"
+            alt={t("login.imageAlt", "Login Background")}
             className="z-0"
             style={{ maxWidth: "100%", height: "auto" }}
           />
@@ -83,7 +85,7 @@ export default function LoginPage() {
             onClick={() => setShowModal(true)}
             className="bg-red-500 text-white px-6 py-3 font-semibold text-lg rounded-full shadow-lg hover:scale-105 hover:bg-red-600 transition duration-300 animate-bounce"
           >
-            Login Now
+            {t("login.loginNow", "Login Now")}
           </button>
         </div>
 
@@ -95,22 +97,21 @@ export default function LoginPage() {
               <button
                 onClick={() => setShowModal(false)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold transition"
-                aria-label="Close Modal"
+                aria-label={t("login.closeModal", "Close Modal")}
               >
                 &times;
               </button>
 
               {/* Heading */}
               <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
-                Welcome Back
+                {t("login.welcomeBack", "Welcome Back")}
               </h2>
 
-              {/* Login Form */}
               {/* Login Form */}
               <form onSubmit={handleLogin} className="space-y-5">
                 <input
                   type="email"
-                  placeholder="Email"
+                  placeholder={t("login.emailPlaceholder", "Email")}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -118,7 +119,7 @@ export default function LoginPage() {
                 />
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder={t("login.passwordPlaceholder", "Password")}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -128,21 +129,21 @@ export default function LoginPage() {
                   type="submit"
                   className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition"
                 >
-                  Login
+                  {t("login.loginButton", "Login")}
                 </button>
               </form>
 
               {/* ✅ Register link */}
               <p className="text-center mt-4 text-sm text-gray-600">
-                Don’t have an account?{" "}
+                {t("login.noAccount", "Don’t have an account?")}{" "}
                 <span
                   onClick={() => {
                     setShowModal(false);
-                    navigate("/register"); // 👈 make sure your route is set correctly
+                    navigate("/register");
                   }}
                   className="text-red-500 hover:underline cursor-pointer font-medium"
                 >
-                  Register here
+                  {t("login.registerHere", "Register here")}
                 </span>
               </p>
             </div>

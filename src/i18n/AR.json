@@ -173,6 +173,34 @@
   "aboutUs": {
     "title": "من نحن"
   },
+  
+  "register": {
+    "title": "إنشاء حساب",
+    "fullName": "الاسم الكامل",
+    "phone": "رقم الهاتف",
+    "email": "البريد الإلكتروني",
+    "address": "العنوان",
+    "dob": "تاريخ الميلاد",
+    "gender": "الجنس",
+    "male": "ذكر",
+    "female": "أنثى",
+    "password": "كلمة المرور",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "selectRole": "اختر الدور",
+    "admin": "مشرف",
+    "customer": "عميل",
+    "user": "مستخدم",
+    "registerBtn": "تسجيل",
+    "avatarUploadFail": "فشل تحميل الصورة الرمزية",
+    "profileUpdateFail": "فشل تحديث الملف الشخصي",
+    "registrationSuccess": "تحقق من بريدك لتأكيد التسجيل.",
+    "allFieldsRequired": "يرجى ملء جميع الحقول.",
+    "invalidEmail": "صيغة البريد الإلكتروني غير صحيحة.",
+    "invalidPhone": "رقم الهاتف يجب أن يحتوي على 10 أرقام على الأقل.",
+    "passwordsNotMatch": "كلمتا المرور غير متطابقتين.",
+    "weakPassword": "كلمة المرور ضعيفة."
+  },
+
   "aboutHero": {
     "title": "هل تبحث عن سيارة؟",
     "phone": "+٥٣٧ ٥٤٧-٦٤٠١",
@@ -446,5 +474,19 @@
     "insuranceCertificate": "شهادة التأمين",
     "companyLogo": "شعار الشركة"
     
+  },
+  "login": {
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صحيح.",
+    "invalidPassword": "يجب أن تكون كلمة المرور 6 أحرف على الأقل.",
+    "success": "تم تسجيل الدخول بنجاح!",
+    "imageAlt": "خلفية تسجيل الدخول",
+    "loginNow": "تسجيل الدخول الآن",
+    "closeModal": "إغلاق النافذة",
+    "welcomeBack": "مرحبًا بعودتك",
+    "emailPlaceholder": "البريد الإلكتروني",
+    "passwordPlaceholder": "كلمة المرور",
+    "loginButton": "تسجيل الدخول",
+    "noAccount": "ليس لديك حساب؟",
+    "registerHere": "سجل هنا"
   }
 }

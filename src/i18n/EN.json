@@ -300,7 +300,7 @@
     "manual": "Manual",
     "comprehensive": "Comprehensive",
     "thirdParty": "Third Party",
-    
+
     "rentingInformation": "Renting Information",
     "dailyPrice": "Daily Price",
     "dailyPricePlaceholder": "Enter daily rental price",
@@ -345,7 +345,7 @@
     "insuranceCertificate": "Insurance Certificate",
     "companyLogo": "Company Logo",
     "companyImages": "Company Gallery",
-   
+
     "companyRegistration": "Company Registration",
     "completeYourProfile": "Complete your profile to start renting vehicles",
     "completeCompanyProfile": "Complete your company profile to start offering rental services",
@@ -393,7 +393,6 @@
     "title": "Choose your account type",
     "description": "Please select the type that best describes you",
 
-   
     "image_alt": "Choose account type"
   },
   "validation": {
@@ -438,32 +437,70 @@
     "depositAmountInvalid": "Deposit amount cannot be negative",
     "cancellationPolicyRequired": "Cancellation policy is required",
     "required": "{{field}} is required",
-      "invalidEmail": "Invalid email address",
-      "invalidPhone": "Invalid phone number",
-      "invalidYear": "Invalid founding year",
-      "invalidFleetSize": "Fleet size must be a number greater than 0",
-      "atLeastOneImage": "At least one image is required"
+    "invalidEmail": "Invalid email address",
+    "invalidPhone": "Invalid phone number",
+    "invalidYear": "Invalid founding year",
+    "invalidFleetSize": "Fleet size must be a number greater than 0",
+    "atLeastOneImage": "At least one image is required"
   },
   "common": {
     "back": "Back",
     "next": "Next",
     "finish": "Finish"
   },
+  "register": {
+    "title": "Create an Account",
+    "fullName": "Full Name",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "dob": "Date of Birth",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "selectRole": "Select Role",
+    "admin": "Admin",
+    "customer": "Customer",
+    "user": "User",
+    "registerBtn": "Register",
+    "avatarUploadFail": "Avatar upload failed",
+    "profileUpdateFail": "Failed to update profile",
+    "registrationSuccess": "Check your email to confirm registration.",
+    "allFieldsRequired": "Please fill out all fields.",
+    "invalidEmail": "Invalid email format.",
+    "invalidPhone": "Phone number must contain at least 10 digits.",
+    "passwordsNotMatch": "Passwords do not match.",
+    "weakPassword": "Password is too weak."
+  },
 
-    "form": {
-      "companyName": "Company Name",
-      "commercialRegistrationNumber": "Commercial Registration Number",
-      "taxId": "Tax ID",
-      "address": "Address",
-      "managerName": "Manager Name",
-      "managerPosition": "Manager Position",
-      "managerEmail": "Manager Email",
-      "managerPhone": "Manager Phone",
-      "licenseDocument": "Business License",
-      "registrationDocument": "Commercial Registration",
-      "insuranceCertificate": "Insurance Certificate",
-      "companyLogo": "Company Logo"
-    }
+  "form": {
+    "companyName": "Company Name",
+    "commercialRegistrationNumber": "Commercial Registration Number",
+    "taxId": "Tax ID",
+    "address": "Address",
+    "managerName": "Manager Name",
+    "managerPosition": "Manager Position",
+    "managerEmail": "Manager Email",
+    "managerPhone": "Manager Phone",
+    "licenseDocument": "Business License",
+    "registrationDocument": "Commercial Registration",
+    "insuranceCertificate": "Insurance Certificate",
+    "companyLogo": "Company Logo"
+  },
+  "login": {
+    "invalidEmail": "Please enter a valid email.",
+    "invalidPassword": "Password must be at least 6 characters.",
+    "success": "Login successful!",
+    "imageAlt": "Login Background",
+    "loginNow": "Login Now",
+    "closeModal": "Close Modal",
+    "welcomeBack": "Welcome Back",
+    "emailPlaceholder": "Email",
+    "passwordPlaceholder": "Password",
+    "loginButton": "Login",
+    "noAccount": "Don’t have an account?",
+    "registerHere": "Register here"
   }
-  
-
+}
