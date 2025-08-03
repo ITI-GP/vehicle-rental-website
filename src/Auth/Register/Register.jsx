@@ -4,6 +4,8 @@ import car from "./../../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
+  const [avatarFile, setAvatarFile] = useState(null);
+
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
@@ -13,6 +15,8 @@ export default function RegisterPage() {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState("male");
   const [message, setMessage] = useState("");
+  const [role, setRole] = useState("");
+
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
@@ -41,7 +45,16 @@ export default function RegisterPage() {
   };
 
   const validateInputs = () => {
-    if (!name || !email || !phone || !password || !rePassword || !address || !dateOfBirth) {
+    if (
+      !name ||
+      !email ||
+      !phone ||
+      !password ||
+      !rePassword ||
+      !address ||
+      !dateOfBirth ||
+      !role
+    ) {
       setMessage("Please fill out all fields.");
       return false;
     }
@@ -75,26 +88,74 @@ export default function RegisterPage() {
 
     if (!validateInputs()) return;
 
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          name,
-          phone,
-          address,
-          dateOfBirth,
-          gender,
+    // 1. Sign up user first (no avatar uploaded yet)
+    const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
+      {
+        email,
+        password,
+        options: {
+          data: { role }, // Save role in metadata
         },
+      }
+    );
+
+    if (signUpError) {
+      setMessage(signUpError.message);
+      return;
+    }
+
+    const userId = signUpData?.user?.id;
+    let avatarUrl = null;
+
+    // 2. Now upload avatar if selected
+    if (avatarFile && userId) {
+      const fileExt = avatarFile.name.split(".").pop();
+      const filePath = `${userId}-${Date.now()}.${fileExt}`;
+
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(filePath, avatarFile, {
+          cacheControl: "3600",
+          upsert: false,
+        });
+
+      if (uploadError) {
+        setMessage(`Avatar upload failed: ${uploadError.message}`);
+        return;
+      }
+
+      const { data: publicUrlData, error: urlError } = supabase.storage
+        .from("avatars")
+        .getPublicUrl(filePath);
+
+      if (urlError) {
+        setMessage(`Failed to get avatar URL: ${urlError.message}`);
+        return;
+      }
+
+      avatarUrl = publicUrlData.publicUrl;
+    }
+
+    // 3. Save profile metadata (including avatar)
+    const { error: updateError } = await supabase.auth.updateUser({
+      data: {
+        name,
+        phone,
+        address,
+        dateOfBirth,
+        gender,
+        role,
+        avatar: avatarUrl,
       },
     });
 
-    if (error) {
-      setMessage(error.message);
-    } else {
-      setMessage("Check your email to confirm registration.");
-      navigate("/login");
+    if (updateError) {
+      setMessage(`Failed to update profile: ${updateError.message}`);
+      return;
     }
+
+    setMessage("Check your email to confirm registration.");
+    navigate("/login");
   };
 
   const strengthScore = getPasswordStrength(password);
@@ -141,6 +202,13 @@ export default function RegisterPage() {
 
             {/* Form */}
             <form onSubmit={handleRegister} className="space-y-3">
+              <input
+                type="file"
+                accept="image/*"
+                className="w-full p-2 border rounded-md"
+                onChange={(e) => setAvatarFile(e.target.files[0])}
+              />
+
               <input
                 type="text"
                 placeholder="Full Name"
@@ -201,7 +269,9 @@ export default function RegisterPage() {
               {/* Password Strength Bar */}
               {password && (
                 <div className="h-2 w-full bg-gray-200 rounded-md overflow-hidden">
-                  <div className={`h-full ${strengthBarColor} transition-all duration-300`} />
+                  <div
+                    className={`h-full ${strengthBarColor} transition-all duration-300`}
+                  />
                 </div>
               )}
 
@@ -213,6 +283,17 @@ export default function RegisterPage() {
                 onChange={(e) => setRePassword(e.target.value)}
                 required
               />
+              <select
+                className="w-full p-2 border rounded-md"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
+              >
+                <option value="">Select Role</option>
+                <option value="admin">Admin</option>
+                <option value="customer">Customer</option>
+                <option value="user">User</option>
+              </select>
 
               <button
                 type="submit"
@@ -222,7 +303,9 @@ export default function RegisterPage() {
               </button>
 
               {message && (
-                <p className="text-center text-sm text-red-600 mt-2">{message}</p>
+                <p className="text-center text-sm text-red-600 mt-2">
+                  {message}
+                </p>
               )}
             </form>
           </div>

@@ -23,7 +23,7 @@ export default function RentHeader() {
       <img
         src="//resources.turo.com/f/81934/1000x667/68efbdaf74/us_list-your-car.jpg/m/"
         alt={t("rent_your_vehicle.image_alt")}
-        className="my-12 w-full rounded-lg shadow-lg h-[70vh]"
+        className="my-12 rounded-lg shadow-lg h-[70vh]"
         srcSet="//resources.turo.com/f/81934/2000x1334/3f055da1df/us_list-your-car-2x.jpg/m/ 2x"
       />
 

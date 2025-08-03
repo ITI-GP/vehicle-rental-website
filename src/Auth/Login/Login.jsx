@@ -34,7 +34,19 @@ export default function LoginPage() {
     } else {
       toast.success("Login successful!");
       setShowModal(false);
-      navigate("/");
+
+      // ✅ Get user data including role
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      const role = user?.user_metadata?.role || "unknown";
+
+      // ✅ Navigate based on role
+      if (role === "admin") {
+        navigate("/dashboard");
+      } else if (role === "customer" || role === "user") {
+        navigate("/");
+      }
     }
   };
 
@@ -94,6 +106,7 @@ export default function LoginPage() {
               </h2>
 
               {/* Login Form */}
+              {/* Login Form */}
               <form onSubmit={handleLogin} className="space-y-5">
                 <input
                   type="email"
@@ -118,6 +131,20 @@ export default function LoginPage() {
                   Login
                 </button>
               </form>
+
+              {/* ✅ Register link */}
+              <p className="text-center mt-4 text-sm text-gray-600">
+                Don’t have an account?{" "}
+                <span
+                  onClick={() => {
+                    setShowModal(false);
+                    navigate("/register"); // 👈 make sure your route is set correctly
+                  }}
+                  className="text-red-500 hover:underline cursor-pointer font-medium"
+                >
+                  Register here
+                </span>
+              </p>
             </div>
           </div>
         )}
