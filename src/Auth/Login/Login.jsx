@@ -36,20 +36,12 @@ export default function LoginPage() {
     } else {
       toast.success(t("login.success", "Login successful!"));
       setShowModal(false);
-
-      // ✅ Get user data including role
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-      const role = user?.user_metadata?.role || "unknown";
-
-      // ✅ Navigate based on role
-      if (role === "admin") {
-        navigate("/dashboard");
-      } else if (role === "customer" || role === "user") {
-        navigate("/");
-      }
+      navigate("/");
     }
+
+     
+
+      
   };
 
   return (

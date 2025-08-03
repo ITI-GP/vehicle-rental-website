@@ -51,6 +51,8 @@
   },
 
   "header": {
+    "hello": "Hello, {{name}}",
+
     "home": "Home",
     "vehicles": "Vehicles",
     "rent_vehicle": "Rent Your Vehicle",
@@ -461,9 +463,7 @@
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "selectRole": "Select Role",
-    "admin": "Admin",
-    "customer": "Customer",
-    "user": "User",
+    "nationalId":"National ID/Passport",
     "registerBtn": "Register",
     "avatarUploadFail": "Avatar upload failed",
     "profileUpdateFail": "Failed to update profile",

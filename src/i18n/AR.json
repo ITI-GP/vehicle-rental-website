@@ -50,6 +50,7 @@
   },
 
   "header": {
+    "hello": "مرحبًا، {{name}}",
     "home": "الرئيسية",
     "vehicles": "المركبات",
     "rent_vehicle": "أجر مركبتك",
@@ -186,10 +187,7 @@
     "female": "أنثى",
     "password": "كلمة المرور",
     "confirmPassword": "تأكيد كلمة المرور",
-    "selectRole": "اختر الدور",
-    "admin": "مشرف",
-    "customer": "عميل",
-    "user": "مستخدم",
+    "nationalId":"رقم الهوية / جواز السفر",
     "registerBtn": "تسجيل",
     "avatarUploadFail": "فشل تحميل الصورة الرمزية",
     "profileUpdateFail": "فشل تحديث الملف الشخصي",

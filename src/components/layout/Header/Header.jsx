@@ -71,7 +71,7 @@ export default function Header() {
                   className="w-8 h-8 rounded-full object-cover"
                 />
                 <span className="font-medium">
-                  Hello, {user.user_metadata?.name || "User"}
+                  {t("header.hello", { name: user.user_metadata?.name || "User" })}
                 </span>
                 <button onClick={handleSignOut} title="Sign Out">
                   <i className="fa-solid fa-right-from-bracket text-gray-700 hover:text-black" />

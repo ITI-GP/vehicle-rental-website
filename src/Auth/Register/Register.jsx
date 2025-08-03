@@ -1,325 +1,4 @@
-// import { useState } from "react";
-// import { supabase } from "./../../Lib/supabaseClient";
-// import car from "./../../assets/login.jpg";
-// import { useNavigate } from "react-router-dom";
-// import { ToastContainer, toast } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import { useTranslation } from "react-i18next";
 
-// export default function RegisterPage() {
-//   const { t } = useTranslation();
-//   const [avatarFile, setAvatarFile] = useState(null);
-
-//   const [name, setName] = useState("");
-//   const [phone, setPhone] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [password, setPassword] = useState("");
-//   const [rePassword, setRePassword] = useState("");
-//   const [address, setAddress] = useState("");
-//   const [dateOfBirth, setDateOfBirth] = useState("");
-//   const [gender, setGender] = useState("male");
-//   const [message, setMessage] = useState("");
-//   const [role, setRole] = useState("");
-
-//   const [showModal, setShowModal] = useState(false);
-//   const navigate = useNavigate();
-
-//   const getPasswordStrength = (pass) => {
-//     let score = 0;
-//     if (pass.length >= 6) score++;
-//     if (/[A-Z]/.test(pass)) score++;
-//     if (/[0-9]/.test(pass)) score++;
-//     if (/[^A-Za-z0-9]/.test(pass)) score++;
-//     return score;
-//   };
-
-//   const getStrengthColor = (score) => {
-//     switch (score) {
-//       case 1:
-//         return "bg-red-500 w-1/4";
-//       case 2:
-//         return "bg-yellow-400 w-1/2";
-//       case 3:
-//         return "bg-blue-500 w-3/4";
-//       case 4:
-//         return "bg-green-500 w-full";
-//       default:
-//         return "bg-gray-300 w-0";
-//     }
-//   };
-
-//   const validateInputs = () => {
-//     if (
-//       !name ||
-//       !email ||
-//       !phone ||
-//       !password ||
-//       !rePassword ||
-//       !address ||
-//       !dateOfBirth ||
-//       !role
-//     ) {
-//       setMessage(t("register.fillAllFields", "Please fill all fields."));
-//       return false;
-//     }
-
-//     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-//     if (!emailRegex.test(email)) {
-//       setMessage(t("register.invalidEmail", "Please enter a valid email."));
-//       return false;
-//     }
-
-//     if (!/^\d{10,}$/.test(phone)) {
-//       setMessage(t("register.invalidPhone", "Please enter a valid phone number."));
-//       return false;
-//     }
-
-//     if (password !== rePassword) {
-//       setMessage(t("register.passwordMismatch", "Passwords do not match."));
-//       return false;
-//     }
-
-//     if (getPasswordStrength(password) < 2) {
-//       setMessage(t("register.weakPassword", "Password is too weak."));
-//       return false;
-//     }
-
-//     return true;
-//   };
-
-//   const handleRegister = async (e) => {
-//     e.preventDefault();
-
-//     if (!validateInputs()) return;
-
-//     // 1. Sign up user first (no avatar uploaded yet)
-//     const { data: signUpData, error: signUpError } = await supabase.auth.signUp(
-//       {
-//         email,
-//         password,
-//         options: {
-//           data: { role }, // Save role in metadata
-//         },
-//       }
-//     );
-
-//     if (error) {
-//       toast.error(error.message);
-//       // setMessage(`${t("register.error")}: ${error.message}`);
-//       return;
-//     }
-
-
-//     const userId = signUpData?.user?.id;
-//     let avatarUrl = null;
-
-//     // 2. Now upload avatar if selected
-//     if (avatarFile && userId) {
-//       const fileExt = avatarFile.name.split(".").pop();
-//       const filePath = `${userId}-${Date.now()}.${fileExt}`;
-
-//       const { data: uploadData, error: uploadError } = await supabase.storage
-//         .from("avatars")
-//         .upload(filePath, avatarFile, {
-//           cacheControl: "3600",
-//           upsert: false,
-//         });
-
-//       if (uploadError) {
-//         setMessage(`Avatar upload failed: ${uploadError.message}`);
-//         return;
-//       }
-
-//       const { data: publicUrlData, error: urlError } = supabase.storage
-//         .from("avatars")
-//         .getPublicUrl(filePath);
-
-//       if (urlError) {
-//         setMessage(`Failed to get avatar URL: ${urlError.message}`);
-//         return;
-//       }
-
-//       avatarUrl = publicUrlData.publicUrl;
-//     }
-
-//     // 3. Save profile metadata (including avatar)
-//     const { error: updateError } = await supabase.auth.updateUser({
-//       data: {
-//         name,
-//         phone,
-//         address,
-//         dateOfBirth,
-//         gender,
-//         role,
-//         avatar: avatarUrl,
-//       },
-//     });
-
-//     if (updateError) {
-//       setMessage(`Failed to update profile: ${updateError.message}`);
-//       return;
-//     }
-
-//     setMessage("Check your email to confirm registration.");
-//     navigate("/login");
-//   };
-
-//   const strengthScore = getPasswordStrength(password);
-//   const strengthBarColor = getStrengthColor(strengthScore);
-
-//   return (
-//     <div className="relative w-full overflow-hidden">
-//       {/* Background Image */}
-//       <div className="flex justify-center items-center">
-//         <img
-//           src={car}
-//           alt="Login Background"
-//           className="z-0"
-//           style={{ maxWidth: "100%", height: "auto" }}
-//         />
-//       </div>
-
-//       {/* Register Button */}
-//       <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 z-20">
-//         <button
-//           onClick={() => setShowModal(true)}
-//           className="bg-red-500 text-white px-6 py-3 font-semibold text-lg rounded-full shadow-lg hover:scale-105 hover:bg-red-600 transition duration-300 animate-bounce"
-//         >
-//           Register Now
-//         </button>
-//       </div>
-
-//       {/* Modal */}
-//       {showModal && (
-//         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm px-2">
-//           <div className="relative bg-white w-full max-w-md p-5 rounded-xl shadow-2xl max-h-[90vh] overflow-y-auto animate-fadeInUp">
-//             {/* Close Button */}
-//             <button
-//               onClick={() => setShowModal(false)}
-//               className="absolute top-3 right-4 text-gray-400 hover:text-red-500 text-xl font-bold"
-//               aria-label="Close Modal"
-//             >
-//               &times;
-//             </button>
-
-//             <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-//               Create an Account
-//             </h2>
-
-//             {/* Form */}
-//             <form onSubmit={handleRegister} className="space-y-3">
-//               <input
-//                 type="file"
-//                 accept="image/*"
-//                 className="w-full p-2 border rounded-md"
-//                 onChange={(e) => setAvatarFile(e.target.files[0])}
-//               />
-
-//               <input
-//                 type="text"
-//                 placeholder="Full Name"
-//                 className="w-full p-2 border rounded-md"
-//                 value={name}
-//                 onChange={(e) => setName(e.target.value)}
-//                 required
-//               />
-//               <input
-//                 type="tel"
-//                 placeholder="Phone"
-//                 className="w-full p-2 border rounded-md"
-//                 value={phone}
-//                 onChange={(e) => setPhone(e.target.value)}
-//                 required
-//               />
-//               <input
-//                 type="email"
-//                 placeholder="Email"
-//                 className="w-full p-2 border rounded-md"
-//                 value={email}
-//                 onChange={(e) => setEmail(e.target.value)}
-//                 required
-//               />
-//               <input
-//                 type="text"
-//                 placeholder="Address"
-//                 className="w-full p-2 border rounded-md"
-//                 value={address}
-//                 onChange={(e) => setAddress(e.target.value)}
-//                 required
-//               />
-//               <input
-//                 type="date"
-//                 className="w-full p-2 border rounded-md"
-//                 value={dateOfBirth}
-//                 onChange={(e) => setDateOfBirth(e.target.value)}
-//                 required
-//               />
-//               <select
-//                 className="w-full p-2 border rounded-md"
-//                 value={gender}
-//                 onChange={(e) => setGender(e.target.value)}
-//               >
-//                 <option value="male">Male</option>
-//                 <option value="female">Female</option>
-//               </select>
-
-//               {/* Password */}
-//               <input
-//                 type="password"
-//                 placeholder="Password"
-//                 className="w-full p-2 border rounded-md"
-//                 value={password}
-//                 onChange={(e) => setPassword(e.target.value)}
-//                 required
-//               />
-//               {/* Password Strength Bar */}
-//               {password && (
-//                 <div className="h-2 w-full bg-gray-200 rounded-md overflow-hidden">
-//                   <div
-//                     className={`h-full ${strengthBarColor} transition-all duration-300`}
-//                   />
-//                 </div>
-//               )}
-
-//               <input
-//                 type="password"
-//                 placeholder="Confirm Password"
-//                 className="w-full p-2 border rounded-md"
-//                 value={rePassword}
-//                 onChange={(e) => setRePassword(e.target.value)}
-//                 required
-//               />
-//               <select
-//                 className="w-full p-2 border rounded-md"
-//                 value={role}
-//                 onChange={(e) => setRole(e.target.value)}
-//                 required
-//               >
-//                 <option value="">Select Role</option>
-//                 <option value="admin">Admin</option>
-//                 <option value="customer">Customer</option>
-//                 <option value="user">User</option>
-//               </select>
-
-//               <button
-//                 type="submit"
-//                 className="w-full bg-red-500 text-white py-2 rounded-md font-semibold hover:bg-red-600 transition"
-//               >
-//                 Register
-//               </button>
-
-//               {message && (
-//                 <p className="text-center text-sm text-red-600 mt-2">
-//                   {message}
-//                 </p>
-//               )}
-//             </form>
-//           </div>
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
 import { useState } from "react";
 import { supabase } from "./../../Lib/supabaseClient";
 import car from "./../../assets/login.jpg";
@@ -341,7 +20,7 @@ export default function RegisterPage() {
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState("male");
   const [message, setMessage] = useState("");
-  const [role, setRole] = useState("");
+  const [nationalId, setNationalId] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -373,7 +52,7 @@ export default function RegisterPage() {
   const validateInputs = () => {
     if (
       !name || !email || !phone || !password || !rePassword ||
-      !address || !dateOfBirth || !role
+      !address || !dateOfBirth || !nationalId
     ) {
       setMessage(t("register.fillAllFields"));
       return false;
@@ -399,6 +78,14 @@ export default function RegisterPage() {
       setMessage(t("register.weakPassword"));
       return false;
     }
+    if (!avatarFile) {
+      setMessage(t("register.avatarRequired"));
+      return false;
+    }
+    if(!nationalId){
+      setMessage(t("register.nationalIdRequired"));
+      return false;
+    }
 
     return true;
   };
@@ -410,7 +97,7 @@ export default function RegisterPage() {
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      options: { data: { role } },
+      nationalId
     });
 
     if (signUpError) {
@@ -453,7 +140,7 @@ export default function RegisterPage() {
         address,
         dateOfBirth,
         gender,
-        role,
+        nationalId,
         avatar: avatarUrl,
       },
     });
@@ -542,13 +229,8 @@ export default function RegisterPage() {
               <input type="password" placeholder={t("register.confirmPassword")} className="w-full p-2 border rounded-md"
                 value={rePassword} onChange={(e) => setRePassword(e.target.value)} required />
 
-              <select className="w-full p-2 border rounded-md"
-                value={role} onChange={(e) => setRole(e.target.value)} required>
-                <option value="">{t("register.selectRole")}</option>
-                <option value="admin">{t("register.admin")}</option>
-                <option value="customer">{t("register.customer")}</option>
-                <option value="user">{t("register.user")}</option>
-              </select>
+              <input type="tel" placeholder={t("register.nationalId")} className="w-full p-2 border rounded-md"
+                value={nationalId} onChange={(e) => setNationalId(e.target.value)} required />
 
               <button type="submit"
                 className="w-full bg-red-500 text-white py-2 rounded-md font-semibold hover:bg-red-600 transition">
