@@ -27,8 +27,8 @@ export default function HomePage() {
       <Featuers />
       <HowToUseSection />
     
-     <h2 className="text-4xl font-bold mb-5 mt-10">
- {t("home.cardshome")}
+     <h2 className="text-3xl font-bold my-12 text-center">
+      {t("home.cardshome")}
       </h2>
       {vehicles.length > 0 && (
         <VehiclesList

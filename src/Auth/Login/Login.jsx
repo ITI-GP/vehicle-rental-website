@@ -7,11 +7,12 @@ import "react-toastify/dist/ReactToastify.css";
 import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
-  const { t } = useTranslation();
+
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -38,6 +39,10 @@ export default function LoginPage() {
       setShowModal(false);
       navigate("/");
     }
+
+     
+
+      
   };
 
   return (
@@ -53,7 +58,7 @@ export default function LoginPage() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ zIndex: 9999 }}
+        style={{ zIndex: 9999}}
       />
 
       <div className="relative w-full">
@@ -61,7 +66,7 @@ export default function LoginPage() {
         <div className="flex justify-center items-center ">
           <img
             src={car}
-            alt="Login Background"
+            alt={t("login.imageAlt", "Login Background")}
             className="z-0"
             style={{ maxWidth: "100%", height: "auto" }}
           />
@@ -85,7 +90,7 @@ export default function LoginPage() {
               <button
                 onClick={() => setShowModal(false)}
                 className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold transition"
-                aria-label="Close Modal"
+                aria-label={t("login.closeModal", "Close Modal")}
               >
                 &times;
               </button>
