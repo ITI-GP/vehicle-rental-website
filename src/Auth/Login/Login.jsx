@@ -4,23 +4,25 @@ import { useNavigate } from "react-router-dom";
 import car from "./../../assets/login.jpg";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useTranslation } from "react-i18next";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !email.includes("@")) {
-      toast.error("Please enter a valid email.");
+      toast.error(t("auth.errors.invalidEmail"));
       return;
     }
 
     if (!password || password.length < 6) {
-      toast.error("Password must be at least 6 characters.");
+      toast.error(t("auth.errors.passwordTooShort"));
       return;
     }
 
@@ -32,7 +34,7 @@ export default function LoginPage() {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success("Login successful!");
+      toast.success(t("auth.loginSuccess"));
       setShowModal(false);
       navigate("/");
     }
@@ -71,7 +73,7 @@ export default function LoginPage() {
             onClick={() => setShowModal(true)}
             className="bg-red-500 text-white px-6 py-3 font-semibold text-lg rounded-full shadow-lg hover:scale-105 hover:bg-red-600 transition duration-300 animate-bounce"
           >
-            Login Now
+            {t("auth.loginNow")}
           </button>
         </div>
 
@@ -90,14 +92,14 @@ export default function LoginPage() {
 
               {/* Heading */}
               <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
-                Welcome Back
+                {t("auth.welcomeBack")}
               </h2>
 
               {/* Login Form */}
               <form onSubmit={handleLogin} className="space-y-5">
                 <input
                   type="email"
-                  placeholder="Email"
+                  placeholder={t("auth.email")}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -105,7 +107,7 @@ export default function LoginPage() {
                 />
                 <input
                   type="password"
-                  placeholder="Password"
+                  placeholder={t("auth.password")}
                   className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -115,9 +117,25 @@ export default function LoginPage() {
                   type="submit"
                   className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition"
                 >
-                  Login
+                  {t("auth.login")}
                 </button>
               </form>
+
+              {/* Sign up link */}
+              <div className="text-center mt-4">
+                <p className="text-gray-600 text-sm">
+                  {t("auth.noAccount")}{" "}
+                  <button
+                    onClick={() => {
+                      setShowModal(false);
+                      navigate("/register");
+                    }}
+                    className="text-red-500 hover:text-red-600 font-medium underline transition"
+                  >
+                    {t("auth.signUpHere")}
+                  </button>
+                </p>
+              </div>
             </div>
           </div>
         )}

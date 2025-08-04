@@ -2,6 +2,7 @@ import { useState } from "react";
 import { supabase } from "./../../Lib/supabaseClient";
 import car from "./../../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -15,6 +16,7 @@ export default function RegisterPage() {
   const [message, setMessage] = useState("");
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const getPasswordStrength = (pass) => {
     let score = 0;
@@ -42,28 +44,28 @@ export default function RegisterPage() {
 
   const validateInputs = () => {
     if (!name || !email || !phone || !password || !rePassword || !address || !dateOfBirth) {
-      setMessage("Please fill out all fields.");
+      setMessage(t("auth.errors.fillAllFields"));
       return false;
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      setMessage("Invalid email format.");
+      setMessage(t("auth.errors.invalidEmailFormat"));
       return false;
     }
 
     if (!/^\d{10,}$/.test(phone)) {
-      setMessage("Phone number must contain at least 10 digits.");
+      setMessage(t("auth.errors.phoneNumberTooShort"));
       return false;
     }
 
     if (password !== rePassword) {
-      setMessage("Passwords do not match.");
+      setMessage(t("auth.errors.passwordsDoNotMatch"));
       return false;
     }
 
     if (getPasswordStrength(password) < 2) {
-      setMessage("Password is too weak.");
+      setMessage(t("auth.errors.passwordTooWeak"));
       return false;
     }
 
@@ -92,7 +94,7 @@ export default function RegisterPage() {
     if (error) {
       setMessage(error.message);
     } else {
-      setMessage("Check your email to confirm registration.");
+      setMessage(t("auth.checkEmailConfirmation"));
       navigate("/login");
     }
   };
@@ -118,7 +120,7 @@ export default function RegisterPage() {
           onClick={() => setShowModal(true)}
           className="bg-red-500 text-white px-6 py-3 font-semibold text-lg rounded-full shadow-lg hover:scale-105 hover:bg-red-600 transition duration-300 animate-bounce"
         >
-          Register Now
+          {t("auth.registerNow")}
         </button>
       </div>
 
@@ -136,14 +138,14 @@ export default function RegisterPage() {
             </button>
 
             <h2 className="text-3xl font-bold text-center text-gray-800 mb-6">
-              Create an Account
+              {t("auth.createAccount")}
             </h2>
 
             {/* Form */}
             <form onSubmit={handleRegister} className="space-y-3">
               <input
                 type="text"
-                placeholder="Full Name"
+                placeholder={t("auth.fullName")}
                 className="w-full p-2 border rounded-md"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
@@ -151,7 +153,7 @@ export default function RegisterPage() {
               />
               <input
                 type="tel"
-                placeholder="Phone"
+                placeholder={t("auth.phone")}
                 className="w-full p-2 border rounded-md"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
@@ -159,7 +161,7 @@ export default function RegisterPage() {
               />
               <input
                 type="email"
-                placeholder="Email"
+                placeholder={t("auth.email")}
                 className="w-full p-2 border rounded-md"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -167,7 +169,7 @@ export default function RegisterPage() {
               />
               <input
                 type="text"
-                placeholder="Address"
+                placeholder={t("auth.address")}
                 className="w-full p-2 border rounded-md"
                 value={address}
                 onChange={(e) => setAddress(e.target.value)}
@@ -185,14 +187,14 @@ export default function RegisterPage() {
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
               >
-                <option value="male">Male</option>
-                <option value="female">Female</option>
+                <option value="male">{t("auth.male")}</option>
+                <option value="female">{t("auth.female")}</option>
               </select>
 
               {/* Password */}
               <input
                 type="password"
-                placeholder="Password"
+                placeholder={t("auth.password")}
                 className="w-full p-2 border rounded-md"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -207,7 +209,7 @@ export default function RegisterPage() {
 
               <input
                 type="password"
-                placeholder="Confirm Password"
+                placeholder={t("auth.confirmPassword")}
                 className="w-full p-2 border rounded-md"
                 value={rePassword}
                 onChange={(e) => setRePassword(e.target.value)}
@@ -218,13 +220,29 @@ export default function RegisterPage() {
                 type="submit"
                 className="w-full bg-red-500 text-white py-2 rounded-md font-semibold hover:bg-red-600 transition"
               >
-                Register
+                {t("auth.register")}
               </button>
 
               {message && (
                 <p className="text-center text-sm text-red-600 mt-2">{message}</p>
               )}
             </form>
+
+            {/* Login link */}
+            <div className="text-center mt-4">
+              <p className="text-gray-600 text-sm">
+                {t("auth.alreadyHaveAccount")}{" "}
+                <button
+                  onClick={() => {
+                    setShowModal(false);
+                    navigate("/login");
+                  }}
+                  className="text-red-500 hover:text-red-600 font-medium underline transition"
+                >
+                  {t("auth.loginHere")}
+                </button>
+              </p>
+            </div>
           </div>
         </div>
       )}

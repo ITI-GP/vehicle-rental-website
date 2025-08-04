@@ -446,5 +446,56 @@
     "insuranceCertificate": "شهادة التأمين",
     "companyLogo": "شعار الشركة"
     
-  }
+  },
+  "auth": {
+  "loginNow": "تسجيل الدخول الآن",
+  "registerNow": "إنشاء حساب الآن",
+  "welcomeBack": "مرحبًا بعودتك",
+  "createAccount": "إنشاء حساب",
+  "email": "البريد الإلكتروني",
+  "password": "كلمة المرور",
+  "confirmPassword": "تأكيد كلمة المرور",
+  "fullName": "الاسم الكامل",
+  "phone": "رقم الهاتف",
+  "address": "العنوان",
+  "male": "ذكر",
+  "female": "أنثى",
+  "login": "تسجيل الدخول",
+  "register": "إنشاء حساب",
+  "noAccount": "ليس لديك حساب؟",
+  "signUpHere": "سجّل هنا",
+  "alreadyHaveAccount": "لديك حساب بالفعل؟",
+  "loginHere": "سجّل الدخول هنا",
+  "loginSuccess": "تم تسجيل الدخول بنجاح!",
+  "logoutSuccess": "تم تسجيل الخروج بنجاح!",
+  "checkEmailConfirmation": "تحقق من بريدك الإلكتروني لتأكيد التسجيل.",
+  "errors": {
+    "invalidEmail": "يرجى إدخال بريد إلكتروني صالح.",
+    "passwordTooShort": "يجب أن تتكون كلمة المرور من 6 أحرف على الأقل.",
+    "fillAllFields": "يرجى تعبئة جميع الحقول.",
+    "invalidEmailFormat": "تنسيق البريد الإلكتروني غير صالح.",
+    "phoneNumberTooShort": "يجب أن يحتوي رقم الهاتف على 10 أرقام على الأقل.",
+    "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين.",
+    "passwordTooWeak": "كلمة المرور ضعيفة جدًا."
+  },
+  "pleaseLoginToViewProfile": "يرجى تسجيل الدخول لعرض ملفك الشخصي."
+},
+"profile": {
+  "user": "المستخدم",
+  "verified": "مُتحقق منه",
+  "pending": "في الانتظار",
+  "personalInfo": "المعلومات الشخصية",
+  "accountStatus": "حالة الحساب",
+  "userId": "معرف المستخدم",
+  "accountCreated": "تاريخ إنشاء الحساب",
+  "lastSignIn": "آخر تسجيل دخول",
+  "emailVerified": "البريد الإلكتروني مُتحقق منه",
+  "phoneVerified": "رقم الهاتف مُتحقق منه",
+  "yes": "نعم",
+  "no": "لا",
+  "editProfile": "تعديل الملف الشخصي",
+  "gender": "الجنس",
+  "dateOfBirth": "تاريخ الميلاد"
+}
+
 }

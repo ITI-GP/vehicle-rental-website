@@ -463,7 +463,57 @@
       "registrationDocument": "Commercial Registration",
       "insuranceCertificate": "Insurance Certificate",
       "companyLogo": "Company Logo"
-    }
+    },
+    "auth": {
+    "loginNow": "Login Now",
+    "registerNow": "Register Now",
+    "welcomeBack": "Welcome Back",
+    "createAccount": "Create an Account",
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "fullName": "Full Name",
+    "phone": "Phone",
+    "address": "Address",
+    "male": "Male",
+    "female": "Female",
+    "login": "Login",
+    "register": "Register",
+    "noAccount": "Don't have an account?",
+    "signUpHere": "Sign up here",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginHere": "Login here",
+    "loginSuccess": "Login successful!",
+    "logoutSuccess": "Logged out successfully!",
+    "checkEmailConfirmation": "Check your email to confirm registration.",
+    "errors": {
+      "invalidEmail": "Please enter a valid email.",
+      "passwordTooShort": "Password must be at least 6 characters.",
+      "fillAllFields": "Please fill out all fields.",
+      "invalidEmailFormat": "Invalid email format.",
+      "phoneNumberTooShort": "Phone number must contain at least 10 digits.",
+      "passwordsDoNotMatch": "Passwords do not match.",
+      "passwordTooWeak": "Password is too weak."
+    },
+    "pleaseLoginToViewProfile": "Please log in to view your profile."
+  },
+  "profile": {
+    "user": "User",
+    "verified": "Verified",
+    "pending": "Pending",
+    "personalInfo": "Personal Information",
+    "accountStatus": "Account Status",
+    "userId": "User ID",
+    "accountCreated": "Account Created",
+    "lastSignIn": "Last Sign In",
+    "emailVerified": "Email Verified",
+    "phoneVerified": "Phone Verified",
+    "yes": "Yes",
+    "no": "No",
+    "editProfile": "Edit Profile",
+    "gender": "Gender",
+    "dateOfBirth": "Date of Birth"
+  }
   }
   
 
