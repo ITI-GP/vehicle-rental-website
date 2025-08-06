@@ -10,6 +10,8 @@ import Group from "./../../assets/Group.png";
 import Distance from "./../../assets/Distance.png";
 import VehiclesCard from "../VehiclesCard/VehiclesCard"; 
 import Reviews from "./Reviews/Reviews";
+import { useNavigate } from "react-router-dom";
+
 
 export default function DetailsPage() {
   const { id } = useParams();
@@ -18,8 +20,16 @@ export default function DetailsPage() {
   const [relatedVehicle, setRelatedVehicle] = useState([]);
   const [mainImage, setMainImage] = useState(null);
   const [showAllReviews, setShowAllReviews] = useState(false);
+  const navigate = useNavigate(); // Add this at the top inside the component
+
+function handleRent() {
+  navigate("/rent-form", {
+    state: { vehicle }, // Optional: pass vehicle data to the rent form
+  });
+}
 
 
+ 
   function getVehicleById(id) {
     const selected = vehicleData.find((v) => v.id === parseInt(id));
     setVehicle(selected);
@@ -129,7 +139,7 @@ export default function DetailsPage() {
                       </div>
                       
             </div>
-       
+      
 
         
       {/* part4 price and rent */}
@@ -142,7 +152,7 @@ export default function DetailsPage() {
            </div>
           
 
-          <button className="bg-primary text-white px-6 py-2 rounded hover:bg-opacity-90">
+          <button className="bg-primary text-white px-6 py-2 rounded hover:bg-opacity-90" onClick={handleRent} >
             {t("vehicles.rentNow")}
           </button>
           </div>

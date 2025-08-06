@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { supabase } from "./../../Lib/supabaseClient";
 import car from "./../../assets/login.jpg";
@@ -10,6 +9,7 @@ import { useTranslation } from "react-i18next";
 export default function RegisterPage() {
   const { t } = useTranslation();
   const [avatarFile, setAvatarFile] = useState(null);
+  const [nationalIdImage, setNationalIdImage] = useState(null);
 
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
@@ -19,8 +19,8 @@ export default function RegisterPage() {
   const [address, setAddress] = useState("");
   const [dateOfBirth, setDateOfBirth] = useState("");
   const [gender, setGender] = useState("male");
-  const [message, setMessage] = useState("");
   const [nationalId, setNationalId] = useState("");
+  const [message, setMessage] = useState("");
 
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
@@ -52,7 +52,7 @@ export default function RegisterPage() {
   const validateInputs = () => {
     if (
       !name || !email || !phone || !password || !rePassword ||
-      !address || !dateOfBirth || !nationalId
+      !address || !dateOfBirth || !nationalId || !avatarFile || !nationalIdImage
     ) {
       setMessage(t("register.fillAllFields"));
       return false;
@@ -78,12 +78,9 @@ export default function RegisterPage() {
       setMessage(t("register.weakPassword"));
       return false;
     }
-    if (!avatarFile) {
-      setMessage(t("register.avatarRequired"));
-      return false;
-    }
-    if(!nationalId){
-      setMessage(t("register.nationalIdRequired"));
+
+    if (!nationalIdImage.type.startsWith("image")) {
+      setMessage(t("register.nationalIdImageRequired"));
       return false;
     }
 
@@ -97,7 +94,6 @@ export default function RegisterPage() {
     const { data: signUpData, error: signUpError } = await supabase.auth.signUp({
       email,
       password,
-      nationalId
     });
 
     if (signUpError) {
@@ -107,32 +103,61 @@ export default function RegisterPage() {
 
     const userId = signUpData?.user?.id;
     let avatarUrl = null;
+    let nationalIdImageUrl = null;
 
+    // Upload avatar
     if (avatarFile && userId) {
-      const fileExt = avatarFile.name.split(".").pop();
-      const filePath = `${userId}-${Date.now()}.${fileExt}`;
+      const ext = avatarFile.name.split(".").pop();
+      const filePath = `${userId}-avatar.${ext}`;
 
-      const { error: uploadError } = await supabase.storage
+      const { error: avatarError } = await supabase.storage
         .from("avatars")
         .upload(filePath, avatarFile);
 
-      if (uploadError) {
-        setMessage(`${t("register.avatarFailed")}: ${uploadError.message}`);
+      if (avatarError) {
+        setMessage(`${t("register.avatarUploadFail")}: ${avatarError.message}`);
         return;
       }
 
-      const { data: publicUrlData, error: urlError } = supabase.storage
+      const { data: avatarData, error: avatarUrlError } = supabase.storage
         .from("avatars")
         .getPublicUrl(filePath);
 
-      if (urlError) {
-        setMessage(`${t("register.avatarUrlFailed")}: ${urlError.message}`);
+      if (avatarUrlError) {
+        setMessage(`${t("register.avatarUrlFail")}: ${avatarUrlError.message}`);
         return;
       }
 
-      avatarUrl = publicUrlData.publicUrl;
+      avatarUrl = avatarData.publicUrl;
     }
 
+    // Upload national ID image
+    if (nationalIdImage && userId) {
+      const ext = nationalIdImage.name.split(".").pop();
+      const filePath = `${userId}-national-id.${ext}`;
+
+      const { error: idUploadError } = await supabase.storage
+        .from("national-ids")
+        .upload(filePath, nationalIdImage);
+
+      if (idUploadError) {
+        setMessage(`${t("register.nationalIdUploadFail")}: ${idUploadError.message}`);
+        return;
+      }
+
+      const { data: idUrlData, error: idUrlError } = supabase.storage
+        .from("national-ids")
+        .getPublicUrl(filePath);
+
+      if (idUrlError) {
+        setMessage(`${t("register.nationalIdUrlFail")}: ${idUrlError.message}`);
+        return;
+      }
+
+      nationalIdImageUrl = idUrlData.publicUrl;
+    }
+
+    // Update user metadata
     const { error: updateError } = await supabase.auth.updateUser({
       data: {
         name,
@@ -142,15 +167,16 @@ export default function RegisterPage() {
         gender,
         nationalId,
         avatar: avatarUrl,
+        nationalIdImage: nationalIdImageUrl,
       },
     });
 
     if (updateError) {
-      setMessage(`${t("register.profileUpdateFailed")}: ${updateError.message}`);
+      setMessage(`${t("register.profileUpdateFail")}: ${updateError.message}`);
       return;
     }
 
-    toast.success(t("register.success"));
+    toast.success(t("register.registrationSuccess"));
     navigate("/login");
   };
 
@@ -193,44 +219,59 @@ export default function RegisterPage() {
             </h2>
 
             <form onSubmit={handleRegister} className="space-y-3">
+              {/* Avatar Upload */}
               <input type="file" accept="image/*" className="w-full p-2 border rounded-md"
                 onChange={(e) => setAvatarFile(e.target.files[0])} />
 
+              {/* Full Name */}
               <input type="text" placeholder={t("register.fullName")} className="w-full p-2 border rounded-md"
                 value={name} onChange={(e) => setName(e.target.value)} required />
 
+              {/* Phone */}
               <input type="tel" placeholder={t("register.phone")} className="w-full p-2 border rounded-md"
                 value={phone} onChange={(e) => setPhone(e.target.value)} required />
 
+              {/* Email */}
               <input type="email" placeholder={t("register.email")} className="w-full p-2 border rounded-md"
                 value={email} onChange={(e) => setEmail(e.target.value)} required />
 
+              {/* Address */}
               <input type="text" placeholder={t("register.address")} className="w-full p-2 border rounded-md"
                 value={address} onChange={(e) => setAddress(e.target.value)} required />
 
+              {/* Date of Birth */}
               <input type="date" className="w-full p-2 border rounded-md"
                 value={dateOfBirth} onChange={(e) => setDateOfBirth(e.target.value)} required />
 
+              {/* Gender */}
               <select className="w-full p-2 border rounded-md"
                 value={gender} onChange={(e) => setGender(e.target.value)}>
                 <option value="male">{t("register.male")}</option>
                 <option value="female">{t("register.female")}</option>
               </select>
 
+              {/* Password */}
               <input type="password" placeholder={t("register.password")} className="w-full p-2 border rounded-md"
                 value={password} onChange={(e) => setPassword(e.target.value)} required />
 
+              {/* Password Strength Bar */}
               {password && (
                 <div className="h-2 w-full bg-gray-200 rounded-md overflow-hidden">
                   <div className={`h-full ${strengthBarColor} transition-all duration-300`} />
                 </div>
               )}
 
+              {/* Confirm Password */}
               <input type="password" placeholder={t("register.confirmPassword")} className="w-full p-2 border rounded-md"
                 value={rePassword} onChange={(e) => setRePassword(e.target.value)} required />
 
+              {/* National ID Number */}
               <input type="tel" placeholder={t("register.nationalId")} className="w-full p-2 border rounded-md"
                 value={nationalId} onChange={(e) => setNationalId(e.target.value)} required />
+
+              {/* National ID Image Upload */}
+              <input type="file" accept="image/*" className="w-full p-2 border rounded-md"
+                onChange={(e) => setNationalIdImage(e.target.files[0])} required />
 
               <button type="submit"
                 className="w-full bg-red-500 text-white py-2 rounded-md font-semibold hover:bg-red-600 transition">
