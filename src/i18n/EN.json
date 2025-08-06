@@ -52,7 +52,7 @@
 
   "header": {
     "hello": "Hello, {{name}}",
-     "seller":"Seller",
+     "seller":"Rent",
      "buyer":"Customer",
 
     "home": "Home",
