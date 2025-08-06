@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// import MultiStepForm from "../../../components/MultiStepForm";
 import useMultiStepForm from "../../../hooks/useMultiStepForm";
 import { PersonalInfoStep, VehicleInfoStep, RentingInfoStep } from "./steps";
 import Button from "../../../components/rentYourVehicle/Button";

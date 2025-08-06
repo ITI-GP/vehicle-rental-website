@@ -4,40 +4,13 @@ import { useAuth } from "../../../contexts/AuthContext";
 import { toast } from "react-toastify";
 import TransButton from "../../TransButton";
 import CarIcon from "../../../assets/CarIcon.png";
-import { supabase } from "../../../Lib/supabaseClient";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function Header() {
   const { t } = useTranslation();
   const { user, isAuthenticated, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
- 
   const navigate = useNavigate();
-
-  useEffect(() => {
-    const getCurrentUser = async () => {
-      const { data } = await supabase.auth.getUser();
-      setUser(data?.user);
-    };
-
-    getCurrentUser();
-
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      async (event, session) => {
-        setUser(session?.user || null);
-      }
-    );
-
-    return () => {
-      listener?.subscription.unsubscribe();
-    };
-  }, []);
-
-  const handleSignOut = async () => {
-    await supabase.auth.signOut();
-    setUser(null); // Clear user immediately
-    navigate("/");
-  };
 
   const handleLogout = async () => {
     const { error } = await signOut();
@@ -45,6 +18,7 @@ export default function Header() {
       toast.error(`Logout failed: ${error}`);
     } else {
       toast.success(t("auth.logoutSuccess"));
+      navigate("/");
     }
   };
 
@@ -79,26 +53,6 @@ export default function Header() {
           </ul>
 
           <div className="flex items-center gap-4">
-            {user ? (
-              <>
-                <img
-                  src={user.user_metadata?.avatar || "https://via.placeholder.com/40"}
-                  alt="Avatar"
-                  className="w-8 h-8 rounded-full object-cover"
-                />
-                <span className="font-medium">
-                  {t("header.hello", { name: user.user_metadata?.name || "User" })}
-                </span>
-                <button onClick={handleSignOut} title="Sign Out">
-                  <i className="fa-solid fa-right-from-bracket text-gray-700 hover:text-black" />
-                </button>
-              </>
-            ) : (
-              <Link to="/login" className="flex items-center gap-1 text-gray-700 hover:text-black">
-                <i className="fa-solid fa-user" />
-                <span>{t("header.signin")}</span>
-              </Link>
-            )}
             {isAuthenticated ? (
               // Logged in user
               <>
@@ -106,11 +60,19 @@ export default function Header() {
                   to="/profile"
                   className="flex items-center gap-2 text-gray-700 hover:text-black"
                 >
-                  <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                    <span className="text-white text-sm font-semibold">
-                      {getUserDisplayName().charAt(0).toUpperCase()}
-                    </span>
-                  </div>
+                  {user?.user_metadata?.avatar ? (
+                    <img
+                      src={user.user_metadata.avatar}
+                      alt="Profile"
+                      className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                    />
+                  ) : (
+                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                      <span className="text-white text-sm font-semibold">
+                        {getUserDisplayName().charAt(0).toUpperCase()}
+                      </span>
+                    </div>
+                  )}
                   <span className="font-medium">{getUserDisplayName()}</span>
                 </Link>
                 <button
@@ -157,11 +119,19 @@ export default function Header() {
                     className="flex items-center gap-2 text-gray-700 hover:text-black"
                     onClick={() => setMenuOpen(false)}
                   >
-                    <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
-                      <span className="text-white text-sm font-semibold">
-                        {getUserDisplayName().charAt(0).toUpperCase()}
-                      </span>
-                    </div>
+                    {user?.user_metadata?.avatar ? (
+                      <img
+                        src={user.user_metadata.avatar}
+                        alt="Profile"
+                        className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                      />
+                    ) : (
+                      <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
+                        <span className="text-white text-sm font-semibold">
+                          {getUserDisplayName().charAt(0).toUpperCase()}
+                        </span>
+                      </div>
+                    )}
                     <span className="font-medium">{getUserDisplayName()}</span>
                   </Link>
                   <button
@@ -187,19 +157,7 @@ export default function Header() {
                 </Link>
               )}
 
-              {user ? (
-                <>
-                  <span>Hello, {user.user_metadata?.name}</span>
-                  <button onClick={handleSignOut} title="Sign Out">
-                    <i className="fa-solid fa-right-from-bracket" />
-                  </button>
-                </>
-              ) : (
-                <Link to="/login" className="flex items-center gap-1 text-gray-700 hover:text-black">
-                  <i className="fa-solid fa-user" />
-                  <span>{t("header.signin")}</span>
-                </Link>
-              )}
+
               <TransButton />
             </div>
           </div>

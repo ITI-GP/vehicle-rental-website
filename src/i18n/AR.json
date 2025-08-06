@@ -485,5 +485,35 @@
     "loginButton": "تسجيل الدخول",
     "noAccount": "ليس لديك حساب؟",
     "registerHere": "سجل هنا"
+  },
+  "auth": {
+    "fullName": "الاسم الكامل",
+    "email": "البريد الإلكتروني",
+    "phone": "رقم الهاتف",
+    "address": "العنوان",
+    "male": "ذكر",
+    "female": "أنثى",
+    "logout": "تسجيل الخروج",
+    "logoutSuccess": "تم تسجيل الخروج بنجاح!",
+    "pleaseLoginToViewProfile": "يرجى تسجيل الدخول لعرض الملف الشخصي"
+  },
+  "profile": {
+    "user": "المستخدم",
+    "verified": "مُتحقق",
+    "pending": "في الانتظار",
+    "personalInfo": "المعلومات الشخصية",
+    "accountStatus": "حالة الحساب",
+    "userId": "معرف المستخدم",
+    "accountCreated": "تاريخ إنشاء الحساب",
+    "lastSignIn": "آخر تسجيل دخول",
+    "emailVerified": "البريد الإلكتروني مُتحقق",
+    "phoneVerified": "رقم الهاتف مُتحقق",
+    "yes": "نعم",
+    "no": "لا",
+    "editProfile": "تعديل الملف الشخصي",
+    "gender": "الجنس",
+    "dateOfBirth": "تاريخ الميلاد",
+    "updateSuccess": "تم تحديث الملف الشخصي بنجاح!",
+    "updateError": "فشل في تحديث الملف الشخصي"
   }
 }

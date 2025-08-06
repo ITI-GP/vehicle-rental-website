@@ -31,8 +31,10 @@ const LanguageProvider = ({ children }) => {
     </LanguageContext.Provider>
   );
 };
+
 LanguageProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };
+
 export { LanguageContext, LanguageProvider };
 export default LanguageProvider;

@@ -13,17 +13,18 @@ export default function LoginPage() {
   const [showModal, setShowModal] = useState(false);
   const navigate = useNavigate();
 
-
   const handleLogin = async (e) => {
     e.preventDefault();
 
     if (!email || !email.includes("@")) {
-      toast.error(t("auth.errors.invalidEmail"));
+      toast.error(t("login.invalidEmail", "Please enter a valid email."));
       return;
     }
 
     if (!password || password.length < 6) {
-      toast.error(t("auth.errors.passwordTooShort"));
+      toast.error(
+        t("login.invalidPassword", "Password must be at least 6 characters.")
+      );
       return;
     }
 
@@ -35,14 +36,10 @@ export default function LoginPage() {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success(t("auth.loginSuccess"));
+      toast.success(t("login.success", "Login successful!"));
       setShowModal(false);
       navigate("/");
     }
-
-     
-
-      
   };
 
   return (
@@ -58,7 +55,7 @@ export default function LoginPage() {
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        style={{ zIndex: 9999}}
+        style={{ zIndex: 9999 }}
       />
 
       <div className="relative w-full">
@@ -76,9 +73,9 @@ export default function LoginPage() {
         <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 z-20">
           <button
             onClick={() => setShowModal(true)}
-            className="bg-red-500 text-white px-6 py-3 font-semibold text-lg rounded-full shadow-lg hover:scale-105 hover:bg-red-600 transition duration-300 animate-bounce"
+            className="bg-primary text-white px-6 py-3 font-semibold text-lg rounded-full shadow-lg hover:scale-105 hover:bg-primary/90 transition duration-300 animate-bounce"
           >
-            {t("auth.loginNow")}
+            {t("login.loginNow", "Login Now")}
           </button>
         </div>
 
@@ -89,7 +86,7 @@ export default function LoginPage() {
               {/* Close Button */}
               <button
                 onClick={() => setShowModal(false)}
-                className="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl font-bold transition"
+                className="absolute top-4 right-4 text-gray-400 hover:text-primary text-2xl font-bold transition"
                 aria-label={t("login.closeModal", "Close Modal")}
               >
                 &times;
@@ -97,50 +94,48 @@ export default function LoginPage() {
 
               {/* Heading */}
               <h2 className="text-3xl font-extrabold text-center text-gray-800 mb-6">
-                {t("auth.welcomeBack")}
+                {t("login.welcomeBack", "Welcome Back")}
               </h2>
 
               {/* Login Form */}
               <form onSubmit={handleLogin} className="space-y-5">
                 <input
                   type="email"
-                  placeholder={t("auth.email")}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
+                  placeholder={t("login.emailPlaceholder", "Email")}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                 />
                 <input
                   type="password"
-                  placeholder={t("auth.password")}
-                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 transition"
+                  placeholder={t("login.passwordPlaceholder", "Password")}
+                  className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                 />
                 <button
                   type="submit"
-                  className="w-full bg-red-500 text-white py-3 rounded-lg font-semibold hover:bg-red-600 transition"
+                  className="w-full bg-primary text-white py-3 rounded-lg font-semibold hover:bg-primary/90 transition"
                 >
-                  {t("auth.login")}
+                  {t("login.loginButton", "Login")}
                 </button>
               </form>
 
-              {/* Sign up link */}
-              <div className="text-center mt-4">
-                <p className="text-gray-600 text-sm">
-                  {t("auth.noAccount")}{" "}
-                  <button
-                    onClick={() => {
-                      setShowModal(false);
-                      navigate("/register");
-                    }}
-                    className="text-red-500 hover:text-red-600 font-medium underline transition"
-                  >
-                    {t("auth.signUpHere")}
-                  </button>
-                </p>
-              </div>
+              {/* ✅ Register link */}
+              <p className="text-center mt-4 text-sm text-gray-600">
+                {t("login.noAccount", "Don’t have an account?")}{" "}
+                <span
+                  onClick={() => {
+                    setShowModal(false);
+                    navigate("/register");
+                  }}
+                  className="text-primary hover:underline cursor-pointer font-medium"
+                >
+                  {t("login.registerHere", "Register here")}
+                </span>
+              </p>
             </div>
           </div>
         )}

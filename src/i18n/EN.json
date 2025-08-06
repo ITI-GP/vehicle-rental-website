@@ -502,5 +502,35 @@
     "loginButton": "Login",
     "noAccount": "Don’t have an account?",
     "registerHere": "Register here"
+  },
+  "auth": {
+    "fullName": "Full Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "male": "Male",
+    "female": "Female",
+    "logout": "Logout",
+    "logoutSuccess": "Logged out successfully!",
+    "pleaseLoginToViewProfile": "Please login to view your profile"
+  },
+  "profile": {
+    "user": "User",
+    "verified": "Verified",
+    "pending": "Pending",
+    "personalInfo": "Personal Information",
+    "accountStatus": "Account Status",
+    "userId": "User ID",
+    "accountCreated": "Account Created",
+    "lastSignIn": "Last Sign In",
+    "emailVerified": "Email Verified",
+    "phoneVerified": "Phone Verified",
+    "yes": "Yes",
+    "no": "No",
+    "editProfile": "Edit Profile",
+    "gender": "Gender",
+    "dateOfBirth": "Date of Birth",
+    "updateSuccess": "Profile updated successfully!",
+    "updateError": "Failed to update profile"
   }
 }
