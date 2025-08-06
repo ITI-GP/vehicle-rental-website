@@ -103,30 +103,41 @@
     "downloadApp": "Download App",
     "companyDescription": "Faucibus faucibus pellentesque dictum turpis. Id pellentesque turpis massa a id iaculis lorem turpis euismod. Purus at quisque integer sit..."
   },
-  "howToUse": {
-    "steps": [
-      {
-        "number": "1",
-        "title": "Erat at semper",
-        "desc": "Non amet fermentum est in enim at sit ullamcorper. Sit elementum rhoncus nullam feugiat. Risus sem fermentum."
-      },
-      {
-        "number": "2",
-        "title": "Urna nec vivamus risus duis arcu",
-        "desc": "Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor tristique et gravida. Quis nunc interdum gravida ullamcorper."
-      },
-      {
-        "number": "3",
-        "title": "Lobortis euismod imperdiet tempus",
-        "desc": "Viverra scelerisque mauris et nullam molestie et. Augue adipiscing praesent nisl cras nunc luctus viverra nisi."
-      },
-      {
-        "number": "4",
-        "title": "Cras nulla aliquet nam eleifend amet",
-        "desc": "Aliquam adipiscing velit semper morbi. Purus non eu cursus porttitor tristique et gravida. Quis nunc interdum gravida ullamcorper sed integer. Quisque eleifend tincidunt vulputate libero."
-      }
-    ]
-  },
+"howToUse": {
+  "header":" How To Use",
+  "steps": [
+    {
+      "number": "1",
+      "title": "Create an Account",
+      "desc": "Sign up easily with your email or social media to start renting or listing vehicles in minutes."
+    },
+    {
+      "number": "2",
+      "title": "Complete Your Profile",
+      "desc": "Add your contact details, driver's license, and payment method to build trust and unlock full features."
+    },
+    {
+      "number": "3",
+      "title": "List or Browse Vehicles",
+      "desc": "Want to earn? List your vehicle with photos and pricing. Need a car? Browse by location, model, or price."
+    },
+    {
+      "number": "4",
+      "title": "Send Request or Accept Booking",
+      "desc": "Renters send a request with their rental dates. Owners review and accept bookings in one click."
+    },
+    {
+      "number": "5",
+      "title": "Pickup & Enjoy the Ride",
+      "desc": "Meet at the agreed location, inspect the car, and start your journey. Drive confidently with full support."
+    },
+    {
+      "number": "6",
+      "title": "Return & Rate",
+      "desc": "Return the vehicle on time and leave a rating. Help others make informed decisions in the community."
+    }
+  ]
+},
   "downloadAppTitle": "Download mobile app",
   "downloadAppDescription": "Imperdiet ut tristique viverra nunc. Ultrices orci vel auctor cursus turpis nibh placerat massa. Fermentum urna ut at et in. Turpis aliquet cras hendrerit enim condimentum. Condimentum interdum risus bibendum urna. Augue aliquet varius faucibus ut integer tristique ut....",
   "features": {

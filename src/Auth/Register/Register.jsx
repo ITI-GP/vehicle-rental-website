@@ -142,6 +142,9 @@ export default function RegisterPage() {
         gender,
         nationalId,
         avatar: avatarUrl,
+        isRenter: true,
+        isOwner: false,
+        isCompany:fa
       },
     });
 

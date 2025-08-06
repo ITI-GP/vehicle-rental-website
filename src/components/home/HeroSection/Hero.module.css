@@ -6,11 +6,12 @@
   position: relative;
   overflow: hidden;
   border-radius: 5px;
-  margin-top: 3rem;
+  height : 90vh;
+  /* margin-top: 3rem; */
 }
 
 .heroContainer {
-  height: 60vh;
+  /* height: 60vh; */
   margin: 20px 20px;
   display: flex;
   align-items: center;

@@ -31,6 +31,7 @@ export default function UserProfile() {
     }
   }, [user]);
 
+
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A';
     return new Date(dateString).toLocaleDateString();
@@ -139,6 +140,7 @@ export default function UserProfile() {
     setFormData((prev) => ({ ...prev, image: 'https://via.placeholder.com/150' }));
   };
 
+  console.log(user);
   if (authLoading) {
     return (
       <div className="flex items-center justify-center p-4">
