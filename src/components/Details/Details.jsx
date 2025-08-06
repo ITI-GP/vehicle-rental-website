@@ -1,8 +1,8 @@
 
 import { useTranslation } from "react-i18next";
 import { useParams, Link } from "react-router-dom";
-import vehicleData from "../../data/vehicles.json";
 import { useEffect, useState } from "react";
+import { supabase } from "../../Lib/supabaseClient";
 import AutoIcon from "./../../assets/AutoIcon.png";
 import Fuel from "./../../assets/Fuel.png";
 import Air from "./../../assets/Air.png";
@@ -17,32 +17,115 @@ export default function DetailsPage() {
   const [vehicle, setVehicle] = useState(null);
   const [relatedVehicle, setRelatedVehicle] = useState([]);
   const [mainImage, setMainImage] = useState(null);
-  const [showAllReviews, setShowAllReviews] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(null);
 
+  const transformVehicleData = (vehicle) => ({
+    ...vehicle,
+    id: vehicle.id.toString(),
+    type: vehicle.type || 'Vehicle',
+    category: vehicle.type || 'Standard',
+    price: parseFloat(vehicle.price_per_day) || 0,
+    imageCover: vehicle.images?.[0] || '/default-vehicle.jpg',
+    manual: false,
+    fuel: 'Petrol',
+    airCondition: true,
+    reviews: [{
+      rating: parseFloat(vehicle.rating) || 0,
+      comment: 'Great vehicle!',
+      user: 'Anonymous'
+    }],
+    description: vehicle.description || 'No description available',
+    location: vehicle.location || 'Location not specified',
+    brand: vehicle.brand || '',
+    model: vehicle.model || '',
+    year: vehicle.year || new Date().getFullYear(),
+    seats: 4, // Default value
+    distance: 'Unlimited' // Default value
+  });
 
-  function getVehicleById(id) {
-    const selected = vehicleData.find((v) => v.id === parseInt(id));
-    setVehicle(selected);
-    return selected;
-  }
+  const fetchVehicle = async (vehicleId) => {
+    try {
+      setIsLoading(true);
+      const { data, error } = await supabase
+        .from('vehicles')
+        .select('*')
+        .eq('id', vehicleId)
+        .single();
 
-  function getRelatedVehicle(selectedVehicle) {
-    const related = vehicleData.filter(
-      (v) =>
-        v.category === selectedVehicle.category && v.id !== selectedVehicle.id
-    );
-    setRelatedVehicle(related);
-  }
+      if (error) throw error;
+      if (data) {
+        const transformed = transformVehicleData(data);
+        setVehicle(transformed);
+        setMainImage(transformed.imageCover);
+        return transformed;
+      }
+    } catch (err) {
+      console.error('Error fetching vehicle:', err);
+      setError(err.message || 'Failed to load vehicle details');
+    } finally {
+      setIsLoading(false);
+    }
+    return null;
+  };
+
+  const fetchRelatedVehicles = async (vehicleType) => {
+    try {
+      const { data, error } = await supabase
+        .from('vehicles')
+        .select('*')
+        .eq('type', vehicleType)
+        .limit(4);
+
+      if (error) throw error;
+      
+      const transformed = data
+        .filter(v => v.id.toString() !== id)
+        .map(transformVehicleData);
+      
+      setRelatedVehicle(transformed);
+    } catch (err) {
+      console.error('Error fetching related vehicles:', err);
+      setRelatedVehicle([]);
+    }
+  };
 
   useEffect(() => {
-    const selected = getVehicleById(id);
-    if (selected) {
-      getRelatedVehicle(selected);
-      setMainImage(selected.imageCover);
-    }
+    const loadData = async () => {
+      const selected = await fetchVehicle(id);
+      if (selected) {
+        await fetchRelatedVehicles(selected.type);
+      }
+    };
+
+    loadData();
   }, [id]);
 
-  if (!vehicle) return <div className="p-8">Loading...</div>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center items-center min-h-[50vh]">
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="text-center py-10 text-red-500">
+        <p>Error: {error}</p>
+        <button 
+          onClick={() => window.location.reload()}
+          className="mt-4 px-4 py-2 bg-primary text-white rounded hover:bg-orange-300"
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
+
+  if (!vehicle) {
+    return <div className="p-8">Vehicle not found</div>;
+  }
 
   return (
     <div className="p-8 space-y-10">

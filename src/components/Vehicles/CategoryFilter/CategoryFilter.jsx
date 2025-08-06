@@ -5,14 +5,14 @@ export default function CategoryFilter({ categories, selected, onChange }) {
 
   return (
     <div className="flex gap-4 justify-center mb-8 flex-wrap">
-      <button
+      {/* <button
         onClick={() => onChange("All")}
         className={`px-8 py-2 rounded-2xl ${
           selected === "All" ? "bg-primary text-white" : "bg-gray-100"
         }`}
       >
         {t("vehicles.all", "All")}
-      </button>
+      </button> */}
       {categories.map((cat) => (
         <button
           key={cat}
