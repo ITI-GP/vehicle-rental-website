@@ -3,9 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   currentStep: 0,
   formData: {
-    personalInfo: {},
+    // personalInfo: {},
     vehicleInfo: {},
-    vehicleImages: [],
+    // vehicleImages: [],
   },
 };
 
@@ -34,9 +34,9 @@ const individualSlice = createSlice({
 export const {
   nextStep,
   prevStep,
-  setPersonalInfo,
+  // setPersonalInfo,
   setVehicleInfo,
-  setVehicleImages,
+  // setVehicleImages,
 } = individualSlice.actions;
 
 export default individualSlice.reducer;

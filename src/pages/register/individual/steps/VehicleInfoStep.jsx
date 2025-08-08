@@ -2,20 +2,17 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 const VehicleInfoStep = ({
-  vehicleBrand,
-  vehicleModel,
-  vehicleType,
-  vehicleColor,
-  vehicleYear,
-  fuelType,
-  transmission,
-  seatCount,
-  mileage,
-  vehicleNumber,
-  insuranceLevel,
-  vehicleImages,
-  registrationDoc,
-  insuranceDoc,
+  price_per_day,
+  type,
+
+  plate_num,
+  location,
+  // insurance_level,
+  brand,
+  model,
+  year,
+  color,
+  images,
   updateFields
 }) => {
   const { t } = useTranslation();
@@ -31,7 +28,7 @@ const VehicleInfoStep = ({
     }
   };
 
-  const handleVehicleImagesChange = (e) => {
+  const handleImagesChange = (e) => {
     const files = Array.from(e.target.files);
     const imagePromises = files.map(file => {
       return new Promise((resolve) => {
@@ -41,14 +38,14 @@ const VehicleInfoStep = ({
       });
     });
     
-    Promise.all(imagePromises).then(images => {
-      updateFields({ vehicleImages: [...vehicleImages, ...images] });
+    Promise.all(imagePromises).then(newImages => {
+      updateFields({ images: [...images, ...newImages] });
     });
   };
 
-  const removeVehicleImage = (index) => {
-    const newImages = vehicleImages.filter((_, i) => i !== index);
-    updateFields({ vehicleImages: newImages });
+  const removeImage = (index) => {
+    const newImages = images.filter((_, i) => i !== index);
+    updateFields({ images: newImages });
   };
 
   return (
@@ -57,51 +54,51 @@ const VehicleInfoStep = ({
         {t('registration.vehicleInformation')}
       </h2>
       
-      {/* Vehicle Brand */}
+      {/* Brand */}
       <div>
-        <label htmlFor="vehicleBrand" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="brand" className="block text-sm font-medium text-gray-700 mb-2">
           {t('registration.vehicleBrand')} {t('registration.required')}
         </label>
         <input
-          id="vehicleBrand"
-          name="vehicleBrand"
+          id="brand"
+          name="brand"
           placeholder={t('registration.vehicleBrandPlaceholder')}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
           type="text"
-          value={vehicleBrand}
-          onChange={e => updateFields({vehicleBrand: e.target.value})}
+          value={brand || ''}
+          onChange={e => updateFields({brand: e.target.value})}
           required
         />
       </div>
-
-      {/* Vehicle Model */}
+      
+      {/* Model */}
       <div>
-        <label htmlFor="vehicleModel" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="model" className="block text-sm font-medium text-gray-700 mb-2">
           {t('registration.vehicleModel')} {t('registration.required')}
         </label>
         <input
-          id="vehicleModel"
-          name="vehicleModel"
+          id="model"
+          name="model"
           placeholder={t('registration.vehicleModelPlaceholder')}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
           type="text"
-          value={vehicleModel}
-          onChange={e => updateFields({vehicleModel: e.target.value})}
+          value={model || ''}
+          onChange={e => updateFields({model: e.target.value})}
           required
         />
       </div>
-
-      {/* Vehicle Type */}
+      
+      {/* Type */}
       <div>
-        <label htmlFor="vehicleType" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="type" className="block text-sm font-medium text-gray-700 mb-2">
           {t('registration.vehicleType')} {t('registration.required')}
         </label>
         <select
-          id="vehicleType"
+          id="type"
           name="vehicleType"
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
-          value={vehicleType}
-          onChange={e => updateFields({vehicleType: e.target.value})}
+          value={type || ''}
+          onChange={e => updateFields({type: e.target.value})}
           required
         >
           <option value="">{t('registration.selectVehicleType')}</option>
@@ -113,188 +110,169 @@ const VehicleInfoStep = ({
         </select>
       </div>
 
-      {/* Vehicle Color */}
+      {/* Location */}
       <div>
-        <label htmlFor="vehicleColor" className="block text-sm font-medium text-gray-700 mb-2">
-          {t('registration.vehicleColor')} {t('registration.required')}
+        <label htmlFor="location" className="block text-sm font-medium text-gray-700 mb-2">
+          {t('registration.location')} {t('registration.required')}
         </label>
         <input
-          id="vehicleColor"
-          name="vehicleColor"
-          placeholder={t('registration.vehicleColorPlaceholder')}
+          id="location"
+          name="location"
+          placeholder={t('registration.locationPlaceholder')}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
           type="text"
-          value={vehicleColor}
-          onChange={e => updateFields({vehicleColor: e.target.value})}
+          value={location || ''}
+          onChange={e => updateFields({location: e.target.value})}
           required
         />
       </div>
 
-      {/* Vehicle Year */}
+      {/* Year */}
       <div>
-        <label htmlFor="vehicleYear" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="year" className="block text-sm font-medium text-gray-700 mb-2">
           {t('registration.vehicleYear')} {t('registration.required')}
         </label>
         <input
-          id="vehicleYear"
-          name="vehicleYear"
+          id="year"
+          name="year"
           placeholder={t('registration.vehicleYearPlaceholder')}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
           type="number"
-          min="1990"
+          min="1900"
           max={new Date().getFullYear() + 1}
-          value={vehicleYear}
-          onChange={e => updateFields({vehicleYear: e.target.value})}
+          value={year || ''}
+          onChange={e => updateFields({year: e.target.value})}
           required
         />
       </div>
 
-      {/* Fuel Type */}
+      {/* Color */}
       <div>
-        <label htmlFor="fuelType" className="block text-sm font-medium text-gray-700 mb-2">
-          {t('registration.fuelType')} {t('registration.required')}
-        </label>
-        <select
-          id="fuelType"
-          name="fuelType"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
-          value={fuelType}
-          onChange={e => updateFields({fuelType: e.target.value})}
-          required
-        >
-          <option value="">{t('registration.selectFuelType')}</option>
-          <option value="Gasoline">{t('registration.gasoline')}</option>
-          <option value="Diesel">{t('registration.diesel')}</option>
-          <option value="Electric">{t('registration.electric')}</option>
-          <option value="Hybrid">{t('registration.hybrid')}</option>
-        </select>
-      </div>
-
-      {/* Transmission */}
-      <div>
-        <label htmlFor="transmission" className="block text-sm font-medium text-gray-700 mb-2">
-          {t('registration.transmission')} {t('registration.required')}
-        </label>
-        <select
-          id="transmission"
-          name="transmission"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
-          value={transmission}
-          onChange={e => updateFields({transmission: e.target.value})}
-          required
-        >
-          <option value="">{t('registration.selectTransmission')}</option>
-          <option value="Automatic">{t('registration.automatic')}</option>
-          <option value="Manual">{t('registration.manual')}</option>
-        </select>
-      </div>
-
-      {/* Seat Count */}
-      <div>
-        <label htmlFor="seatCount" className="block text-sm font-medium text-gray-700 mb-2">
-          {t('registration.seatCount')} {t('registration.required')}
+        <label htmlFor="color" className="block text-sm font-medium text-gray-700 mb-2">
+          {t('registration.vehicleColor')} {t('registration.required')}
         </label>
         <input
-          id="seatCount"
-          name="seatCount"
-          placeholder={t('registration.seatCountPlaceholder')}
+          id="color"
+          name="color"
+          placeholder={t('registration.vehicleColorPlaceholder')}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
-          type="number"
-          min="1"
-          max="50"
-          value={seatCount}
-          onChange={e => updateFields({seatCount: e.target.value})}
+          type="text"
+          value={color || ''}
+          onChange={e => updateFields({color: e.target.value})}
           required
         />
       </div>
-
-      {/* Mileage */}
+      
+      {/* Price Per Day */}
       <div>
-        <label htmlFor="mileage" className="block text-sm font-medium text-gray-700 mb-2">
-          {t('registration.mileage')} {t('registration.required')}
+        <label htmlFor="price_per_day" className="block text-sm font-medium text-gray-700 mb-2">
+          {t('registration.pricePerDay')} {t('registration.required')}
         </label>
-        <input
-          id="mileage"
-          name="mileage"
-          placeholder={t('registration.mileagePlaceholder')}
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
-          type="number"
-          min="0"
-          value={mileage}
-          onChange={e => updateFields({mileage: e.target.value})}
-          required
-        />
+        <div className="relative">
+          <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+          <input
+            id="price_per_day"
+            name="price_per_day"
+            placeholder={t('registration.pricePerDayPlaceholder')}
+            className="w-full pl-8 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
+            type="number"
+            min="0"
+            step="0.01"
+            value={price_per_day || ''}
+            onChange={e => updateFields({price_per_day: e.target.value})}
+            required
+          />
+        </div>
       </div>
 
-      {/* Vehicle Number */}
+      {/* Plate Number */}
       <div>
-        <label htmlFor="vehicleNumber" className="block text-sm font-medium text-gray-700 mb-2">
+        <label htmlFor="plate_num" className="block text-sm font-medium text-gray-700 mb-2">
           {t('registration.vehicleNumber')} {t('registration.required')}
         </label>
         <input
-          id="vehicleNumber"
-          name="vehicleNumber"
+          id="plate_num"
+          name="plate_num"
           placeholder={t('registration.vehicleNumberPlaceholder')}
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
           type="text"
-          value={vehicleNumber}
-          onChange={e => updateFields({vehicleNumber: e.target.value})}
+          value={plate_num || ''}
+          onChange={e => updateFields({plate_num: e.target.value})}
           required
         />
       </div>
 
       {/* Insurance Level */}
-      <div>
-        <label htmlFor="insuranceLevel" className="block text-sm font-medium text-gray-700 mb-2">
+      {/* <div>
+        <label htmlFor="insurance_level" className="block text-sm font-medium text-gray-700 mb-2">
           {t('registration.insuranceLevel')} {t('registration.required')}
         </label>
         <select
-          id="insuranceLevel"
-          name="insuranceLevel"
+          id="insurance_level"
+          name="insurance_level"
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
-          value={insuranceLevel}
-          onChange={e => updateFields({insuranceLevel: e.target.value})}
+          value={insurance_level || ''}
+          onChange={e => updateFields({insurance_level: e.target.value})}
           required
         >
           <option value="">{t('registration.selectInsuranceLevel')}</option>
           <option value="Comprehensive">{t('registration.comprehensive')}</option>
           <option value="Third Party">{t('registration.thirdParty')}</option>
         </select>
-      </div>
+      </div> */}
 
-      {/* Vehicle Images */}
+      {/* Images */}
       <div>
-        <label htmlFor="vehicleImages" className="block text-sm font-medium text-gray-700 mb-2">
-          {t('registration.vehicleImages')} {t('registration.required')} {t('registration.vehicleImagesNote')}
+        <label className="block text-sm font-medium text-gray-700 mb-2">
+          {t('registration.vehicleImages')} {t('registration.required')}
         </label>
-        <input
-          id="vehicleImages"
-          name="vehicleImages"
-          className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary transition"
-          type="file"
-          accept="image/*"
-          multiple
-          onChange={handleVehicleImagesChange}
-        />
-        {vehicleImages.length > 0 && (
-          <div className="mt-2 space-y-2">
-            <div className="text-sm text-green-600 font-medium">
-              ✓ {vehicleImages.length} {t('registration.imagesSelected')}
+        <div className="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+          <div className="space-y-1 text-center">
+            <div className="flex text-sm text-gray-600">
+              <label
+                htmlFor="images"
+                className="relative cursor-pointer bg-white rounded-md font-medium text-primary hover:text-primary-dark focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary"
+              >
+                <span>{t('registration.uploadImages')}</span>
+                <input
+                  id="images"
+                  name="images"
+                  type="file"
+                  className="sr-only"
+                  multiple
+                  accept="image/*"
+                  onChange={handleImagesChange}
+                />
+              </label>
+              <p className="pl-1">{t('registration.orDragAndDrop')}</p>
             </div>
+            <p className="text-xs text-gray-500">
+              {t('registration.imageRequirements')}
+            </p>
+          </div>
+        </div>
+        
+        {/* Preview uploaded images */}
+        {images && images.length > 0 && (
+          <div className="mt-4">
+            <h4 className="text-sm font-medium text-gray-700 mb-2">{t('registration.uploadedImages')}</h4>
             <div className="grid grid-cols-3 gap-2">
-              {vehicleImages.map((image, index) => (
-                <div key={index} className="relative">
-                  <img 
-                    src={image} 
-                    alt={`Vehicle ${index + 1}`} 
-                    className="w-full h-20 object-cover rounded-lg" 
+              {images.map((image, index) => (
+                <div key={index} className="relative group">
+                  <img
+                    src={image}
+                    alt={`Vehicle ${index + 1}`}
+                    className="h-24 w-full object-cover rounded-md"
                   />
                   <button
                     type="button"
-                    onClick={() => removeVehicleImage(index)}
-                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600"
+                    onClick={() => removeImage(index)}
+                    className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                    title={t('registration.removeImage')}
                   >
-                    ×
+                    <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
                   </button>
                 </div>
               ))}
@@ -304,7 +282,7 @@ const VehicleInfoStep = ({
       </div>
 
       {/* Registration Document */}
-      <div>
+      {/* <div>
         <label htmlFor="registrationDoc" className="block text-sm font-medium text-gray-700 mb-2">
           {t('registration.registrationDoc')} {t('registration.required')}
         </label>
@@ -325,10 +303,10 @@ const VehicleInfoStep = ({
             <img src={registrationDoc} alt="Registration document" className="w-32 h-20 object-cover rounded-lg" />
           </div>
         )}
-      </div>
+      </div> */}
 
       {/* Insurance Document */}
-      <div>
+      {/* <div>
         <label htmlFor="insuranceDoc" className="block text-sm font-medium text-gray-700 mb-2">
           {t('registration.insuranceDoc')} {t('registration.required')}
         </label>
@@ -349,7 +327,7 @@ const VehicleInfoStep = ({
             <img src={insuranceDoc} alt="Insurance document" className="w-32 h-20 object-cover rounded-lg" />
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

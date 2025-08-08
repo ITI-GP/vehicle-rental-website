@@ -397,7 +397,16 @@
   "managerPhone": "رقم هاتف المسؤول",
   "managerPhonePlaceholder": "مثال: +20123456789",
 
-  "next": "التالي"
+ 
+  "next": "التالي",
+  "submit": "إرسال",
+  "submitting": "جاري الإرسال...",
+  "vehicleRegisteredSuccessfully": "تم تسجيل المركبة بنجاح!",
+  "pricePerDay": "السعر لكل يوم",
+  "uploadImages": "لم يتم اختيار ملف",
+  "orDragAndDrop": "أو اسحب وأسقط",
+  "imageRequirements": "متطلبات الصورة",
+  "location":"الموقع"
  
 },
 "choose_user_type": {

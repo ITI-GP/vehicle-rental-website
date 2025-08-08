@@ -18,7 +18,7 @@ export const FavoriteProvider = ({ user, children }) => {
         if (error) {
           console.error("Error fetching favorites:", error.message);
         } else {
-           console.log("Fetched favorites:", data);
+          //  console.log("Fetched favorites:", data);
           setFavorites(data.map((fav) => fav.vehicle_id));
         }
       }

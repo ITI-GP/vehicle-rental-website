@@ -387,7 +387,17 @@
     "managerEmailPlaceholder": "e.g. manager@company.com",
     "managerPhone": "Manager Phone",
     "managerPhonePlaceholder": "e.g. +123456789",
-    "next": "Next"
+    "next": "Next",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "vehicleRegisteredSuccessfully": "Vehicle registered successfully!",
+    "pricePerDay":"Price per day",
+    "uploadImages":"No file chosen",
+    "orDragAndDrop":"or Drag and Drop",
+    "imageRequirements":"Image Requirements",
+    "location":"Location"
+
+
   },
   "choose_user_type": {
     "subtitle": "Choose your registration type to get started with our vehicle rental platform",

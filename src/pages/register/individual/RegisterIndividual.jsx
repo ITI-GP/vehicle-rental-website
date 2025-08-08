@@ -1,61 +1,40 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import useMultiStepForm from "../../../hooks/useMultiStepForm";
 import { PersonalInfoStep, VehicleInfoStep, RentingInfoStep } from "./steps";
 import Button from "../../../components/rentYourVehicle/Button";
 import { useTranslation } from "react-i18next";
 import { validateCurrentStep } from "../validations/individualValidation";
+import { supabase } from "../../../Lib/supabaseClient";
+import { useAuth } from "../../../contexts/AuthContext";
 
 
 const INITIAL_DATA = {
-  // بيانات شخصية
-  fullName: "",
-  email: "",
-  phone: "",
-  nationalId: "",      // رقم الهوية أو جواز السفر
-  address: "",
-  dateOfBirth: "",
-  nationality: "",
-  profileImage: "",    // صورة شخصية
-  licenseImage: "",    // صورة رخصة القيادة
-
-  // بيانات المركبة
- 
-  vehicleBrand: "",     // الماركة مثل Toyota
-  vehicleModel: "",     // الموديل مثل Corolla
-  vehicleType: "",      // سيارة / دراجة / فان
-  vehicleColor: "",
-  vehicleYear: "",
-  fuelType: "",         // بنزين / ديزل / كهرباء
-  transmission: "",     // أوتوماتيك / مانيوال
-  seatCount: "",
-  mileage: "",          // عدد الكيلومترات
-  vehicleNumber: "",    // رقم اللوحة
-  insuranceLevel: "",   // شامل / ضد الغير
 
 
-  // صور المركبة
-  vehicleImages: [],     // array of images: أمامية، خلفية، داخلية...
+  price_per_day: "",
+  type: "",
+  owner_id: "",
+  plate_num: "",
+  location: "",
+  // insurance_level: "",
+  brand: "",
+  model: "",
+  year: "",
+  color: "",
 
-  // مستندات المركبة
-  registrationDoc: "",   // صورة رخصة المركبة
-  insuranceDoc: "",      // صورة التأمين
-
-
-  // بيانات التأجير
-  dailyPrice: "",
-  weeklyPrice: "",
-  monthlyPrice: "",
-  minRentalDays: "",
-  depositAmount: "",
-  cancellationPolicy: "",
+images: [],
 
 
 };
 const RegisterIndividual = () => {
   const { t } = useTranslation();
+  const { user } = useAuth();
   const [data, setData] = useState(INITIAL_DATA);
   const [errors, setErrors] = useState({});
   const [showErrors, setShowErrors] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(null);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   function updateFields(data) {
     setData((prevData) => ({ ...prevData, ...data }));
@@ -80,9 +59,9 @@ const RegisterIndividual = () => {
   };
   const { steps, step, currentStepIndex, isfirstStep, isLastStep, back, next } =
     useMultiStepForm([
-      <PersonalInfoStep {...data} updateFields ={updateFields} />,
+      // <PersonalInfoStep {...data} updateFields ={updateFields} />,
       <VehicleInfoStep {...data} updateFields={updateFields} />,
-      <RentingInfoStep {...data} updateFields={updateFields} />,
+      // <RentingInfoStep {...data} updateFields={updateFields} />,
     ]);
   const StepComponent = step;
   // Handle back navigation without validation
@@ -93,18 +72,71 @@ const RegisterIndividual = () => {
     back();
   };
 
-  // Handle forward navigation with validation
-  function onSubmit(e) {
+  // Handle form submission
+  async function onSubmit(e) {
     e.preventDefault();
     
-    if (validateStep()) {
-      if (isLastStep) {
-        // Handle final form submission
-        console.log('Form submitted successfully:', data);
-        alert(t('validation.formSubmitted'));
-      } else {
-        next();
+    if (!validateStep()) {
+      return;
+    }
+
+    if (!isLastStep) {
+      next();
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setSubmitError(null);
+
+      // Prepare the vehicle data according to Supabase schema
+      const vehicleData = {
+        // Basic vehicle info
+        brand: data.brand,
+        model: data.model,
+        year: parseInt(data.year) || new Date().getFullYear(),
+        color: data.color,
+        plate_num: data.plate_num, // Note: Using plate_number instead of plate_num
+        type: data.type,
+        
+        // Location and availability
+        location: data.location,
+        available: true,
+        
+        // Insurance and pricing
+        // insurance: data.insurance_level, // Changed from insurance_level to insurance
+        price_per_day: parseFloat(data.price_per_day) || 0,
+        
+        // Owner and metadata
+        owner_id: user?.id,
+        rating: 0,
+        rentals_count: 0, // Changed from string to number
+        created_at: new Date().toISOString(),
+        
+        // Handle images (assuming images is an array of base64 strings)
+        images: data.images || []
+      };
+
+      // Insert the vehicle data into the database
+      const { data: insertedData, error } = await supabase
+        .from('vehicles')
+        .insert([vehicleData])
+        .select();
+
+      if (error) {
+        throw error;
       }
+
+      // Handle successful submission
+      console.log('Vehicle registered successfully:', insertedData);
+      setSubmitSuccess(true);
+      // Optionally reset the form or redirect
+      // setData(INITIAL_DATA);
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      setSubmitError(error.message || 'An error occurred while submitting the form');
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -166,10 +198,39 @@ const RegisterIndividual = () => {
         </div>
       )}
       
-      <div className="flex m-20 px-3 justify-around ">
-        {!isfirstStep && <Button type="button" onClick={handleBack}>{t('common.back')}</Button>}
-        <Button type="submit">{isLastStep ? t('common.finish') : t('common.next')}</Button>
-      </div>
+      {submitError && (
+        <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+          {submitError}
+        </div>
+      )}
+      
+      {submitSuccess ? (
+        <div className="mt-8 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
+          {t('registration.vehicleRegisteredSuccessfully')}
+        </div>
+      ) : (
+        <div className="mt-8 flex justify-center space-x-4">
+          {!isfirstStep && (
+            <Button 
+              type="button" 
+              onClick={handleBack} 
+              variant="secondary"
+              disabled={isSubmitting}
+            >
+              {t('common.back')}
+            </Button>
+          )}
+          <div>
+            <Button 
+              type="submit"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? t('common.submitting') : 
+               isLastStep ? t('common.submit') : t('common.next')}
+            </Button>
+          </div>
+        </div>
+      )}
     </form>
   );
 };
