@@ -5,12 +5,16 @@ import { toast } from "react-toastify";
 import TransButton from "../../TransButton";
 import CarIcon from "../../../assets/CarIcon.png";
 import { useState } from "react";
+import { useFavorites } from "../../../contexts/FavoriteContext";
 
 export default function Header() {
   const { t } = useTranslation();
   const { user, isAuthenticated, signOut } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
+  const { favoriteCount } = useFavorites();
+
+
 
   const handleLogout = async () => {
     const { error } = await signOut();
@@ -76,6 +80,7 @@ export default function Header() {
                   )}
                   <span className="font-medium">{getUserDisplayName()}</span>
                 </Link>
+
                 <button
                   onClick={handleLogout}
                   className="text-gray-700 hover:text-red-500 transition-colors"
@@ -102,7 +107,9 @@ export default function Header() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 max-w-7xl mx-auto">
+          
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+            
             <ul className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
               <li><NavLink to="/" onClick={() => setMenuOpen(false)}>{t("header.home")}</NavLink></li>
               <li><NavLink to="/vehicles" onClick={() => setMenuOpen(false)}>{t("header.vehicles")}</NavLink></li>
@@ -110,6 +117,7 @@ export default function Header() {
               <li><NavLink to="/contactus" onClick={() => setMenuOpen(false)}>{t("header.contact")}</NavLink></li>
               <li><NavLink to="/aboutus" onClick={() => setMenuOpen(false)}>{t("header.about")}</NavLink></li>
             </ul>
+            
 
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
               {isAuthenticated ? (
@@ -135,6 +143,7 @@ export default function Header() {
                     )}
                     <span className="font-medium">{getUserDisplayName()}</span>
                   </Link>
+    
                   <button
                     onClick={() => {
                       handleLogout();

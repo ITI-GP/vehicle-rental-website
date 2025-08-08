@@ -22,6 +22,7 @@ import Register from "./../Auth/Register/Register";
 import ProtectUser from "../Protector/ProtectUser";
 import Profile from "../pages/Profile/Profile"
 import Dashboard from "../pages/Dashboard/Dashboard";
+import FavoriteVehicles from "../pages/FavoriteVehicles/FavoriteVehicles";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -37,6 +38,7 @@ const router = createBrowserRouter(
       <Route path="profile" element={<Profile/>} />
 
       <Route path="dashboard" element={<Dashboard />} />
+      <Route path="favorites" element={<FavoriteVehicles/>}/>
 
       {/* protected routes */}
 
