@@ -1,9 +1,9 @@
-import UserProfile from "../../components/UserProfile";
+import ProfileLayout from "../../components/Profile/ProfileLayout";
 
-export default function CustomerProfile() {
+export default function ProfilePage() {
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <UserProfile />
+    <div className="min-h-screen bg-gray-50">
+      <ProfileLayout />
     </div>
   );
 }

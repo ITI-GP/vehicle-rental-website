@@ -498,12 +498,26 @@
     "registerHere": "سجل هنا"
   },
   "auth": {
-    "fullName": "الاسم الكامل",
+    "name": "الاسم الكامل",
+    "enterYourName": "أدخل اسمك الكامل",
     "email": "البريد الإلكتروني",
+    "enterYourEmail": "أدخل بريدك الإلكتروني",
     "phone": "رقم الهاتف",
+    "enterYourPhone": "أدخل رقم هاتفك",
+    "password": "كلمة المرور",
+    "enterYourPassword": "أدخل كلمة المرور",
+    "confirmPourPassword": "أعد إدخال كلمة المرور",
     "address": "العنوان",
+    "enterYourAddress": "أدخل عنوانك",
+    "dateOfBirth": "تاريخ الميلاد",
+    "gender": "النوع",
     "male": "ذكر",
     "female": "أنثى",
+    "profilePicture": "صورة الملف الشخصي",
+    "optional": "اختياري",
+    "passwordsDoNotMatch": "كلمتا المرور غير متطابقتين",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "loginHere": "سجل دخول من هنا",
     "logout": "تسجيل الخروج",
     "logoutSuccess": "تم تسجيل الخروج بنجاح!",
     "pleaseLoginToViewProfile": "يرجى تسجيل الدخول لعرض الملف الشخصي"
@@ -525,6 +539,117 @@
     "gender": "الجنس",
     "dateOfBirth": "تاريخ الميلاد",
     "updateSuccess": "تم تحديث الملف الشخصي بنجاح!",
-    "updateError": "فشل في تحديث الملف الشخصي"
+    "updateError": "فشل في تحديث الملف الشخصي",
+    
+    "imageSizeError": "يجب أن يكون حجم الصورة أقل من 5 ميجابايت",
+    "imageTypeError": "الرجاء اختيار ملف صورة صالح",
+    "imageUploadError": "حدث خطأ أثناء رفع الصورة",
+    
+    "sidebar": {
+      "navigation": "قائمة التنقل الشخصية",
+      "overview": "نظرة عامة",
+      "rentedCars": "السيارات المؤجرة",
+      "myListings": "عروضي",
+      "favorites": "المفضلة",
+      "notifications": "الإشعارات",
+      "settings": "الإعدادات"
+    },
+    
+    "myListings": {
+      "title": "عروضي للمركبات",
+      "description": "إدارة المركبات المدرجة وعرض أدائها",
+      "addVehicle": "إضافة مركبة",
+      "vehicle": "المركبة",
+      "status": "الحالة",
+      "price": "السعر",
+      "bookings": "الحجوزات",
+      "noListings": "لم تقم بإدراج أي مركبات حتى الآن",
+      "getStarted": "قم بإدراج سيارتك الأولى لبدء الكسب",
+      "listNow": "إدراج الآن"
+    },
+    
+    "settings": {
+      "title": "إعدادات الحساب",
+      "general": "عام",
+      "changePassword": "تغيير كلمة المرور",
+      "currentPassword": "كلمة المرور الحالية",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmPassword": "تأكيد كلمة المرور الجديدة",
+      "updatePassword": "تحديث كلمة المرور",
+      "passwordsDontMatch": "كلمات المرور غير متطابقة",
+      "passwordTooShort": "يجب أن تكون كلمة المرور 6 أحرف على الأقل",
+      "passwordUpdated": "تم تحديث كلمة المرور بنجاح",
+      "errorUpdatingPassword": "حدث خطأ أثناء تحديث كلمة المرور",
+      "language": "اللغة",
+      "theme": "السمة",
+      "saveChanges": "حفظ التغييرات",
+      "saving": "جاري الحفظ...",
+      "saved": "تم حفظ التغييرات بنجاح",
+      "errorSaving": "حدث خطأ أثناء حفظ التغييرات"
+    },
+    
+    "favorites": {
+      "title": "المفضلة",
+      "noFavorites": "لا توجد عناصر مفضلة حتى الآن",
+      "getStarted": "احفظ مركباتك المفضلة أثناء التصفح",
+      "browseVehicles": "تصفح المركبات"
+    },
+    
+    "rentals": {
+      "title": "المركبات المؤجرة",
+      "noRentals": "ليس لديك أي إيجارات حتى الآن",
+      "startRenting": "ابدأ بتصفح المركبات المتاحة",
+      "browseVehicles": "تصفح المركبات",
+      "status": {
+        "active": "نشط",
+        "upcoming": "قادم",
+        "completed": "مكتمل",
+        "cancelled": "ملغي"
+      },
+      "details": "عرض التفاصيل",
+      "cancel": "إلغاء الإيجار",
+      "extend": "تمديد الإيجار",
+      "pickupDate": "تاريخ الاستلام",
+      "returnDate": "تاريخ الإرجاع",
+      "totalCost": "التكلفة الإجمالية",
+      "vehicleDetails": "تفاصيل المركبة",
+      "rentalDetails": "تفاصيل الإيجار",
+      "contactOwner": "اتصال بالمالك",
+      "needHelp": "هل تحتاج مساعدة؟"
+    }
+  },
+  "overview": {
+    "welcome": "مرحبًا بعودتك",
+    "welcomeSubtitle": "إليك ما يحدث في حسابك اليوم.",
+    "renterBadge": "مستأجر",
+    "companyBadge": "شركة",
+    "ownerBadge": "مالك",
+    "activeRentals": "عمليات التأجير النشطة",
+    "loading": "جاري التحميل...",
+    "rentalCount": "{{count}} نشطة",
+    "datesNotSet": "لم يتم تحديد التواريخ",
+    "vehicleImageAlt": "صورة المركبة",
+    "vehicleNotAvailable": "المركبة غير متوفرة",
+    "status": {
+      "active": "نشط",
+      "in_progress": "قيد التنفيذ",
+      "approved": "موافق عليه"
+    },
+    "accountStatus": "حالة الحساب",
+    "verifiedBadge": "تم التحقق",
+    "emailVerified": "تم التحقق من البريد الإلكتروني",
+    "memberSince": "عضو منذ",
+    "recently": "مؤخرًا",
+    "lastActivity": "آخر نشاط",
+    "never": "أبدًا",
+    "lastActive": "آخر نشاط {{time}}",
+    "noActivity": "لا توجد سجلات نشاط",
+    "recentActivity": "النشاطات الحديثة",
+    "activityAppearHere": "ستظهر أنشطتك الحديثة هنا.",
+    "errorFetchingRentals": "فشل تحميل معلومات التأجير",
+    "joinedRecently": "مؤخرًا",
+    "joinedDaysAgo": "منذ {{count}} يوم",
+    "joinedMonthsAgo": "منذ {{count}} شهر",
+    "joinedYearsAgo": "منذ {{count}} سنة"
   }
 }

@@ -30,10 +30,11 @@ export default function Header() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-none">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto" />
           <h3 className="font-bold text-[16px] font-inter">
-            {t("footer.name")}
+            {/* {t("footer.name")} */}
+            2GO
           </h3>
+          <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto" />
         </Link>
 
         <button

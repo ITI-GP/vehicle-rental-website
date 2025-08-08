@@ -12,6 +12,7 @@ import {
   RegisterCompany,
   RegisterIndividual,
 } from "../pages";
+
 import Details from "../components/details/details";
 import ContactUs from "./../components/ContactUs/ContactUs";
 import AboutUs from "./../components/AboutUs/AboutUs";
@@ -33,7 +34,8 @@ const router = createBrowserRouter(
       <Route path="vehicles" element={<Vehicles />} />
       <Route path="login" element={<Login />} />
       <Route path="register" element={<Register />} />
-       <Route path="profile" element={<Profile/>} />
+      <Route path="profile" element={<Profile/>} />
+
       <Route path="dashboard" element={<Dashboard />} />
 
       {/* protected routes */}

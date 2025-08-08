@@ -55,7 +55,7 @@
 
     "home": "Home",
     "vehicles": "Vehicles",
-    "rent_vehicle": "Rent Your Vehicle",
+    "rent_vehicle": "Add Your Vehicle",
     "contact": "Contact Us",
     "about": "About Us",
     "signin": "Sign In"
@@ -515,15 +515,68 @@
     "registerHere": "Register here"
   },
   "auth": {
-    "fullName": "Full Name",
-    "email": "Email",
-    "phone": "Phone",
+    "name": "Full Name",
+    "enterYourName": "Enter your full name",
+    "email": "Email Address",
+    "enterYourEmail": "Enter your email",
+    "phone": "Phone Number",
+    "enterYourPhone": "Enter your phone number",
+    "password": "Password",
+    "enterYourPassword": "Enter your password",
+    "confirmPassword": "Confirm Password",
+    "confirmYourPassword": "Confirm your password",
     "address": "Address",
+    "enterYourAddress": "Enter your address",
+    "dateOfBirth": "Date of Birth",
+    "gender": "Gender",
     "male": "Male",
     "female": "Female",
+    "profilePicture": "Profile Picture",
+    "optional": "Optional",
+    "passwordsDoNotMatch": "Passwords do not match",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginHere": "Login here",
     "logout": "Logout",
     "logoutSuccess": "Logged out successfully!",
-    "pleaseLoginToViewProfile": "Please login to view your profile"
+    "pleaseLoginToViewProfile": "Please login to view your profile",
+    "avatar": "Profile Picture",
+    "avatarUrlFailed": "Failed to get avatar URL",
+    "profileUpdateFailed": "Failed to update profile"
+
+  },
+  "overview": {
+    "welcome": "Welcome back",
+    "welcomeSubtitle": "Here's what's happening with your account today.",
+    "renterBadge": "Renter",
+    "companyBadge": "Company",
+    "ownerBadge": "Owner",
+    "activeRentals": "Active Rentals",
+    "loading": "Loading...",
+    "rentalCount": "{{count}} active",
+    "datesNotSet": "Dates not set",
+    "vehicleImageAlt": "Vehicle image",
+    "vehicleNotAvailable": "Vehicle not available",
+    "status": {
+      "active": "Active",
+      "in_progress": "In Progress",
+      "approved": "Approved"
+    },
+    "accountStatus": "Account Status",
+    "verifiedBadge": "Verified",
+    "emailVerified": "Email verified",
+    "memberSince": "Member since",
+    "recently": "Recently",
+    "lastActivity": "Last activity",
+    "never": "Never",
+    "lastActive": "Last active {{time}}",
+    "noActivity": "No activity recorded",
+    "recentActivity": "Recent Activity",
+    "activityAppearHere": "Your recent activities will appear here.",
+    "errorFetchingRentals": "Failed to load rental information",
+    "joinedRecently": "Recently",
+    "joinedDaysAgo": "{{count}} days ago",
+    "joinedMonthsAgo": "{{count}} months ago",
+    "joinedYearsAgo": "{{count}} years ago"
   },
   "profile": {
     "user": "User",
@@ -542,6 +595,83 @@
     "gender": "Gender",
     "dateOfBirth": "Date of Birth",
     "updateSuccess": "Profile updated successfully!",
-    "updateError": "Failed to update profile"
+    "updateError": "Failed to update profile",
+    
+    "imageSizeError": "Image size should be less than 5MB",
+    "imageTypeError": "Please select a valid image file",
+    "imageUploadError": "Error uploading image",
+    
+    "sidebar": {
+      "navigation": "Profile navigation",
+      "overview": "Overview",
+      "rentedCars": "Rented Cars",
+      "myListings": "My Listings",
+      "favorites": "Favorites",
+      "notifications": "Notifications",
+      "settings": "Settings"
+    },
+    
+    "myListings": {
+      "title": "My Vehicle Listings",
+      "description": "Manage your listed vehicles and view their performance",
+      "addVehicle": "Add Vehicle",
+      "vehicle": "Vehicle",
+      "status": "Status",
+      "price": "Price",
+      "bookings": "Bookings",
+      "noListings": "You haven't listed any vehicles yet",
+      "getStarted": "List your first vehicle to start earning",
+      "listNow": "List Now"
+    },
+    
+    "settings": {
+      "title": "Account Settings",
+      "general": "General",
+      "changePassword": "Change Password",
+      "currentPassword": "Current Password",
+      "newPassword": "New Password",
+      "confirmPassword": "Confirm New Password",
+      "updatePassword": "Update Password",
+      "passwordsDontMatch": "Passwords do not match",
+      "passwordTooShort": "Password must be at least 6 characters",
+      "passwordUpdated": "Password updated successfully",
+      "errorUpdatingPassword": "Error updating password",
+      "language": "Language",
+      "theme": "Theme",
+      "saveChanges": "Save Changes",
+      "saving": "Saving...",
+      "saved": "Changes saved successfully",
+      "errorSaving": "Error saving changes"
+    },
+    
+    "favorites": {
+      "title": "Favorites",
+      "noFavorites": "No favorites yet",
+      "getStarted": "Save your favorite vehicles while browsing",
+      "browseVehicles": "Browse Vehicles"
+    },
+    
+    "rentals": {
+      "title": "Rented Cars",
+      "noRentals": "You don't have any rentals yet",
+      "startRenting": "Start browsing available vehicles",
+      "browseVehicles": "Browse Vehicles",
+      "status": {
+        "active": "Active",
+        "upcoming": "Upcoming",
+        "completed": "Completed",
+        "cancelled": "Cancelled"
+      },
+      "details": "View Details",
+      "cancel": "Cancel Rental",
+      "extend": "Extend Rental",
+      "pickupDate": "Pickup Date",
+      "returnDate": "Return Date",
+      "totalCost": "Total Cost",
+      "vehicleDetails": "Vehicle Details",
+      "rentalDetails": "Rental Details",
+      "contactOwner": "Contact Owner",
+      "needHelp": "Need help?"
+    }
   }
 }

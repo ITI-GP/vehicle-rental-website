@@ -1,13 +1,21 @@
-import { useSelector } from "react-redux";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthContext";
+
 const ProtectUser = ({ children, allowedRoles }) => {
-  // const user = useSelector((state) => state.auth.user?.user); // the logic for how to know
-  const navigate = useNavigate();
-  if (0) {
-    // return <Navigate to="/unauthorized" replace />;
+  const { user, loading } = useAuth();
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (!user) {
+ 
     return <Navigate to="/login" replace />;
   }
 
+
+
   return children;
 };
+
 export default ProtectUser;

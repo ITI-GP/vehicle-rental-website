@@ -23,8 +23,11 @@ export default function Footer() {
           <div className="w-[280px] min-h-[171px] flex flex-col justify-between mx-auto">
 
             <div className="logo flex items-center gap-2" >
+              <h3 className="font-bold text-[16px]  font-inter"> 
+                {/* {t("footer.name")} */}
+                2GO
+              </h3>
               <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto " />
-              <h3 className="font-bold text-[16px]  font-inter"> {t("footer.name")}</h3>
             </div>
 
             <div className="mt-4">
