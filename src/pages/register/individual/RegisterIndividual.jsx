@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import useMultiStepForm from "../../../hooks/useMultiStepForm";
 import { PersonalInfoStep, VehicleInfoStep, RentingInfoStep } from "./steps";
 import Button from "../../../components/rentYourVehicle/Button";
@@ -7,10 +7,7 @@ import { validateCurrentStep } from "../validations/individualValidation";
 import { supabase } from "../../../Lib/supabaseClient";
 import { useAuth } from "../../../contexts/AuthContext";
 
-
 const INITIAL_DATA = {
-
-
   price_per_day: "",
   type: "",
   owner_id: "",
@@ -22,9 +19,7 @@ const INITIAL_DATA = {
   year: "",
   color: "",
 
-images: [],
-
-
+  images: [],
 };
 const RegisterIndividual = () => {
   const { t } = useTranslation();
@@ -41,7 +36,7 @@ const RegisterIndividual = () => {
     // Clear errors for updated fields
     if (showErrors) {
       const updatedErrors = { ...errors };
-      Object.keys(data).forEach(key => {
+      Object.keys(data).forEach((key) => {
         if (updatedErrors[key]) {
           delete updatedErrors[key];
         }
@@ -75,7 +70,7 @@ const RegisterIndividual = () => {
   // Handle form submission
   async function onSubmit(e) {
     e.preventDefault();
-    
+
     if (!validateStep()) {
       return;
     }
@@ -98,28 +93,28 @@ const RegisterIndividual = () => {
         color: data.color,
         plate_num: data.plate_num, // Note: Using plate_number instead of plate_num
         type: data.type,
-        
+
         // Location and availability
         location: data.location,
         available: true,
-        
+
         // Insurance and pricing
         // insurance: data.insurance_level, // Changed from insurance_level to insurance
         price_per_day: parseFloat(data.price_per_day) || 0,
-        
+
         // Owner and metadata
         owner_id: user?.id,
         rating: 0,
         rentals_count: 0, // Changed from string to number
         created_at: new Date().toISOString(),
-        
+
         // Handle images (assuming images is an array of base64 strings)
-        images: data.images || []
+        images: data.images || [],
       };
 
       // Insert the vehicle data into the database
       const { data: insertedData, error } = await supabase
-        .from('vehicles')
+        .from("vehicles")
         .insert([vehicleData])
         .select();
 
@@ -128,13 +123,15 @@ const RegisterIndividual = () => {
       }
 
       // Handle successful submission
-      console.log('Vehicle registered successfully:', insertedData);
+      console.log("Vehicle registered successfully:", insertedData);
       setSubmitSuccess(true);
       // Optionally reset the form or redirect
       // setData(INITIAL_DATA);
     } catch (error) {
-      console.error('Error submitting form:', error);
-      setSubmitError(error.message || 'An error occurred while submitting the form');
+      console.error("Error submitting form:", error);
+      setSubmitError(
+        error.message || "An error occurred while submitting the form"
+      );
     } finally {
       setIsSubmitting(false);
     }
@@ -145,12 +142,12 @@ const RegisterIndividual = () => {
       {/* Header Section */}
       <div className="text-center mb-8  bg-orange-50 p-6">
         <h1 className="text-5xl font-extrabold text-gray-900 mb-2">
-          {t('registration.individualRegistration')}
+          {t("registration.individualRegistration")}
         </h1>
         <p className="text-gray-600 text-sm mb-4">
-          {t('registration.completeYourProfile')}
+          {t("registration.completeYourProfile")}
         </p>
-        
+
         {/* Progress Indicator */}
         <div className="flex items-center justify-center space-x-2 mb-6">
           <div className="flex items-center space-x-2">
@@ -159,8 +156,8 @@ const RegisterIndividual = () => {
                 <div
                   className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-colors ${
                     index <= currentStepIndex
-                      ? 'bg-primary text-white'
-                      : 'bg-gray-200 text-gray-600'
+                      ? "bg-primary text-white"
+                      : "bg-gray-200 text-gray-600"
                   }`}
                 >
                   {index + 1}
@@ -168,7 +165,7 @@ const RegisterIndividual = () => {
                 {index < steps.length - 1 && (
                   <div
                     className={`w-12 h-0.5 transition-colors ${
-                      index < currentStepIndex ? 'bg-primary' : 'bg-gray-200'
+                      index < currentStepIndex ? "bg-primary" : "bg-gray-200"
                     }`}
                   />
                 )}
@@ -176,20 +173,23 @@ const RegisterIndividual = () => {
             ))}
           </div>
         </div>
-        
+
         {/* Step Counter */}
         <div className="text-sm text-gray-500">
-          {t('registration.step')} {currentStepIndex + 1} {t('registration.of')} {steps.length}
+          {t("registration.step")} {currentStepIndex + 1} {t("registration.of")}{" "}
+          {steps.length}
         </div>
       </div>
       {/* <MultiStepForm /> */}
 
-      {React.cloneElement(StepComponent, { errors, showErrors })} 
-      
+      {React.cloneElement(StepComponent, { errors, showErrors })}
+
       {/* Error Summary */}
       {showErrors && Object.keys(errors).length > 0 && (
         <div className="mt-4 p-4 bg-red-50 border border-red-200 rounded-lg max-w-md mx-auto">
-          <h3 className="text-red-800 font-medium mb-2">{t('validation.errorsFound')}</h3>
+          <h3 className="text-red-800 font-medium mb-2">
+            {t("validation.errorsFound")}
+          </h3>
           <ul className="text-sm text-red-600 space-y-1">
             {Object.values(errors).map((error, index) => (
               <li key={index}>• {error}</li>
@@ -197,36 +197,36 @@ const RegisterIndividual = () => {
           </ul>
         </div>
       )}
-      
+
       {submitError && (
         <div className="mt-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
           {submitError}
         </div>
       )}
-      
+
       {submitSuccess ? (
         <div className="mt-8 p-4 bg-green-100 border border-green-400 text-green-700 rounded">
-          {t('registration.vehicleRegisteredSuccessfully')}
+          {t("registration.vehicleRegisteredSuccessfully")}
         </div>
       ) : (
         <div className="mt-8 flex justify-center space-x-4">
           {!isfirstStep && (
-            <Button 
-              type="button" 
-              onClick={handleBack} 
+            <Button
+              type="button"
+              onClick={handleBack}
               variant="secondary"
               disabled={isSubmitting}
             >
-              {t('common.back')}
+              {t("common.back")}
             </Button>
           )}
           <div>
-            <Button 
-              type="submit"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? t('common.submitting') : 
-               isLastStep ? t('common.submit') : t('common.next')}
+            <Button type="submit" disabled={isSubmitting}>
+              {isSubmitting
+                ? t("registration.submitting")
+                : isLastStep
+                ? t("registration.submit")
+                : t("registration.next")}
             </Button>
           </div>
         </div>

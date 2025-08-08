@@ -11,7 +11,7 @@ import VehiclesCard from "../VehiclesCard/VehiclesCard";
 import Reviews from "./Reviews/Reviews";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {useAuth} from "../../contexts/AuthContext"
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function DetailsPage() {
   const { user } = useAuth();
@@ -154,10 +154,15 @@ export default function DetailsPage() {
     if (!formData.address.trim()) errors.address = "Address is required";
 
     // Delivery Date Validation
-    if (!formData.deliveryDate) errors.deliveryDate = "Delivery date is required";
+    if (!formData.deliveryDate)
+      errors.deliveryDate = "Delivery date is required";
 
     // Rental Days Validation
-    if (!formData.rentalDays || isNaN(formData.rentalDays) || Number(formData.rentalDays) < 1)
+    if (
+      !formData.rentalDays ||
+      isNaN(formData.rentalDays) ||
+      Number(formData.rentalDays) < 1
+    )
       errors.rentalDays = "Please enter a valid number of days";
 
     // Payment Method Validation
@@ -170,24 +175,24 @@ export default function DetailsPage() {
 
       // Card Number Validation (13 to 19 digits)
       if (!formData.cardNumber.trim())
-        errors.cardNumber = "Please enter a valid credit card number (13-19 digits)";
+        errors.cardNumber =
+          "Please enter a valid credit card number (13-19 digits)";
       else if (!/^\d{13,19}$/.test(formData.cardNumber))
-        errors.cardNumber = "Please enter a valid credit card number (13-19 digits)";
+        errors.cardNumber =
+          "Please enter a valid credit card number (13-19 digits)";
 
       // Expiration Validation
       if (!formData.expiration) errors.expiration = "Expiration is required";
 
       // CVV Validation (3 or 4 digits)
-      if (!formData.cvv)
-        errors.cvv = "Please enter a valid CVV (3-4 digits)";
+      if (!formData.cvv) errors.cvv = "Please enter a valid CVV (3-4 digits)";
       else if (!/^\d{3,4}$/.test(formData.cvv))
         errors.cvv = "Please enter a valid CVV (3 or 4 digits)";
     }
     // Notes Validation (optional, but can be added if needed)
-    if (formData.notes && formData.notes.length > 500) {  
+    if (formData.notes && formData.notes.length > 500) {
       errors.notes = "Notes cannot exceed 500 characters";
     }
-      
 
     setFormErrors(errors);
     return Object.keys(errors).length === 0;
@@ -198,9 +203,12 @@ export default function DetailsPage() {
       setIsSubmitting(true);
       try {
         // Validate user_id is UUID
-        const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+        const uuidRegex =
+          /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
         if (user?.id && !uuidRegex.test(user.id)) {
-          toast.error("User ID is not a valid UUID.", { position: "top-right" });
+          toast.error("User ID is not a valid UUID.", {
+            position: "top-right",
+          });
           setIsSubmitting(false);
           return;
         }
@@ -208,7 +216,9 @@ export default function DetailsPage() {
         // Ensure date format is correct
         const dateFormat = /^\d{4}-\d{2}-\d{2}$/;
         if (!dateFormat.test(formData.deliveryDate)) {
-          toast.error("Date format must be YYYY-MM-DD.", { position: "top-right" });
+          toast.error("Date format must be YYYY-MM-DD.", {
+            position: "top-right",
+          });
           setIsSubmitting(false);
           return;
         }
@@ -222,24 +232,27 @@ export default function DetailsPage() {
         const startDate = startDateObj.toISOString();
         const endDate = endDateObj.toISOString();
 
-        const { data, error } = await supabase.from("rental_requests").insert([
-          {
-            user_id: user?.id,
-            vehicle_id: Number(id),
-            status: "pending",
-            is_delivered: false,
-            start_date: startDate,
-            end_date: endDate,
-            location: formData.location,
-            address: formData.address,
-            payment: formData.payment,
-            card_name: formData.cardName,
-            card_number: formData.cardNumber,
-            expiration: formData.expiration,
-            cvv: formData.cvv,
-            notes: formData.notes,
-          },
-        ]).select();
+        const { data, error } = await supabase
+          .from("rental_requests")
+          .insert([
+            {
+              user_id: user?.id,
+              vehicle_id: Number(id),
+              status: "pending",
+              is_delivered: false,
+              start_date: startDate,
+              end_date: endDate,
+              location: formData.location,
+              address: formData.address,
+              payment: formData.payment,
+              card_name: formData.cardName,
+              card_number: formData.cardNumber,
+              expiration: formData.expiration,
+              cvv: formData.cvv,
+              notes: formData.notes,
+            },
+          ])
+          .select();
 
         if (error) throw error;
 
@@ -325,7 +338,9 @@ export default function DetailsPage() {
                   alt={`thumb-${idx}`}
                   onClick={() => setMainImage(img)}
                   className={`cursor-pointer h-20 object-cover rounded-md hover:scale-90 transition-all border ${
-                    img === mainImage ? "border-primary border-2" : "border-gray-300"
+                    img === mainImage
+                      ? "border-primary border-2"
+                      : "border-gray-300"
                   }`}
                 />
               ))}
@@ -426,7 +441,9 @@ export default function DetailsPage() {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm transition-opacity duration-300">
           <div className="bg-white p-10 rounded-2xl w-full max-w-3xl shadow-lg max-h-[90vh] overflow-y-auto">
-            <h2 className="text-3xl font-bold mb-6 text-center">Rent Vehicle</h2>
+            <h2 className="text-3xl font-bold mb-6 text-center">
+              Rent Vehicle
+            </h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-semibold mb-1">
@@ -467,7 +484,7 @@ export default function DetailsPage() {
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-1">
-                 Location
+                  Location
                 </label>
                 <select
                   name="location"
@@ -507,7 +524,7 @@ export default function DetailsPage() {
               </div>
               <div>
                 <label className="block text-sm font-semibold mb-1">
-                 Delivery Date
+                  Delivery Date
                 </label>
                 <input
                   type="date"
