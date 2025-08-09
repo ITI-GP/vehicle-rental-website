@@ -24,7 +24,7 @@ export default function RentedCarsTab({ user, activeTab }) {
     if (rentalId) setSelectedRentalId(rentalId);
   }, [activeTab]);
 
-  // Fetch user's rentals with vehicle details
+  // Fetch user's rental requests with vehicle details
   const fetchRentals = useCallback(async () => {
     if (!user?.id) {
       setLoading(false);
@@ -32,8 +32,9 @@ export default function RentedCarsTab({ user, activeTab }) {
     }
     try {
       setLoading(true);
+      // Fetch rental requests for this user
       const { data: rentalsData, error: rentalsError } = await supabase
-        .from("rentals")
+        .from("rental_requests")
         .select("*")
         .eq("user_id", user.id)
         .order("created_at", { ascending: false });
@@ -56,7 +57,7 @@ export default function RentedCarsTab({ user, activeTab }) {
       const rentalsWithVehicles = rentalsData.map((r) => ({
         ...r,
         vehicles: vehiclesMap[r.vehicle_id] || null,
-        total_price: r.total_cost,
+        total_price: r.total_cost, // If you use total_cost in rental_requests
       }));
       setRentals(rentalsWithVehicles);
       setError(null);
@@ -143,7 +144,7 @@ export default function RentedCarsTab({ user, activeTab }) {
     try {
       setLoading(true);
       const { error } = await supabase
-        .from("rentals")
+        .from("rental_requests")
         .update({ status: "cancelled" })
         .eq("id", rental.id)
         .select();
@@ -173,7 +174,7 @@ export default function RentedCarsTab({ user, activeTab }) {
     try {
       setLoading(true);
       const { error } = await supabase
-        .from("rentals")
+        .from("rental_requests")
         .delete()
         .eq("id", rental.id);
       if (error) throw error;
@@ -421,12 +422,12 @@ export default function RentedCarsTab({ user, activeTab }) {
                   >
                     {t("profile.rentedCars.deleteRental", "Delete Rental")}
                   </button>
-                  <button
+                  {/* <button
                     type="button"
                     className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-indigo-700 bg-indigo-100 hover:bg-indigo-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                   >
                     {t("profile.rentedCars.viewDetails", "View Details")}
-                  </button>
+                  </button> */}
                 </div>
               </div>
             )}

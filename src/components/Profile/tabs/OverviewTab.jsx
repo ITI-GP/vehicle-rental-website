@@ -18,7 +18,7 @@ export default function OverviewTab({ user, userRoles }) {
   const [isLoadingRentals, setIsLoadingRentals] = useState(true);
   const [rentalError, setRentalError] = useState(null);
 
-  // Fetch active rentals with vehicle details
+  // Fetch active rental requests with vehicle details
   useEffect(() => {
     const fetchActiveRentals = async () => {
       if (!user?.id) {
@@ -27,24 +27,25 @@ export default function OverviewTab({ user, userRoles }) {
       }
 
       try {
-        // First, get all active rentals for the user
-        const { data: rentalsData, error: rentalsError } = await supabase
-          .from("rentals")
-          .select("*")
-          .eq("user_id", user.id)
-          .in("status", ["active", "in_progress", "approved"])
-          .order("start_date", { ascending: true });
+        // Get all active rental requests for the user
+        const { data: rentalRequestsData, error: rentalRequestsError } =
+          await supabase
+            .from("rental_requests")
+            .select("*")
+            .eq("user_id", user.id)
+            .in("status", ["active", "in_progress", "approved"])
+            .order("start_date", { ascending: true });
 
-        if (rentalsError) throw rentalsError;
+        if (rentalRequestsError) throw rentalRequestsError;
 
-        if (!rentalsData || rentalsData.length === 0) {
+        if (!rentalRequestsData || rentalRequestsData.length === 0) {
           setActiveRentals([]);
           return;
         }
 
-        // Get all unique vehicle IDs from active rentals
+        // Get all unique vehicle IDs from active rental requests
         const vehicleIds = [
-          ...new Set(rentalsData.map((rental) => rental.vehicle_id)),
+          ...new Set(rentalRequestsData.map((rental) => rental.vehicle_id)),
         ];
 
         // Fetch all vehicle details in a single query
@@ -61,11 +62,11 @@ export default function OverviewTab({ user, userRoles }) {
           return acc;
         }, {});
 
-        // Combine rental data with vehicle details
-        const rentalsWithVehicles = rentalsData.map((rental) => ({
+        // Combine rental request data with vehicle details
+        const rentalsWithVehicles = rentalRequestsData.map((rental) => ({
           ...rental,
           vehicles: vehiclesMap[rental.vehicle_id] || null,
-          // Map total_cost to total_price for backward compatibility with the UI
+          // Map total_cost to total_price for backward compatibility with the UI if needed
           total_price: rental.total_cost,
         }));
 
