@@ -1,388 +1,171 @@
-// import { Link } from "react-router-dom";
-// import { useTranslation } from "react-i18next";
-// import { useFavorites } from "../../contexts/FavoriteContext";
-// import AutoIcon from "./../../assets/AutoIcon.png";
-// import Fuel from "./../../assets/Fuel.png";
-// import Air from "./../../assets/Air.png";
-
-// export default function VehiclesCard({ vehicle, onUnfavorite }) {
-//   const { t } = useTranslation();
-//   const { toggleFavorite, isFavorite } = useFavorites();
-
-//   if (!vehicle) return null;
-
-//   const handleFavoriteClick = async (e) => {
-//     e.preventDefault();
-//     await toggleFavorite(vehicle.id);
-//     if (onUnfavorite && isFavorite(vehicle.id) === false) {
-//       onUnfavorite(); // إزالة من القائمة لو اتشالت من الفيفوريت
-//     }
-//   };
-
-//   return (
-//     <div
-//       className="
-//         card
-//         w-full
-//         sm:w-[calc((100%-24px)/2)]
-//         md:w-[calc((100%-48px)/3)]
-//         xl:w-[calc((100%-72px)/4)]
-//         rounded-2xl shadow-md bg-white
-//         hover:scale-105 transition-all
-//       "
-//     >
-//       <Link to={`/details/${vehicle.id}`}>
-//         <div className="relative">
-//           <img
-//             src={vehicle.images?.[0] || "/placeholder.jpg"}
-//             alt={vehicle.type || "Vehicle"}
-//             className="rounded w-full h-[220px] object-cover"
-//           />
-//           <button
-//             onClick={handleFavoriteClick}
-//             className={`absolute top-2 right-2 p-1 rounded-full shadow transition-colors ${
-//               isFavorite(vehicle.id) ? "bg-red-100" : "bg-white"
-//             }`}
-//             title={
-//               isFavorite(vehicle.id)
-//                 ? "Remove from favorites"
-//                 : "Add to favorites"
-//             }
-//           >
-//             <svg
-//               width="28"
-//               height="28"
-//               viewBox="0 0 24 24"
-//               fill={isFavorite(vehicle.id) ? "#e11d48" : "#ffffff"}
-//               stroke="#e11d48"
-//               strokeWidth="2"
-//               strokeLinecap="round"
-//               strokeLinejoin="round"
-//               style={{ transition: "fill 0.2s, stroke 0.2s" }}
-//             >
-//               <path d="M12 21s-7-5.686-7-10.25A4.75 4.75 0 0 1 12 6.25a4.75 4.75 0 0 1 7 4.5C19 15.314 12 21 12 21z" />
-//             </svg>
-//           </button>
-//         </div>
-
-//         <div className="info p-5">
-//           <div className="flex justify-between">
-//             <div>
-//               <p className="font-bold text-lg">{vehicle.type || "Unknown"}</p>
-//               <p className="text-gray-600">{vehicle.category || "N/A"}</p>
-//             </div>
-//             <div>
-//               <p className="text-primary font-bold">
-//                 {vehicle.price_per_day ? `${vehicle.price_per_day}$` : "N/A"}
-//               </p>
-//               <p className="text-sm text-gray-500">{t("vehicles.perDay")}</p>
-//             </div>
-//           </div>
-
-//           <div className="rate py-2">
-//             {Array.from({
-//               length: Math.round(vehicle.reviews?.[0]?.rating || 0),
-//             }).map((_, idx) => (
-//               <i key={idx} className="fa-solid fa-star text-yellow-500"></i>
-//             ))}
-//           </div>
-
-//           <div className="flex justify-between pt-3 text-sm text-gray-700">
-//             <div className="flex items-center gap-1">
-//               <img src={AutoIcon} alt="Transmission" className="w-4" />
-//               <span>
-//                 {vehicle.manual
-//                   ? t("vehicles.manual")
-//                   : t("vehicles.automatic")}
-//               </span>
-//             </div>
-//             <div className="flex items-center gap-1">
-//               <img src={Fuel} alt="Fuel" className="w-4" />
-//               <span>{vehicle.fuel || "N/A"}</span>
-//             </div>
-//             <div className="flex items-center gap-1">
-//               <img src={Air} alt="A/C" className="w-4" />
-//               <span>
-//                 {vehicle.airCondition
-//                   ? t("vehicles.airCondition")
-//                   : t("vehicles.noAirCondition")}
-//               </span>
-//             </div>
-//           </div>
-
-//           <button className="bg-primary w-full mt-4 rounded py-2 text-white text-sm hover:bg-opacity-90">
-//             {t("vehicles.rentNow")}
-//           </button>
-//         </div>
-//       </Link>
-//     </div>
-//   );
-// }
-
-
-
-
-// import React, { useState } from "react";
-// import { Link } from "react-router-dom";
-// import { useTranslation } from "react-i18next";
-// import AutoIcon from "./../../assets/AutoIcon.png";
-// import Fuel from "./../../assets/Fuel.png";
-// import Air from "./../../assets/Air.png";
-// import { useFavorites } from "../../contexts/FavoriteContext";
-
-// export default function VehiclesCard({ vehicle }) {
-//   const { t } = useTranslation();
-//   const { isFavorite, toggleFavorite } = useFavorites();
-
-//   const [showModal, setShowModal] = useState(false);
-//   const [isSubmitting, setIsSubmitting] = useState(false);
-
-//   if (!vehicle) return null;
-
-//   const favorite = isFavorite(vehicle.id);
-
-//   const handleFavoriteClick = (e) => {
-//     e.preventDefault();
-//     e.stopPropagation();
-//     toggleFavorite(vehicle.id);
-//   };
-
-//   // formData و formErrors ممكن تعيد تعريفهم هنا أو تبسطها حسب الحاجة
-//   // لكن هنا مثال بسيط مع البيانات الأساسية:
-//   const [formData, setFormData] = useState({
-//     fullName: "",
-//     email: "",
-//     location: "",
-//     address: "",
-//     deliveryDate: "",
-//     rentalDays: "",
-//     cardName: "",
-//     cardNumber: "",
-//     expiration: "",
-//     cvv: "",
-//     payment: "",
-//     notes: "",
-//   });
-//   const [formErrors, setFormErrors] = useState({});
-
-//   const handleChange = (e) => {
-//     const { name, value } = e.target;
-//     setFormData(prev => ({ ...prev, [name]: value }));
-//   };
-
-//   return (
-//     <div
-//       className="
-//         card
-//         w-full
-//         sm:w-[calc((100%-24px)/2)]
-//         md:w-[calc((100%-48px)/3)]
-//         xl:w-[calc((100%-72px)/4)]
-//         rounded-2xl shadow-md bg-white
-//         hover:scale-105 transition-all cursor-pointer
-//         relative
-//       "
-//       onClick={() => {
-//         window.location.href = `/details/${vehicle.id}`;
-//       }}
-//     >
-//       <img
-//         src={vehicle.images?.[0] || "/placeholder.jpg"}
-//         alt={vehicle.type || "Vehicle"}
-//         className="rounded w-full h-[220px] object-cover"
-//         style={{
-//           // border: favorite ? "3px solid #e11d48" : "3px solid transparent",
-//           transition: "border 0.3s",
-//         }}
-//       />
-
-//       <button
-//         onClick={handleFavoriteClick}
-//         className={`absolute top-2 right-2 p-1 rounded-full shadow transition-colors ${
-//           favorite ? "bg-red-100" : "bg-white"
-//         }`}
-//         title={favorite ? t("Remove from favorites") : t("Add to favorites")}
-//         aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
-//       >
-//         <svg
-//           width="28"
-//           height="28"
-//           viewBox="0 0 24 24"
-//           fill={favorite ? "#e11d48" : "#ffffff"}
-//           stroke="#e11d48"
-//           strokeWidth="2"
-//           strokeLinecap="round"
-//           strokeLinejoin="round"
-//           style={{ transition: "fill 0.3s, stroke 0.3s" }}
-//         >
-//           <path d="M12 21s-7-5.686-7-10.25A4.75 4.75 0 0 1 12 6.25a4.75 4.75 0 0 1 7 4.5C19 15.314 12 21 12 21z" />
-//         </svg>
-//       </button>
-
-//       <div className="info p-5">
-//         <div className="flex justify-between">
-//           <div>
-//             <p className="font-bold text-lg">{vehicle.type || "Unknown"}</p>
-//             <p className="text-gray-600">{vehicle.category || "N/A"}</p>
-//           </div>
-//           <div>
-//             <p className="text-primary font-bold">
-//               {vehicle.price_per_day ? `${vehicle.price_per_day}$` : "N/A"}
-//             </p>
-//             <p className="text-sm text-gray-500">{t("vehicles.perDay")}</p>
-//           </div>
-//         </div>
-
-//         <div className="rate py-2">
-//           {Array.from({
-//             length: Math.round(vehicle.reviews?.[0]?.rating || 0),
-//           }).map((_, idx) => (
-//             <i key={idx} className="fa-solid fa-star text-yellow-500"></i>
-//           ))}
-//         </div>
-
-//         <div className="flex justify-between pt-3 text-sm text-gray-700">
-//           <div className="flex items-center gap-1">
-//             <img src={AutoIcon} alt="Transmission" className="w-4" />
-//             <span>
-//               {vehicle.manual
-//                 ? t("vehicles.manual")
-//                 : t("vehicles.automatic")}
-//             </span>
-//           </div>
-//           <div className="flex items-center gap-1">
-//           <div className="flex items-center gap-1">
-//             <span>
-//               {vehicle.airCondition
-//                 ? t("vehicles.airCondition")
-//                 : t("vehicles.noAirCondition")}
-//             </span>
-//           </div>
-//         </div>
-
-//         <button className="bg-primary w-full mt-4 rounded py-2 text-white text-sm hover:bg-opacity-90">
-//           {t("vehicles.rentNow")}
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import AutoIcon from "./../../assets/AutoIcon.png";
 import { useFavorites } from "../../contexts/FavoriteContext";
+import AutoIcon from "./../../assets/AutoIcon.png";
+import Fuel from "./../../assets/Fuel.png";
+import Air from "./../../assets/Air.png";
+import RentalModal from "../Details/RentalModal"; // استيراد المودال
 
-export default function VehiclesCard({ vehicle }) {
+export default function VehiclesCard({ vehicle, onUnfavorite }) {
   const { t } = useTranslation();
-  const { isFavorite, toggleFavorite } = useFavorites();
+  const { toggleFavorite, isFavorite } = useFavorites();
+
+  const [showModal, setShowModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   if (!vehicle) return null;
 
-  const favorite = isFavorite(vehicle.id);
-
-  const handleFavoriteClick = (e) => {
+  const handleFavoriteClick = async (e) => {
     e.preventDefault();
-    e.stopPropagation();
-    toggleFavorite(vehicle.id);
+    await toggleFavorite(vehicle.id);
+    if (onUnfavorite && isFavorite(vehicle.id) === false) {
+      onUnfavorite(); // إزالة من القائمة لو اتشالت من الفيفوريت
+    }
   };
 
-  // حساب متوسط تقييم السيارة لو عندك data جاهزة
-  // لو عندك array reviews مع rate لكل تقييم، تقدر تحسب المتوسط هنا
-  const averageRating = vehicle.reviews && vehicle.reviews.length
-    ? Math.round(
-        vehicle.reviews.reduce((sum, r) => sum + Number(r.rate || 0), 0) /
-          vehicle.reviews.length
-      )
-    : 0;
+  // formData و formErrors ممكن تعيد تعريفهم هنا أو تبسطها حسب الحاجة
+  // لكن هنا مثال بسيط مع البيانات الأساسية:
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    location: "",
+    address: "",
+    deliveryDate: "",
+    rentalDays: "",
+    cardName: "",
+    cardNumber: "",
+    expiration: "",
+    cvv: "",
+    payment: "",
+    notes: "",
+  });
+  const [formErrors, setFormErrors] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   return (
-    <div
-      className="
-        card
-        w-full
-        sm:w-[calc((100%-24px)/2)]
-        md:w-[calc((100%-48px)/3)]
-        xl:w-[calc((100%-72px)/4)]
-        rounded-2xl shadow-md bg-white
-        hover:scale-105 transition-all cursor-pointer
-        relative
-      "
-      onClick={() => {
-        window.location.href = `/details/${vehicle.id}`;
-      }}
-    >
-      <img
-        src={vehicle.images?.[0] || "/placeholder.jpg"}
-        alt={vehicle.type || "Vehicle"}
-        className="rounded w-full h-[220px] object-cover"
-      />
-
-      <button
-        onClick={handleFavoriteClick}
-        className={`absolute top-2 right-2 p-1 rounded-full shadow transition-colors ${
-          favorite ? "bg-red-100" : "bg-white"
-        }`}
-        title={favorite ? t("Remove from favorites") : t("Add to favorites")}
-        aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
+    <>
+      <div
+        className="
+          card
+          w-full
+          sm:w-[calc((100%-24px)/2)]
+          md:w-[calc((100%-48px)/3)]
+          xl:w-[calc((100%-72px)/4)]
+          rounded-2xl shadow-md bg-white
+          hover:scale-105 transition-all
+        "
       >
-        <svg
-          width="28"
-          height="28"
-          viewBox="0 0 24 24"
-          fill={favorite ? "#e11d48" : "#ffffff"}
-          stroke="#e11d48"
-          strokeWidth="2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          style={{ transition: "fill 0.3s, stroke 0.3s" }}
-        >
-          <path d="M12 21s-7-5.686-7-10.25A4.75 4.75 0 0 1 12 6.25a4.75 4.75 0 0 1 7 4.5C19 15.314 12 21 12 21z" />
-        </svg>
-      </button>
-
-      <div className="info p-5">
-        <div className="flex justify-between">
-          <div>
-            <p className="font-bold text-lg">{vehicle.type || "Unknown"}</p>
-            <p className="text-gray-600">{vehicle.category || "N/A"}</p>
+        <Link to={`/details/${vehicle.id}`}>
+          <div className="relative">
+            <img
+              src={vehicle.images?.[0] || "/placeholder.jpg"}
+              alt={vehicle.type || "Vehicle"}
+              className="rounded w-full h-[220px] object-contain"
+            />
+            <button
+              onClick={handleFavoriteClick}
+              className={`absolute top-2 right-2 p-1 rounded-full shadow transition-colors ${
+                isFavorite(vehicle.id) ? "bg-red-100" : "bg-white"
+              }`}
+              title={
+                isFavorite(vehicle.id)
+                  ? "Remove from favorites"
+                  : "Add to favorites"
+              }
+            >
+              <svg
+                width="28"
+                height="28"
+                viewBox="0 0 24 24"
+                fill={isFavorite(vehicle.id) ? "#e11d48" : "#ffffff"}
+                stroke="#e11d48"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                style={{ transition: "fill 0.2s, stroke 0.2s" }}
+              >
+                <path d="M12 21s-7-5.686-7-10.25A4.75 4.75 0 0 1 12 6.25a4.75 4.75 0 0 1 7 4.5C19 15.314 12 21 12 21z" />
+              </svg>
+            </button>
           </div>
-          <div>
-            <p className="text-primary font-bold">
-              {vehicle.price_per_day ? `${vehicle.price_per_day}$` : "N/A"}
-            </p>
-            <p className="text-sm text-gray-500">{t("vehicles.perDay")}</p>
-          </div>
-        </div>
 
-        <div className="rate py-2">
-          {Array.from({ length: averageRating }).map((_, idx) => (
-            <i key={idx} className="fa-solid fa-star text-yellow-500"></i>
-          ))}
-        </div>
+          <div className="info p-5">
+            <div className="flex justify-between">
+              <div>
+                <p className="font-bold text-lg">{vehicle.type || "Unknown"}</p>
+                <p className="text-gray-600">{vehicle.category || "N/A"}</p>
+              </div>
+              <div>
+                <p className="text-primary font-bold">
+                  {vehicle.price_per_day ? `${vehicle.price_per_day}$ `: "N/A"}
+                </p>
+                <p className="text-sm text-gray-500">{t("vehicles.perDay")}</p>
+              </div>
+            </div>
 
-        <div className="flex justify-between pt-3 text-sm text-gray-700">
-          <div className="flex items-center gap-1">
-            <img src={AutoIcon} alt="Transmission" className="w-4" />
-            <span>{vehicle.manual ? t("vehicles.manual") : t("vehicles.automatic")}</span>
-          </div>
-          <div className="flex items-center gap-1">
-            <span>
-              {vehicle.airCondition ? t("vehicles.airCondition") : t("vehicles.noAirCondition")}
-            </span>
-          </div>
-        </div>
+            <div className="rate py-2">
+              {Array.from({
+                length: Math.round(vehicle.reviews?.[0]?.rating || 0),
+              }).map((_, idx) => (
+                <i key={idx} className="fa-solid fa-star text-yellow-500"></i>
+              ))}
+            </div>
 
-        <button
-          className="bg-primary w-full mt-4 rounded py-2 text-white text-sm hover:bg-opacity-90"
-          onClick={(e) => {
-            e.stopPropagation();
-            window.location.href = `/details/${vehicle.id}`;
-          }}
-        >
-          {t("vehicles.rentNow")}
-        </button>
+            <div className="flex justify-between pt-3 text-sm text-gray-700">
+              <div className="flex items-center gap-1">
+                <img src={AutoIcon} alt="Transmission" className="w-4" />
+                <span>
+                  {vehicle.manual
+                    ? t("vehicles.manual")
+                    : t("vehicles.automatic")}
+                </span>
+              </div>
+              <div className="flex items-center gap-1">
+                <img src={Fuel} alt="Fuel" className="w-4" />
+                <span>{vehicle.fuel || "N/A"}</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <img src={Air} alt="A/C" className="w-4" />
+                <span>
+                  {vehicle.airCondition
+                    ? t("vehicles.airCondition")
+                    : t("vehicles.noAirCondition")}
+                </span>
+              </div>
+            </div>
+
+            {/* بدل الزرار العادي هنا نخليه بيفتح المودال */}
+            <button
+              onClick={(e) => {
+                e.preventDefault(); // عشان ما ينقلش للرابط لما نفتح المودال
+                setShowModal(true);
+              }}
+              className="bg-primary w-full mt-4 rounded py-2 text-white text-sm hover:bg-opacity-90"
+            >
+              {t("vehicles.rentNow")}
+            </button>
+          </div>
+        </Link>
       </div>
-    </div>
+
+      {showModal && (
+        <RentalModal
+          formData={formData}
+          formErrors={formErrors}
+          setFormErrors={setFormErrors}
+          handleChange={handleChange}
+          setShowModal={setShowModal}
+          vehicleId={vehicle.id}
+          user={null} // لازم تمرر المستخدم لو متوفر Context مثلا
+          isSubmitting={isSubmitting}
+          setIsSubmitting={setIsSubmitting}
+        />
+      )}
+    </>
   );
 }
