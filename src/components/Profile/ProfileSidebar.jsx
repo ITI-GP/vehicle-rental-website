@@ -28,7 +28,7 @@ export default function ProfileSidebar({
 
   // Check if user is verified
   const isVerified = user?.user_metadata?.is_verified || false;
-  console.log("User verification status:", user?.user_metadata);
+  // console.log("User verification status:", user?.id);
 
   return (
     <>
