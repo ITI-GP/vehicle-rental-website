@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useCallback,useMemo } from "react";
 import { supabase } from "./../../Lib/supabaseClient";
 import car from "./../../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
@@ -249,7 +249,7 @@ export default function RegisterPage() {
   };
 
   const strengthScore = getPasswordStrength(formData.password);
-  const strengthBarColor = getStrengthColor(strengthScore);
+  // const strengthBarColor = getStrengthColor(strengthScore);
 
   return (
     <div className="relative w-full overflow-hidden">
@@ -257,7 +257,7 @@ export default function RegisterPage() {
         <img
           src={car}
           alt={t("auth.loginBackground")}
-          className="z-0 w-full h-full object-cover"
+          className="z-0  object-cover"
         />
       </div>
 

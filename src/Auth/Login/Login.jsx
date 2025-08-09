@@ -47,7 +47,7 @@ export default function LoginPage() {
       {/* ✅ Place ToastContainer at top-level (outside modal) */}
       <ToastContainer
         position="top-center"
-        autoClose={3000}
+        autoClose={2000}
         newestOnTop
         hideProgressBar
         closeOnClick
