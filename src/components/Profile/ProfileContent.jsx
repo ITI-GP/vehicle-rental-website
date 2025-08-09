@@ -395,8 +395,8 @@
 import { lazy, Suspense, useState, useRef } from "react";
 import PropTypes from "prop-types";
 import { supabase } from "../../Lib/supabaseClient";
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // Components
 import ProfileHeader from "./ProfileHeader";
@@ -426,14 +426,17 @@ const LoadingSpinner = () => (
 const ProfileContent = ({ activeTab, user, userRoles }) => {
   // Initialize form data with user data
   const [formData, setFormData] = useState({
-    name: user?.user_metadata?.name || '',
-    email: user?.email || '',
-    phone: user?.user_metadata?.phone || '',
-    address: user?.user_metadata?.address || '',
-    dateOfBirth: user?.user_metadata?.date_of_birth || '',
-    gender: user?.user_metadata?.gender || '',
-    avatar_url: user?.user_metadata?.avatar_url || ''
+    name: user?.user_metadata?.name || "",
+    email: user?.email || "",
+    phone: user?.user_metadata?.phone || "",
+    address: user?.user_metadata?.address || "",
+    dateOfBirth: user?.user_metadata?.date_of_birth || "",
+    gender: user?.user_metadata?.gender || "",
+    avatar_url: user?.user_metadata?.avatar_url || "",
   });
+
+  // Tab change is now handled by the parent ProfileLayout component
+  // via the activeTab prop
 
   const [isSaving, setIsSaving] = useState(false);
   const fileInputRef = useRef(null);
@@ -441,120 +444,176 @@ const ProfileContent = ({ activeTab, user, userRoles }) => {
   // Handle file upload
   const handleFileUpload = async (file) => {
     if (!file) {
-      toast.error('Please select a file to upload');
-      return { error: 'No file selected' };
+      toast.error("Please select a file to upload");
+      return { error: "No file selected" };
     }
 
-    // Validate file size (max 5MB)
-    const maxSize = 5 * 1024 * 1024;
+    // Check file size (max 5MB)
+    const maxSize = 5 * 1024 * 1024; // 5MB
     if (file.size > maxSize) {
-      const errorMsg = `File size (${(file.size / (1024 * 1024)).toFixed(2)}MB) exceeds the 5MB limit`;
+      const errorMsg = `File size (${(file.size / (1024 * 1024)).toFixed(
+        2
+      )}MB) exceeds the 5MB limit`;
       toast.error(errorMsg);
       return { error: errorMsg };
     }
 
-    // Validate file type
-    const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
+    // Check file type
+    const validTypes = ["image/jpeg", "image/png", "image/gif"];
     if (!validTypes.includes(file.type)) {
       const errorMsg = 'Unsupported file type. Please upload a JPEG, PNG, or GIF image.';
       toast.error(errorMsg);
       return { error: errorMsg };
     }
 
-    const toastId = toast.loading('Uploading image...');
-    try {
-      const fileExt = file.name.split('.').pop().toLowerCase();
-      const fileName = `${Date.now()}.${fileExt}`;
-      const filePath = `${user.id}/${fileName}`;
+    // Show upload in progress
+    const toastId = toast.loading("Uploading image...");
 
-      // Attempt to clean up previous avatars
+    try {
+      // Generate a unique file name with user ID as folder
+      const fileExt = file.name.split(".").pop().toLowerCase();
+      const fileName = `${Date.now()}.${fileExt}`;
+      const filePath = `${user.id}/${fileName}`; // Store in user's folder
+
+      // First, try to delete any existing avatar for this user
       try {
-        toast.update(toastId, { render: 'Cleaning up previous avatar...', type: 'info', isLoading: true });
-        const { data: list, error: listError } = await supabase.storage.from('avatars').list(user.id);
+        toast.update(toastId, {
+          render: "Cleaning up previous avatar...",
+          type: "info",
+          isLoading: true,
+        });
+
+        const { data: list, error: listError } = await supabase.storage
+          .from("avatars")
+          .list(user.id);
+
         if (!listError && list && list.length > 0) {
-          const filesToRemove = list.map(f => `${user.id}/${f.name}`);
-          const { error: removeError } = await supabase.storage.from('avatars').remove(filesToRemove);
+          const filesToRemove = list.map((file) => `${user.id}/${file.name}`);
+          const { error: removeError } = await supabase.storage
+            .from("avatars")
+            .remove(filesToRemove);
+
           if (removeError) {
-            console.warn('Could not remove existing avatar:', removeError);
+            console.warn(
+              "Warning: Could not remove existing avatar:",
+              removeError
+            );
+            // Continue with upload even if delete fails
           }
         }
       } catch (cleanupError) {
-        console.warn('Avatar cleanup error:', cleanupError);
+        console.warn("Warning during avatar cleanup:", cleanupError);
+        // Continue with upload even if cleanup fails
       }
 
-      toast.update(toastId, { render: 'Uploading new avatar...', type: 'info', isLoading: true });
+      // Upload the new file
+      toast.update(toastId, {
+        render: "Uploading new avatar...",
+        type: "info",
+        isLoading: true,
+      });
 
+      // Remove upsert: true (Supabase Storage does not support upsert)
       const { error: uploadError } = await supabase.storage
-        .from('avatars')
+        .from("avatars")
         .upload(filePath, file, {
-          cacheControl: '3600',
-          upsert: true,
+          cacheControl: "3600",
           contentType: file.type,
         });
 
       if (uploadError) {
-        toast.update(toastId, { render: 'Failed to upload image.', type: 'error', isLoading: false, autoClose: 3000 });
+        console.error("Upload error:", uploadError);
+        toast.update(toastId, {
+          render: "Failed to upload image. Please try again.",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
+        });
         return { error: uploadError.message };
       }
 
-      const { data: { publicUrl } } = supabase.storage.from('avatars').getPublicUrl(filePath);
-      const publicUrlWithCache = `${publicUrl}?v=${Date.now()}`;
+      // Get the public URL with a cache buster
+      const cacheBuster = `?v=${Date.now()}`;
+      const {
+        data: { publicUrl },
+      } = supabase.storage.from("avatars").getPublicUrl(filePath);
 
-      setFormData(prev => ({ ...prev, avatar_url: publicUrlWithCache }));
+      // Add cache buster to force refresh
+      const publicUrlWithCache = `${publicUrl}${cacheBuster}`;
 
-      toast.update(toastId, { render: 'Updating profile...', type: 'info', isLoading: true });
+      // Update the form data with the new avatar URL
+      setFormData((prev) => ({
+        ...prev,
+        avatar_url: publicUrlWithCache,
+      }));
 
-      const { error: updateError } = await supabase.auth.updateUser({
-        data: {
-      
+      // Also update the user's metadata with the new avatar URL
+      toast.update(toastId, {
+        render: "Updating profile...",
+        type: "info",
+        isLoading: true,
+      });
+
       // First update the auth user metadata
       const { error: updateAuthError } = await supabase.auth.updateUser({
-        data: { 
+        data: {
           ...user.user_metadata,
           avatar_url: publicUrlWithCache,
           updated_at: new Date().toISOString(),
-        }
+        },
       });
 
-      if (updateError) {
-        toast.update(toastId, { render: 'Uploaded but failed to update profile.', type: 'error', isLoading: false, autoClose: 3000 });
-        return { error: updateError.message };
-      
       if (updateAuthError) {
-        console.error('Error updating user metadata:', updateAuthError);
-        toast.update(toastId, { 
-          render: 'Uploaded but failed to update profile. Please try again.', 
-          type: 'error', 
+        console.error("Error updating user metadata:", updateAuthError);
+        toast.update(toastId, {
+          render: "Uploaded but failed to update profile. Please try again.",
+          type: "error",
           isLoading: false,
-          autoClose: 3000
+          autoClose: 3000,
         });
         return { error: updateAuthError.message };
       }
-      
+
       // Then update the users table using a stored procedure or RLS-friendly update
       try {
         const { error: updateUserError } = await supabase
-          .from('users')
-          .update({ 
+          .from("users")
+          .update({
             avatar_url: publicUrlWithCache,
-            updated_at: new Date().toISOString()
+            updated_at: new Date().toISOString(),
           })
-          .eq('id', user.id);
-          
+          .eq("id", user.id);
+
         if (updateUserError) {
-          console.warn('Warning: Could not update users table:', updateUserError);
+          console.warn(
+            "Warning: Could not update users table:",
+            updateUserError
+          );
           // Continue even if users table update fails
         }
       } catch (usersTableError) {
-        console.warn('Warning during users table update:', usersTableError);
+        console.warn("Warning during users table update:", usersTableError);
         // Continue even if users table update fails
       }
 
-      toast.update(toastId, { render: 'Profile picture updated successfully!', type: 'success', isLoading: false, autoClose: 3000 });
+      // Success! Update the toast
+      toast.update(toastId, {
+        render: "Profile picture updated successfully!",
+        type: "success",
+        isLoading: false,
+        autoClose: 3000,
+      });
+
       return { publicUrl: publicUrlWithCache };
     } catch (error) {
-      toast.update(toastId, { render: error.message || 'Failed to upload file.', type: 'error', isLoading: false, autoClose: 3000 });
-      return { error: error.message || 'Failed to upload file' };
+      console.error("Error in handleFileUpload:", error);
+      toast.update(toastId, {
+        render: error.message || "Failed to upload file. Please try again.",
+        type: "error",
+        isLoading: false,
+        autoClose: 3000,
+      });
+      return { error: error.message || "Failed to upload file" };
     } finally {
       setTimeout(() => {
         toast.dismiss(toastId);
@@ -569,41 +628,87 @@ const ProfileContent = ({ activeTab, user, userRoles }) => {
     setIsSaving(true);
 
     try {
-      const allowedFields = ['name', 'phone', 'address', 'dateOfBirth', 'gender', 'avatar_url'];
+      // Only include allowed fields in the update
+      const allowedFields = [
+        "name",
+        "phone",
+        "address",
+        "dateOfBirth",
+        "gender",
+        "avatar_url",
+      ];
 
-      const { data: { user: currentUser }, error: fetchError } = await supabase.auth.getUser();
+      // Get current user data
+      const {
+        data: { user: currentUser },
+        error: fetchError,
+      } = await supabase.auth.getUser();
+
       if (fetchError) throw fetchError;
 
       const currentMetadata = currentUser?.user_metadata || {};
+
+      // Prepare the update payload with only allowed and changed fields
       const updatePayload = {};
 
-      allowedFields.forEach(field => {
-        if (updatedData[field] !== undefined && updatedData[field] !== currentMetadata[field]) {
+      // Check each field that should be updated
+      allowedFields.forEach((field) => {
+        if (
+          updatedData[field] !== undefined &&
+          updatedData[field] !== currentMetadata[field]
+        ) {
           updatePayload[field] = updatedData[field];
         }
       });
 
+      // If nothing to update, return early
       if (Object.keys(updatePayload).length === 0) {
-        toast.info('No changes to save');
+        toast.info("No changes to save");
         return { success: true };
       }
 
+      // Add timestamp
       updatePayload.updated_at = new Date().toISOString();
-      const completeUpdate = { ...currentMetadata, ...updatePayload };
 
-      const { error } = await supabase.auth.updateUser({ data: completeUpdate });
+      // Prepare the complete update object
+      const completeUpdate = {
+        ...currentMetadata,
+        ...updatePayload,
+      };
+
+      // Update user metadata in Supabase
+
+      const { data, error } = await supabase.auth.updateUser({
+        data: completeUpdate,
+      });
+
       if (error) {
+        console.error("Supabase update error:", error);
         throw error;
       }
 
-      setFormData(prev => ({ ...prev, ...updatePayload }));
+      // Update local form data
+      setFormData((prev) => ({
+        ...prev,
+        ...updatePayload,
+      }));
 
-      // Refresh user info if needed (optional)
-      await supabase.auth.getUser();
+      // Force a refresh of the user data
 
-      toast.success('Profile updated successfully!');
+      const {
+        data: { user: refreshedUser },
+      } = await supabase.auth.getUser();
+
+      // Show success message
+      toast.success("Profile updated successfully!");
+
       return { success: true };
     } catch (error) {
+      console.error("Error in handleSave:", {
+        message: error.message,
+        details: error,
+        stack: error.stack,
+      });
       toast.error(`Failed to update profile: ${error.message}`);
       return { error: error.message };
     } finally {
@@ -614,17 +719,17 @@ const ProfileContent = ({ activeTab, user, userRoles }) => {
   // Render tab content based on activeTab
   const renderTabContent = (tab) => {
     switch (tab) {
-      case 'overview':
+      case "overview":
         return <OverviewTab user={user} userRoles={userRoles} />;
-      case 'rented':
+      case "rented":
         return <RentedCarsTab user={user} />;
-      case 'listings':
+      case "listings":
         return <MyListingsTab user={user} />;
-      case 'favorites':
+      case "favorites":
         return <FavoritesTab user={user} />;
-      case 'notifications':
+      case "notifications":
         return <NotificationsTab user={user} />;
-      case 'settings':
+      case "settings":
         return (
           <SettingsTab
             user={user}

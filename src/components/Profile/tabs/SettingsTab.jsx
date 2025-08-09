@@ -1,22 +1,29 @@
-import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import PropTypes from 'prop-types';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import { supabase } from '../../../Lib/supabaseClient';
+import { useTranslation } from "react-i18next";
+import { useState } from "react";
+import PropTypes from "prop-types";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { supabase } from "../../../Lib/supabaseClient";
 
 // Import CameraIcon (assuming you're using Heroicons; adjust if using a different icon library)
-import { CameraIcon } from '@heroicons/react/24/solid';
+import { CameraIcon } from "@heroicons/react/24/solid";
 
-const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUpload }) => {
+const SettingsTab = ({
+  user,
+  onSave,
+  formData,
+  setFormData,
+  isSaving,
+  onFileUpload,
+}) => {
   const { t } = useTranslation();
   const [passwordData, setPasswordData] = useState({
-    currentPassword: '',
-    newPassword: '',
-    confirmPassword: '',
+    currentPassword: "",
+    newPassword: "",
+    confirmPassword: "",
   });
-  const [passwordError, setPasswordError] = useState('');
-  const [passwordSuccess, setPasswordSuccess] = useState('');
+  const [passwordError, setPasswordError] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState("");
   const [isPasswordSaving, setIsPasswordSaving] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
 
@@ -36,7 +43,7 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
       [name]: value,
     }));
     // Clear error when user types
-    if (passwordError) setPasswordError('');
+    if (passwordError) setPasswordError("");
   };
 
   const handleChangePassword = async (e) => {
@@ -44,17 +51,24 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
 
     // Validate passwords
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      setPasswordError(t('profile.settings.passwordsDontMatch', 'Passwords do not match'));
+      setPasswordError(
+        t("profile.settings.passwordsDontMatch", "Passwords do not match")
+      );
       return;
     }
 
     if (passwordData.newPassword.length < 6) {
-      setPasswordError(t('profile.settings.passwordTooShort', 'Password must be at least 6 characters'));
+      setPasswordError(
+        t(
+          "profile.settings.passwordTooShort",
+          "Password must be at least 6 characters"
+        )
+      );
       return;
     }
 
     setIsPasswordSaving(true);
-    setPasswordError('');
+    setPasswordError("");
 
     try {
       // Update password using Supabase
@@ -65,18 +79,23 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
       if (error) throw error;
 
       // Show success message and clear form
-      setPasswordSuccess(t('profile.settings.passwordUpdated', 'Password updated successfully!'));
+      setPasswordSuccess(
+        t("profile.settings.passwordUpdated", "Password updated successfully!")
+      );
       setPasswordData({
-        currentPassword: '',
-        newPassword: '',
-        confirmPassword: '',
+        currentPassword: "",
+        newPassword: "",
+        confirmPassword: "",
       });
 
       // Clear success message after 5 seconds
-      setTimeout(() => setPasswordSuccess(''), 5000);
+      setTimeout(() => setPasswordSuccess(""), 5000);
     } catch (error) {
-      console.error('Error updating password:', error);
-      setPasswordError(error.message || t('profile.settings.passwordUpdateError', 'Failed to update password'));
+      console.error("Error updating password:", error);
+      setPasswordError(
+        error.message ||
+          t("profile.settings.passwordUpdateError", "Failed to update password")
+      );
     } finally {
       setIsPasswordSaving(false);
     }
@@ -87,6 +106,32 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
     const file = e.target.files[0];
     if (!file) return;
 
+    // Validate file type and size (max 5MB)
+    const validTypes = [
+      "image/jpeg",
+      "image/png",
+      "image/gif",
+      "image/jpg",
+      "image/webp",
+    ];
+    if (!validTypes.includes(file.type)) {
+      toast.error(
+        t(
+          "profile.settings.invalidFileType",
+          "Invalid file type. Please upload an image."
+        )
+      );
+      e.target.value = "";
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      toast.error(
+        t("profile.settings.fileTooLarge", "File is too large. Max 5MB.")
+      );
+      e.target.value = "";
+      return;
+    }
+
     try {
       setIsUploading(true);
 
@@ -95,11 +140,11 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
       const { publicUrl, error: uploadError } = await onFileUpload(file);
 
       if (uploadError) {
-        throw new Error(uploadError.message || 'Failed to upload image');
+        throw new Error(uploadError.message || "Failed to upload image");
       }
 
       if (!publicUrl) {
-        throw new Error('Failed to get image URL');
+        throw new Error("Failed to get image URL");
       }
 
       // The parent component should handle updating the user's metadata
@@ -109,13 +154,21 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
         avatar_url: publicUrl,
       }));
 
-      toast.success(t('profile.settings.profilePictureUpdated', 'Profile picture updated successfully!'));
+      toast.success(
+        t(
+          "profile.settings.profilePictureUpdated",
+          "Profile picture updated successfully!"
+        )
+      );
     } catch (error) {
-      console.error('Error in handleFileChange:', error);
-      toast.error(error.message || t('profile.settings.uploadError', 'Failed to upload image'));
+      console.error("Error in handleFileChange:", error);
+      toast.error(
+        error.message ||
+          t("profile.settings.uploadError", "Failed to upload image")
+      );
     } finally {
       setIsUploading(false);
-      e.target.value = ''; // Reset file input
+      e.target.value = ""; // Reset file input
     }
   };
 
@@ -123,20 +176,26 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
     <div className="space-y-6">
       <div>
         <h2 className="text-xl font-semibold text-gray-900">
-          {t('profile.settings.title', 'Account Settings')}
+          {t("profile.settings.title", "Account Settings")}
         </h2>
         <p className="mt-1 text-sm text-gray-500">
-          {t('profile.settings.description', 'Manage your account settings and preferences')}
+          {t(
+            "profile.settings.description",
+            "Manage your account settings and preferences"
+          )}
         </p>
       </div>
 
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
           <h3 className="text-lg leading-6 font-medium text-gray-900">
-            {t('profile.settings.profile', 'Profile Information')}
+            {t("profile.settings.profile", "Profile Information")}
           </h3>
           <p className="mt-1 max-w-2xl text-sm text-gray-500">
-            {t('profile.settings.profileDescription', 'Update your account information')}
+            {t(
+              "profile.settings.profileDescription",
+              "Update your account information"
+            )}
           </p>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
@@ -144,17 +203,28 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
             {/* Avatar Upload */}
             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
               <dt className="text-sm font-medium text-gray-500">
-                {t('profile.settings.profilePicture', 'Profile Picture')}
+                {t("profile.settings.profilePicture", "Profile Picture")}
               </dt>
               <dd className="mt-1 flex items-center space-x-4 sm:mt-0 sm:col-span-2">
                 <div className="relative">
                   <img
-                    className={`h-16 w-16 rounded-full object-cover ${isUploading ? 'opacity-50' : ''}`}
-                    src={formData?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(formData?.name || 'User')}&background=random`}
+                    className={`h-16 w-16 rounded-full object-cover ${
+                      isUploading ? "opacity-50" : ""
+                    }`}
+                    src={
+                      formData?.avatar_url
+                        ? formData.avatar_url
+                        : `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                            formData?.name || "User"
+                          )}&background=random`
+                    }
                     alt="Profile"
                     onError={(e) => {
                       // Fallback to default avatar if image fails to load
-                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(formData?.name || 'User')}&background=random`;
+                      e.target.onerror = null;
+                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(
+                        formData?.name || "User"
+                      )}&background=random`;
                     }}
                   />
                   {isUploading && (
@@ -166,10 +236,17 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
                     htmlFor="avatar-upload"
                     className={`absolute -bottom-1 -right-1 p-1.5 rounded-full text-white ${
                       isUploading
-                        ? 'bg-gray-400 cursor-not-allowed'
-                        : 'bg-indigo-600 hover:bg-indigo-700 cursor-pointer'
+                        ? "bg-gray-400 cursor-not-allowed"
+                        : "bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
                     } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500`}
-                    title={isUploading ? t('profile.settings.uploading', 'Uploading...') : t('profile.settings.changePicture', 'Change profile picture')}
+                    title={
+                      isUploading
+                        ? t("profile.settings.uploading", "Uploading...")
+                        : t(
+                            "profile.settings.changePicture",
+                            "Change profile picture"
+                          )
+                    }
                   >
                     <CameraIcon className="w-4 h-4" />
                     <input
@@ -183,38 +260,54 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
                   </label>
                 </div>
                 <div className="text-sm text-gray-500">
-                  <p className="text-xs">{t('profile.settings.photoSize', 'PNG, JPG, GIF up to 5MB')}</p>
+                  <p className="text-xs">
+                    {t("profile.settings.photoSize", "PNG, JPG, GIF up to 5MB")}
+                  </p>
                 </div>
               </dd>
             </div>
 
             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">{t('profile.settings.fullName', 'Full name')}</dt>
+              <dt className="text-sm font-medium text-gray-500">
+                {t("profile.settings.fullName", "Full name")}
+              </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   type="text"
                   name="name"
-                  value={formData?.name || ''}
+                  value={formData?.name || ""}
                   onChange={handleInputChange}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  placeholder={t('profile.settings.enterFullName', 'Enter your full name')}
+                  placeholder={t(
+                    "profile.settings.enterFullName",
+                    "Enter your full name"
+                  )}
                 />
               </dd>
             </div>
             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">{t('profile.settings.email', 'Email address')}</dt>
-              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">{user?.email}</dd>
+              <dt className="text-sm font-medium text-gray-500">
+                {t("profile.settings.email", "Email address")}
+              </dt>
+              <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                {user?.email}
+              </dd>
             </div>
             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">{t('profile.settings.phone', 'Phone number')}</dt>
+              <dt className="text-sm font-medium text-gray-500">
+                {t("profile.settings.phone", "Phone number")}
+              </dt>
               <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                 <input
                   type="tel"
                   name="phone"
-                  value={formData?.phone || ''}
+                  value={formData?.phone || ""}
                   onChange={handleInputChange}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  placeholder={t('profile.settings.enterPhone', 'Enter your phone number')}
+                  placeholder={t(
+                    "profile.settings.enterPhone",
+                    "Enter your phone number"
+                  )}
                 />
               </dd>
             </div>
@@ -224,13 +317,19 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
 
       <div className="bg-white shadow overflow-hidden sm:rounded-lg">
         <div className="px-4 py-5 sm:px-6">
-          <h3 className="text-lg leading-6 font-medium text-gray-900">{t('profile.settings.password', 'Change Password')}</h3>
-          <p className="mt-1 max-w-2xl text-sm text-gray-500">{t('profile.settings.passwordDescription', 'Update your password')}</p>
+          <h3 className="text-lg leading-6 font-medium text-gray-900">
+            {t("profile.settings.password", "Change Password")}
+          </h3>
+          <p className="mt-1 max-w-2xl text-sm text-gray-500">
+            {t("profile.settings.passwordDescription", "Update your password")}
+          </p>
         </div>
         <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
           <dl className="sm:divide-y sm:divide-gray-200">
             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">{t('profile.settings.currentPassword', 'Current password')}</dt>
+              <dt className="text-sm font-medium text-gray-500">
+                {t("profile.settings.currentPassword", "Current password")}
+              </dt>
               <dd className="mt-1 text-sm sm:mt-0 sm:col-span-2">
                 <input
                   type="password"
@@ -238,12 +337,17 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
                   value={passwordData.currentPassword}
                   onChange={handlePasswordChange}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  placeholder={t('profile.settings.enterCurrentPassword', 'Enter current password')}
+                  placeholder={t(
+                    "profile.settings.enterCurrentPassword",
+                    "Enter current password"
+                  )}
                 />
               </dd>
             </div>
             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">{t('profile.settings.newPassword', 'New password')}</dt>
+              <dt className="text-sm font-medium text-gray-500">
+                {t("profile.settings.newPassword", "New password")}
+              </dt>
               <dd className="mt-1 text-sm sm:mt-0 sm:col-span-2">
                 <input
                   type="password"
@@ -251,12 +355,17 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
                   value={passwordData.newPassword}
                   onChange={handlePasswordChange}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  placeholder={t('profile.settings.enterNewPassword', 'Enter new password')}
+                  placeholder={t(
+                    "profile.settings.enterNewPassword",
+                    "Enter new password"
+                  )}
                 />
               </dd>
             </div>
             <div className="py-4 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-              <dt className="text-sm font-medium text-gray-500">{t('profile.settings.confirmPassword', 'Confirm new password')}</dt>
+              <dt className="text-sm font-medium text-gray-500">
+                {t("profile.settings.confirmPassword", "Confirm new password")}
+              </dt>
               <dd className="mt-1 text-sm sm:mt-0 sm:col-span-2">
                 <input
                   type="password"
@@ -264,7 +373,10 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
                   value={passwordData.confirmPassword}
                   onChange={handlePasswordChange}
                   className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md"
-                  placeholder={t('profile.settings.confirmNewPassword', 'Confirm new password')}
+                  placeholder={t(
+                    "profile.settings.confirmNewPassword",
+                    "Confirm new password"
+                  )}
                 />
               </dd>
             </div>
@@ -277,12 +389,23 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
         <div className="rounded-md bg-green-50 p-4 mb-4">
           <div className="flex">
             <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-green-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <svg
+                className="h-5 w-5 text-green-400"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                  clipRule="evenodd"
+                />
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-green-800">{passwordSuccess}</p>
+              <p className="text-sm font-medium text-green-800">
+                {passwordSuccess}
+              </p>
             </div>
           </div>
         </div>
@@ -293,12 +416,23 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
         <div className="rounded-md bg-red-50 p-4 mb-4">
           <div className="flex">
             <div className="flex-shrink-0">
-              <svg className="h-5 w-5 text-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
-                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              <svg
+                className="h-5 w-5 text-red-400"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z"
+                  clipRule="evenodd"
+                />
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm font-medium text-red-800">{passwordError}</p>
+              <p className="text-sm font-medium text-red-800">
+                {passwordError}
+              </p>
             </div>
           </div>
         </div>
@@ -317,7 +451,7 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
               onClick={() => window.history.back()}
               className="inline-flex justify-center py-2 px-4 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
             >
-              {t('common.back', 'Back')}
+              {t("common.back", "Back")}
             </button>
           </div>
           <div className="flex space-x-3">
@@ -334,24 +468,36 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
                     fill="none"
                     viewBox="0 0 24 24"
                   >
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
                     <path
                       className="opacity-75"
                       fill="currentColor"
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  {t('common.saving', 'Saving...')}
+                  {t("common.saving", "Saving...")}
                 </>
               ) : (
-                t('common.saveChanges', 'Save Profile')
+                t("common.saveChanges", "Save Profile")
               )}
             </button>
 
             <button
               type="button"
               onClick={handleChangePassword}
-              disabled={isPasswordSaving || !passwordData.currentPassword || !passwordData.newPassword || !passwordData.confirmPassword}
+              disabled={
+                isPasswordSaving ||
+                !passwordData.currentPassword ||
+                !passwordData.newPassword ||
+                !passwordData.confirmPassword
+              }
               className="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isPasswordSaving ? (
@@ -362,17 +508,24 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
                     fill="none"
                     viewBox="0 0 24 24"
                   >
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
                     <path
                       className="opacity-75"
                       fill="currentColor"
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  {t('common.saving', 'Saving...')}
+                  {t("common.saving", "Saving...")}
                 </>
               ) : (
-                t('profile.settings.changePassword', 'Change Password')
+                t("profile.settings.changePassword", "Change Password")
               )}
             </button>
           </div>
