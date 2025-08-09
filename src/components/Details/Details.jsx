@@ -1121,7 +1121,9 @@ export default function DetailsPage() {
         </div>
       </div>
 
-      <Reviews reviews={vehicle.reviews} />
+      {/* <Reviews reviews={vehicle.reviews} /> */}
+      {vehicle && vehicle.id && <Reviews vehicleId={vehicle.id} />}
+
 
       {relatedVehicle.length > 0 && (
         <>
