@@ -248,7 +248,7 @@ export default function RegisterPage() {
     }
   };
 
-  const strengthScore = getPasswordStrength(formData.password);
+  // const strengthScore = getPasswordStrength(formData.password);
   // const strengthBarColor = getStrengthColor(strengthScore);
 
   return (
