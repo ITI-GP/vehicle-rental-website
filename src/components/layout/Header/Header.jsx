@@ -65,11 +65,15 @@ export default function Header() {
                   to="/profile"
                   className="flex items-center gap-2 text-gray-700 hover:text-black"
                 >
-                  {user?.user_metadata?.avatar ? (
+                  {user?.avatar_url ? (
                     <img
-                      src={user.user_metadata.avatar}
+                      src={user.avatar_url}
                       alt="Profile"
                       className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                      onError={(e) => {
+                        e.target.style.display = 'none';
+                        e.target.nextElementSibling.style.display = 'flex';
+                      }}
                     />
                   ) : (
                     <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">
@@ -128,11 +132,15 @@ export default function Header() {
                     className="flex items-center gap-2 text-gray-700 hover:text-black"
                     onClick={() => setMenuOpen(false)}
                   >
-                    {user?.user_metadata?.avatar ? (
+                    {user?.avatar_url ? (
                       <img
-                        src={user.user_metadata.avatar}
+                        src={user.avatar_url}
                         alt="Profile"
                         className="w-8 h-8 rounded-full object-cover border border-gray-200"
+                        onError={(e) => {
+                          e.target.style.display = 'none';
+                          e.target.nextElementSibling.style.display = 'flex';
+                        }}
                       />
                     ) : (
                       <div className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center">

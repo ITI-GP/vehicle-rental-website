@@ -203,7 +203,8 @@ export default function RegisterPage() {
     }
 
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // 1. Sign up the user with Supabase Auth
+      const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -213,20 +214,26 @@ export default function RegisterPage() {
             address: formData.address,
             date_of_birth: formData.dateOfBirth,
             gender: formData.gender,
+            email_verified: false,
+            phone_verified: false,
           },
         },
       });
 
-      if (error) {
-        setMessage(`${t("register.signUpFailed")}: ${error.message}`);
+      if (signUpError) {
+        setMessage(`${t("register.signUpFailed")}: ${signUpError.message}`);
         return;
       }
 
-      const userId = data.user.id;
+      const userId = authData.user.id;
+      let avatarUrl = '';
+
+      // 2. Handle avatar upload if exists
       if (avatarFile && userId) {
         const fileExt = avatarFile.name.split(".").pop();
         const filePath = `${userId}-${Date.now()}.${fileExt}`;
 
+        // Upload the avatar to storage
         const { error: uploadError } = await supabase.storage
           .from("avatars")
           .upload(filePath, avatarFile);
@@ -236,31 +243,42 @@ export default function RegisterPage() {
           return;
         }
 
-        const { data: publicUrlData, error: urlError } = supabase.storage
+        // Get the public URL of the uploaded avatar
+        const { data: publicUrlData } = supabase.storage
           .from("avatars")
           .getPublicUrl(filePath);
+        
+        avatarUrl = publicUrlData.publicUrl;
+      }
 
-        if (urlError) {
-          setMessage(`${t("register.avatarUrlFailed")}: ${urlError.message}`);
-          return;
-        }
+      // 3. Insert user data into the users table
+      const { error: userInsertError } = await supabase
+        .from('users')
+        .insert([
+          {
+            id: userId,
+            email: formData.email,
+            name: formData.name,
+            role: 'user', // Default role
+            isVerified: false,
+            isCompany: false,
+            isOwner: false,
+            isRenter: false,
+            avatar_url: avatarUrl,
+            created_at: new Date().toISOString()
+          }
+        ]);
 
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .update({ avatar_url: publicUrlData.publicUrl })
-          .eq("id", userId);
-
-        if (profileError) {
-          setMessage(
-            `${t("register.profileUpdateFailed")}: ${profileError.message}`
-          );
-          return;
-        }
+      if (userInsertError) {
+        console.error('Error inserting user data:', userInsertError);
+        setMessage(`${t("register.userDataSaveFailed")}: ${userInsertError.message}`);
+        return;
       }
 
       toast.success(t("register.success"));
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
+      console.error('Registration error:', error);
       setMessage(`${t("register.signUpFailed")}: ${error.message}`);
     }
   };
@@ -274,7 +292,7 @@ export default function RegisterPage() {
         <img
           src={car}
           alt={t("auth.loginBackground")}
-          className="z-0 w-full h-full object-cover"
+          className="z-0  object-cover"
         />
       </div>
 
