@@ -14,8 +14,6 @@ export default function Header() {
   const navigate = useNavigate();
   const { favoriteCount } = useFavorites();
 
-
-
   const handleLogout = async () => {
     const { error } = await signOut();
     if (error) {
@@ -27,7 +25,11 @@ export default function Header() {
   };
 
   const getUserDisplayName = () => {
-    return user?.user_metadata?.name || user?.email?.split('@')[0] || t("profile.user");
+    return (
+      user?.user_metadata?.name ||
+      user?.email?.split("@")[0] ||
+      t("profile.user")
+    );
   };
 
   return (
@@ -50,11 +52,23 @@ export default function Header() {
 
         <div className="hidden md:flex justify-between items-center flex-1 ml-6">
           <ul className="flex flex-1 justify-center gap-6">
-            <li><NavLink to="/">{t("header.home")}</NavLink></li>
-            <li><NavLink to="/vehicles">{t("header.vehicles")}</NavLink></li>
-            <li><NavLink to="/RentYourVehicle">{t("header.rent_vehicle")}</NavLink></li>
-            <li><NavLink to="/contactus">{t("header.contact")}</NavLink></li>
-            <li><NavLink to="/aboutus">{t("header.about")}</NavLink></li>
+            <li>
+              <NavLink to="/">{t("header.home")}</NavLink>
+            </li>
+            <li>
+              <NavLink to="/vehicles">{t("header.vehicles")}</NavLink>
+            </li>
+            <li>
+              <NavLink to="/RentYourVehicle">
+                {t("header.rent_vehicle")}
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contactus">{t("header.contact")}</NavLink>
+            </li>
+            <li>
+              <NavLink to="/aboutus">{t("header.about")}</NavLink>
+            </li>
           </ul>
 
           <div className="flex items-center gap-4">
@@ -71,10 +85,10 @@ export default function Header() {
                       alt="Profile"
                       className="w-8 h-8 rounded-full object-cover border border-gray-200"
                       onError={(e) => {
-                        e.target.style.display = 'none';
+                        e.target.style.display = "none";
                         // Show fallback initials if image fails
                         const fallback = e.target.nextElementSibling;
-                        if (fallback) fallback.style.display = 'flex';
+                        if (fallback) fallback.style.display = "flex";
                       }}
                     />
                   ) : (
@@ -86,7 +100,9 @@ export default function Header() {
                   )}
                   <div
                     style={{
-                      display: user?.user_metadata?.avatar_url ? 'none' : 'flex',
+                      display: user?.user_metadata?.avatar_url
+                        ? "none"
+                        : "flex",
                     }}
                     className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
                   >
@@ -123,17 +139,37 @@ export default function Header() {
       {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 max-w-7xl mx-auto">
-          
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
-            
             <ul className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-              <li><NavLink to="/" onClick={() => setMenuOpen(false)}>{t("header.home")}</NavLink></li>
-              <li><NavLink to="/vehicles" onClick={() => setMenuOpen(false)}>{t("header.vehicles")}</NavLink></li>
-              <li><NavLink to="/RentYourVehicle" onClick={() => setMenuOpen(false)}>{t("header.rent_vehicle")}</NavLink></li>
-              <li><NavLink to="/contactus" onClick={() => setMenuOpen(false)}>{t("header.contact")}</NavLink></li>
-              <li><NavLink to="/aboutus" onClick={() => setMenuOpen(false)}>{t("header.about")}</NavLink></li>
+              <li>
+                <NavLink to="/" onClick={() => setMenuOpen(false)}>
+                  {t("header.home")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/vehicles" onClick={() => setMenuOpen(false)}>
+                  {t("header.vehicles")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink
+                  to="/RentYourVehicle"
+                  onClick={() => setMenuOpen(false)}
+                >
+                  {t("header.rent_vehicle")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/contactus" onClick={() => setMenuOpen(false)}>
+                  {t("header.contact")}
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/aboutus" onClick={() => setMenuOpen(false)}>
+                  {t("header.about")}
+                </NavLink>
+              </li>
             </ul>
-            
 
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
               {isAuthenticated ? (
@@ -150,9 +186,9 @@ export default function Header() {
                         alt="Profile"
                         className="w-8 h-8 rounded-full object-cover border border-gray-200"
                         onError={(e) => {
-                          e.target.style.display = 'none';
+                          e.target.style.display = "none";
                           const fallback = e.target.nextElementSibling;
-                          if (fallback) fallback.style.display = 'flex';
+                          if (fallback) fallback.style.display = "flex";
                         }}
                       />
                     ) : (
@@ -164,7 +200,9 @@ export default function Header() {
                     )}
                     <div
                       style={{
-                        display: user?.user_metadata?.avatar_url ? 'none' : 'flex',
+                        display: user?.user_metadata?.avatar_url
+                          ? "none"
+                          : "flex",
                       }}
                       className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
                     >
@@ -174,7 +212,7 @@ export default function Header() {
                     </div>
                     <span className="font-medium">{getUserDisplayName()}</span>
                   </Link>
-    
+
                   <button
                     onClick={() => {
                       handleLogout();
@@ -198,7 +236,6 @@ export default function Header() {
                 </Link>
               )}
 
-
               <TransButton />
             </div>
           </div>
@@ -207,5 +244,3 @@ export default function Header() {
     </nav>
   );
 }
-
-
