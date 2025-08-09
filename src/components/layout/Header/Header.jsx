@@ -65,14 +65,16 @@ export default function Header() {
                   to="/profile"
                   className="flex items-center gap-2 text-gray-700 hover:text-black"
                 >
-                  {user?.avatar_url ? (
+                  {user?.user_metadata?.avatar_url ? (
                     <img
-                      src={user.avatar_url}
+                      src={user.user_metadata.avatar_url}
                       alt="Profile"
                       className="w-8 h-8 rounded-full object-cover border border-gray-200"
                       onError={(e) => {
                         e.target.style.display = 'none';
-                        e.target.nextElementSibling.style.display = 'flex';
+                        // Show fallback initials if image fails
+                        const fallback = e.target.nextElementSibling;
+                        if (fallback) fallback.style.display = 'flex';
                       }}
                     />
                   ) : (
@@ -82,6 +84,16 @@ export default function Header() {
                       </span>
                     </div>
                   )}
+                  <div
+                    style={{
+                      display: user?.user_metadata?.avatar_url ? 'none' : 'flex',
+                    }}
+                    className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
+                  >
+                    <span className="text-white text-sm font-semibold">
+                      {getUserDisplayName().charAt(0).toUpperCase()}
+                    </span>
+                  </div>
                   <span className="font-medium">{getUserDisplayName()}</span>
                 </Link>
 
@@ -132,14 +144,15 @@ export default function Header() {
                     className="flex items-center gap-2 text-gray-700 hover:text-black"
                     onClick={() => setMenuOpen(false)}
                   >
-                    {user?.avatar_url ? (
+                    {user?.user_metadata?.avatar_url ? (
                       <img
-                        src={user.avatar_url}
+                        src={user.user_metadata.avatar_url}
                         alt="Profile"
                         className="w-8 h-8 rounded-full object-cover border border-gray-200"
                         onError={(e) => {
                           e.target.style.display = 'none';
-                          e.target.nextElementSibling.style.display = 'flex';
+                          const fallback = e.target.nextElementSibling;
+                          if (fallback) fallback.style.display = 'flex';
                         }}
                       />
                     ) : (
@@ -149,6 +162,16 @@ export default function Header() {
                         </span>
                       </div>
                     )}
+                    <div
+                      style={{
+                        display: user?.user_metadata?.avatar_url ? 'none' : 'flex',
+                      }}
+                      className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
+                    >
+                      <span className="text-white text-sm font-semibold">
+                        {getUserDisplayName().charAt(0).toUpperCase()}
+                      </span>
+                    </div>
                     <span className="font-medium">{getUserDisplayName()}</span>
                   </Link>
     
