@@ -506,6 +506,10 @@ const ProfileContent = ({ activeTab, user, userRoles }) => {
 
       const { error: updateError } = await supabase.auth.updateUser({
         data: {
+      
+      // First update the auth user metadata
+      const { error: updateAuthError } = await supabase.auth.updateUser({
+        data: { 
           ...user.user_metadata,
           avatar_url: publicUrlWithCache,
           updated_at: new Date().toISOString(),
@@ -515,6 +519,35 @@ const ProfileContent = ({ activeTab, user, userRoles }) => {
       if (updateError) {
         toast.update(toastId, { render: 'Uploaded but failed to update profile.', type: 'error', isLoading: false, autoClose: 3000 });
         return { error: updateError.message };
+      
+      if (updateAuthError) {
+        console.error('Error updating user metadata:', updateAuthError);
+        toast.update(toastId, { 
+          render: 'Uploaded but failed to update profile. Please try again.', 
+          type: 'error', 
+          isLoading: false,
+          autoClose: 3000
+        });
+        return { error: updateAuthError.message };
+      }
+      
+      // Then update the users table using a stored procedure or RLS-friendly update
+      try {
+        const { error: updateUserError } = await supabase
+          .from('users')
+          .update({ 
+            avatar_url: publicUrlWithCache,
+            updated_at: new Date().toISOString()
+          })
+          .eq('id', user.id);
+          
+        if (updateUserError) {
+          console.warn('Warning: Could not update users table:', updateUserError);
+          // Continue even if users table update fails
+        }
+      } catch (usersTableError) {
+        console.warn('Warning during users table update:', usersTableError);
+        // Continue even if users table update fails
       }
 
       toast.update(toastId, { render: 'Profile picture updated successfully!', type: 'success', isLoading: false, autoClose: 3000 });

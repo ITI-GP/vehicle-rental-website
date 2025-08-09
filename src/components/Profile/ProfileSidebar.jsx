@@ -178,7 +178,6 @@ export default function ProfileSidebar({
     console.log("Verification code submitted:", code);
     // TODO: call your API to verify here
   };
-  
 
   return (
     <>

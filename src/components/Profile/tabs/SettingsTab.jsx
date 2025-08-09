@@ -90,18 +90,20 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
     try {
       setIsUploading(true);
 
-      // Use the parent's file upload handler
+      // Use the parent's file upload handler which should handle the storage upload
+      // and return the public URL
       const { publicUrl, error: uploadError } = await onFileUpload(file);
 
       if (uploadError) {
-        throw new Error(uploadError);
+        throw new Error(uploadError.message || 'Failed to upload image');
       }
 
       if (!publicUrl) {
         throw new Error('Failed to get image URL');
       }
 
-      // Update the form data with the new avatar URL
+      // The parent component should handle updating the user's metadata
+      // with the new avatar URL. We just need to update the local form data.
       setFormData((prev) => ({
         ...prev,
         avatar_url: publicUrl,
@@ -150,6 +152,10 @@ const SettingsTab = ({ user, onSave, formData, setFormData, isSaving, onFileUplo
                     className={`h-16 w-16 rounded-full object-cover ${isUploading ? 'opacity-50' : ''}`}
                     src={formData?.avatar_url || `https://ui-avatars.com/api/?name=${encodeURIComponent(formData?.name || 'User')}&background=random`}
                     alt="Profile"
+                    onError={(e) => {
+                      // Fallback to default avatar if image fails to load
+                      e.target.src = `https://ui-avatars.com/api/?name=${encodeURIComponent(formData?.name || 'User')}&background=random`;
+                    }}
                   />
                   {isUploading && (
                     <div className="absolute inset-0 flex items-center justify-center">

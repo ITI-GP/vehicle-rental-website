@@ -1,4 +1,4 @@
-import { useState, useCallback,useMemo } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { supabase } from "./../../Lib/supabaseClient";
 import car from "./../../assets/login.jpg";
 import { useNavigate } from "react-router-dom";
@@ -25,76 +25,91 @@ export default function RegisterPage() {
 
   const getPasswordStrength = useCallback((pass) => {
     if (!pass) return 0;
-    
+
     let score = 0;
     const requirements = {
       length: pass.length >= 8,
       uppercase: /[A-Z]/.test(pass),
       lowercase: /[a-z]/.test(pass),
       number: /[0-9]/.test(pass),
-      special: /[^A-Za-z0-9]/.test(pass)
+      special: /[^A-Za-z0-9]/.test(pass),
     };
-    
+
     // Calculate score based on met requirements
     score = Object.values(requirements).filter(Boolean).length;
     return Math.min(score, 4); // Cap at 4 for UI consistency
   }, []);
 
-  const getStrengthInfo = useCallback((score) => {
-    const strengthLevels = [
-      { text: t("auth.veryWeak"), color: "bg-red-500", width: "w-1/4" },
-      { text: t("auth.weak"), color: "bg-orange-500", width: "w-2/4" },
-      { text: t("auth.fair"), color: "bg-yellow-500", width: "w-3/4" },
-      { text: t("auth.strong"), color: "bg-green-500", width: "w-full" }
-    ];
-    
-    return strengthLevels[Math.min(score - 1, 3)] || strengthLevels[0];
-  }, [t]);
-  
-  const passwordStrength = useMemo(() => getPasswordStrength(formData.password), [formData.password, getPasswordStrength]);
-  const strengthInfo = useMemo(() => getStrengthInfo(passwordStrength), [passwordStrength, getStrengthInfo]);
+  const getStrengthInfo = useCallback(
+    (score) => {
+      const strengthLevels = [
+        { text: t("auth.veryWeak"), color: "bg-red-500", width: "w-1/4" },
+        { text: t("auth.weak"), color: "bg-orange-500", width: "w-2/4" },
+        { text: t("auth.fair"), color: "bg-yellow-500", width: "w-3/4" },
+        { text: t("auth.strong"), color: "bg-green-500", width: "w-full" },
+      ];
+
+      return strengthLevels[Math.min(score - 1, 3)] || strengthLevels[0];
+    },
+    [t]
+  );
+
+  const passwordStrength = useMemo(
+    () => getPasswordStrength(formData.password),
+    [formData.password, getPasswordStrength]
+  );
+  const strengthInfo = useMemo(
+    () => getStrengthInfo(passwordStrength),
+    [passwordStrength, getStrengthInfo]
+  );
 
   const validateInputs = () => {
     const validations = [
       {
         condition: !formData.name?.trim(),
-        message: t("register.errors.nameRequired")
+        message: t("register.errors.nameRequired"),
       },
       {
         condition: !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email),
-        message: t("register.errors.invalidEmail")
+        message: t("register.errors.invalidEmail"),
       },
       {
         condition: !/^\+?[0-9\s-]{10,}$/.test(formData.phone),
-        message: t("register.errors.invalidPhone")
+        message: t("register.errors.invalidPhone"),
       },
       {
         condition: formData.password.length < 8,
-        message: t("register.errors.passwordMinLength")
+        message: t("register.errors.passwordMinLength"),
       },
       {
         condition: formData.password !== formData.rePassword,
-        message: t("register.errors.passwordMismatch")
+        message: t("register.errors.passwordMismatch"),
       },
       {
         condition: !formData.address?.trim(),
-        message: t("register.errors.addressRequired")
+        message: t("register.errors.addressRequired"),
       },
       {
         condition: !formData.dateOfBirth,
-        message: t("register.errors.dobRequired")
+        message: t("register.errors.dobRequired"),
       },
       {
         condition: !avatarFile,
-        message: t("register.errors.avatarRequired")
+        message: t("register.errors.avatarRequired"),
       },
       {
-        condition: formData.dateOfBirth && (new Date().getFullYear() - new Date(formData.dateOfBirth).getFullYear() < 18),
-        message: t("register.errors.minAgeRequired")
-      }
+        condition:
+          formData.dateOfBirth &&
+          new Date().getFullYear() -
+            new Date(formData.dateOfBirth).getFullYear() <
+            18,
+        message: t("register.errors.minAgeRequired"),
+      },
     ];
 
-    const failedValidation = validations.find(validation => validation.condition);
+    const failedValidation = validations.find(
+      (validation) => validation.condition
+    );
     if (failedValidation) {
       setMessage(failedValidation.message);
       return false;
@@ -188,7 +203,8 @@ export default function RegisterPage() {
     }
 
     try {
-      const { data, error } = await supabase.auth.signUp({
+      // 1. Sign up the user with Supabase Auth
+      const { data: authData, error: signUpError } = await supabase.auth.signUp({
         email: formData.email,
         password: formData.password,
         options: {
@@ -198,20 +214,26 @@ export default function RegisterPage() {
             address: formData.address,
             date_of_birth: formData.dateOfBirth,
             gender: formData.gender,
+            email_verified: false,
+            phone_verified: false,
           },
         },
       });
 
-      if (error) {
-        setMessage(`${t("register.signUpFailed")}: ${error.message}`);
+      if (signUpError) {
+        setMessage(`${t("register.signUpFailed")}: ${signUpError.message}`);
         return;
       }
 
-      const userId = data.user.id;
+      const userId = authData.user.id;
+      let avatarUrl = '';
+
+      // 2. Handle avatar upload if exists
       if (avatarFile && userId) {
         const fileExt = avatarFile.name.split(".").pop();
         const filePath = `${userId}-${Date.now()}.${fileExt}`;
 
+        // Upload the avatar to storage
         const { error: uploadError } = await supabase.storage
           .from("avatars")
           .upload(filePath, avatarFile);
@@ -221,29 +243,42 @@ export default function RegisterPage() {
           return;
         }
 
-        const { data: publicUrlData, error: urlError } = supabase.storage
+        // Get the public URL of the uploaded avatar
+        const { data: publicUrlData } = supabase.storage
           .from("avatars")
           .getPublicUrl(filePath);
+        
+        avatarUrl = publicUrlData.publicUrl;
+      }
 
-        if (urlError) {
-          setMessage(`${t("register.avatarUrlFailed")}: ${urlError.message}`);
-          return;
-        }
+      // 3. Insert user data into the users table
+      const { error: userInsertError } = await supabase
+        .from('users')
+        .insert([
+          {
+            id: userId,
+            email: formData.email,
+            name: formData.name,
+            role: 'user', // Default role
+            isVerified: false,
+            isCompany: false,
+            isOwner: false,
+            isRenter: false,
+            avatar_url: avatarUrl,
+            created_at: new Date().toISOString()
+          }
+        ]);
 
-        const { error: profileError } = await supabase
-          .from("profiles")
-          .update({ avatar_url: publicUrlData.publicUrl })
-          .eq("id", userId);
-
-        if (profileError) {
-          setMessage(`${t("register.profileUpdateFailed")}: ${profileError.message}`);
-          return;
-        }
+      if (userInsertError) {
+        console.error('Error inserting user data:', userInsertError);
+        setMessage(`${t("register.userDataSaveFailed")}: ${userInsertError.message}`);
+        return;
       }
 
       toast.success(t("register.success"));
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
+      console.error('Registration error:', error);
       setMessage(`${t("register.signUpFailed")}: ${error.message}`);
     }
   };
@@ -337,7 +372,7 @@ export default function RegisterPage() {
 
               {formData.password && (
                 <div className="h-2 w-full bg-gray-200 rounded-md overflow-hidden">
-                  <div className={`h-full ${strengthBarColor} transition-all duration-300`} />
+                  <div className={`h-full transition-all duration-300`} />
                 </div>
               )}
 
@@ -348,7 +383,11 @@ export default function RegisterPage() {
                 {t("register.registerBtn")}
               </button>
 
-              {message && <p className="text-center text-sm text-red-600 mt-2">{message}</p>}
+              {message && (
+                <p className="text-center text-sm text-red-600 mt-2">
+                  {message}
+                </p>
+              )}
             </form>
 
             <div className="text-center mt-4">
