@@ -17,6 +17,7 @@ export default function RentHeader() {
         <Button onClick={() => navigate("/ChooseUserType")}>
           {t("rent_your_vehicle.get_started")}
         </Button>
+        
       </div>
 
       {/* Main image */}
