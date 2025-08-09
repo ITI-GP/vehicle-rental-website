@@ -46,13 +46,13 @@ export default function ProfileLayout() {
       roles: ['renter'],
       count: 0
     },
-    { 
-      id: 'notifications', 
-      label: 'Notifications', 
-      icon: '🔔', 
-      roles: ['owner', 'renter', 'company'],
-      count: 0
-    },
+    // { 
+    //   id: 'notifications', 
+    //   label: 'Notifications', 
+    //   icon: '🔔', 
+    //   roles: ['owner', 'renter', 'company'],
+    //   count: 0
+    // },
     { 
       id: 'settings', 
       label: 'Settings', 
