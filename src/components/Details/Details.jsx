@@ -312,7 +312,7 @@ export default function DetailsPage() {
           <img
             src={mainImage || vehicle.imageCover}
             alt={vehicle.type}
-            className="w-full h-[300px] object-cover rounded-xl"
+            className="w-full h-[300px] object-contain rounded-xl"
           />
           {vehicle.images?.length > 0 && (
             <div className="mt-4 grid grid-cols-4 gap-4">
