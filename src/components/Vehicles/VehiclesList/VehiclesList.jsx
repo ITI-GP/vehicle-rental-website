@@ -47,6 +47,11 @@ export default function VehiclesList({
           ))}
         </div>
       )}
+      <hr />
+      {/* the rental requests  */}
+      <div>
+
+      </div>
     </div>
   );
 }

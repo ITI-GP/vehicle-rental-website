@@ -16,10 +16,10 @@ export default function ProfileLayout() {
 
   // Default roles (isOwner is true by default)
   const userRoles = {
-    isCompany: user?.user_metadata?.isCompany || false,
+    // isCompany: user?.user_metadata?.isCompany || false,
     // isRenter: user?.user_metadata?.isRenter || false,
-    isOwner: user?.user_metadata?.isOwner || false,
-    isRenter: user?.user_metadata?.  isRenter?? true // Default to true if not specified
+    isOwner: user?.user_metadata?.isOwner?? true,
+    isRenter: user?.user_metadata?.isRenter?? true // Default to true if not specified
   };
 
   // Navigation items based on user roles
@@ -61,9 +61,9 @@ export default function ProfileLayout() {
     }
   ].filter(item => {
     // Filter navigation items based on user roles
-    if (userRoles.isCompany) return item.roles.includes('company');
-    if (userRoles.isRenter) return item.roles.includes('renter');
-    return item.roles.includes('owner');
+    // if (userRoles.isCompany) return item.roles.includes('company');
+    // if (userRoles.isRenter) return item.roles.includes('renter');
+    return 'owner';
   });
 
   // Set first available tab as active if current active tab is not in filtered nav items

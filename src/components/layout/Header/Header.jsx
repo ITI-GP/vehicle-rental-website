@@ -112,7 +112,7 @@ export default function Header() {
                       </span>
                     </div>
                   )}
-                  <div
+                  {/* <div
                     style={{
                       display: userData?.avatar_url ? "none" : "flex",
                     }}
@@ -121,7 +121,7 @@ export default function Header() {
                     <span className="text-white text-sm font-semibold">
                       {getUserDisplayName().charAt(0).toUpperCase()}
                     </span>
-                  </div>
+                  </div> */}
                   <span className="font-medium">{getUserDisplayName()}</span>
                 </Link>
 

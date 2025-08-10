@@ -93,10 +93,10 @@ export default function RegisterPage() {
         condition: !formData.dateOfBirth,
         message: t("register.errors.dobRequired"),
       },
-      {
-        condition: !avatarFile,
-        message: t("register.errors.avatarRequired"),
-      },
+      // {
+      //   condition: !avatarFile,
+      //   message: t("register.errors.avatarRequired"),
+      // },
       {
         condition:
           formData.dateOfBirth &&
@@ -276,7 +276,7 @@ export default function RegisterPage() {
       }
 
       toast.success(t("register.success"));
-      setTimeout(() => navigate("/login"), 2000);
+      setTimeout(() => navigate("/login"), 10);
     } catch (error) {
       console.error('Registration error:', error);
       setMessage(`${t("register.signUpFailed")}: ${error.message}`);
@@ -331,7 +331,7 @@ export default function RegisterPage() {
                   accept="image/*"
                   onChange={handleFileChange}
                   className="w-full p-2 border rounded-md"
-                  required
+                  // required
                 />
               </div>
 
