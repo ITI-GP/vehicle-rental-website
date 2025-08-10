@@ -5,40 +5,55 @@ const FavoriteContext = createContext();
 
 export const FavoriteProvider = ({ user, children }) => {
   const [favorites, setFavorites] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Debug effect to log favorites changes
+  useEffect(() => {
+    console.log('Favorites updated:', favorites);
+  }, [favorites]);
 
   useEffect(() => {
     const fetchFavorites = async () => {
+      console.log('fetchFavorites called');
       if (!user?.id) {
+        console.log('No user ID, setting empty favorites');
         setFavorites([]);
+        setIsLoading(false);
         return;
       }
 
       try {
-        const { data: favs, error: favsError } = await supabase
-          .from("favorites")
-          .select("vehicle_id")
-          .eq("user_id", user.id);
+        console.log('Fetching favorites for user:', user.id);
+        const { data, error } = await supabase
+          .from('favorites')
+          .select('vehicle_id, vehicles(*)')
+          .eq('user_id', user.id);
 
-        if (favsError) throw favsError;
-
-        const vehicleIds = favs.map((fav) => fav.vehicle_id);
-
-        if (vehicleIds.length === 0) {
-          setFavorites([]);
-          return;
+        if (error) {
+          console.error('Error from Supabase:', error);
+          throw error;
         }
 
-        const { data: vehicles, error: vehiclesError } = await supabase
-          .from("vehicles")
-          .select("*")
-          .in("id", vehicleIds);
+        console.log('Raw favorites data from Supabase:', data);
+        
+        // Map the data to match the vehicle objects in the favorites array
+        const favoritesData = data.map(fav => {
+          const vehicle = {
+            ...fav.vehicles,
+            id: fav.vehicle_id // Ensure we use vehicle_id as the id
+          };
+          console.log('Mapped favorite:', vehicle);
+          return vehicle;
+        });
 
-        if (vehiclesError) throw vehiclesError;
-
-        setFavorites(vehicles || []);
+        console.log('Setting favorites data:', favoritesData);
+        setFavorites(favoritesData || []);
       } catch (error) {
-        console.error("Error fetching favorites:", error.message);
-        setFavorites([]);
+        console.error('Error fetching favorites:', error);
+        // Keep the existing favorites in case of error
+      } finally {
+        console.log('Finished loading favorites');
+        setIsLoading(false);
       }
     };
 
@@ -46,67 +61,104 @@ export const FavoriteProvider = ({ user, children }) => {
   }, [user]);
 
   const toggleFavorite = async (vehicleId) => {
-    if (!user?.id) return;
+    console.log('toggleFavorite called with vehicleId:', vehicleId);
+    
+    if (!user) {
+      const errorMsg = 'Please sign in to add favorites';
+      console.log(errorMsg);
+      toast.error(errorMsg);
+      return;
+    }
 
+    // Create a reference to the current favorites to avoid race conditions
+    const currentFavorites = [...favorites];
+    const isFavorite = currentFavorites.some(fav => fav.id.toString() === vehicleId.toString());
+    const action = isFavorite ? 'remove' : 'add';
+    
+    console.log(`Current favorites before ${action}:`, currentFavorites);
+    console.log(`Action: ${action} vehicle ${vehicleId}`);
+    
     try {
-      // First, check if the vehicle is in the database
-      const { data: existingVehicle, error: vehicleError } = await supabase
-        .from('vehicles')
-        .select('*')
-        .eq('id', vehicleId)
-        .single();
+      // Optimistically update the UI
+      setFavorites(prev => {
+        if (action === 'remove') {
+          return prev.filter(v => v.id.toString() !== vehicleId.toString());
+        } else {
+          // If we don't have the full vehicle data, create a minimal object
+          const existingVehicle = prev.find(v => v.id.toString() === vehicleId.toString()) || { id: vehicleId };
+          return [...prev, existingVehicle];
+        }
+      });
 
-      if (vehicleError) throw vehicleError;
-      if (!existingVehicle) throw new Error('Vehicle not found');
-
-      // Check if already favorited using a direct query to avoid race conditions
-      const { data: existingFavorite, error: favCheckError } = await supabase
-        .from('favorites')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('vehicle_id', vehicleId)
-        .maybeSingle();
-
-      if (favCheckError) throw favCheckError;
-
-      if (existingFavorite) {
-        // Remove from favorites
+      // Perform the database operation
+      if (action === 'remove') {
         const { error: deleteError } = await supabase
           .from('favorites')
           .delete()
-          .eq('id', existingFavorite.id);
+          .match({ user_id: user.id, vehicle_id: vehicleId });
 
         if (deleteError) throw deleteError;
-
-        // Update local state
-        setFavorites(prev => prev.filter(v => v.id !== vehicleId));
-        toast.success('Removed from favorites');
       } else {
-        // Add to favorites
-        try {
-          const { error: insertError } = await supabase
-            .from('favorites')
-            .insert([{ user_id: user.id, vehicle_id: vehicleId }]);
+        const { error: upsertError } = await supabase
+          .from('favorites')
+          .upsert(
+            { user_id: user.id, vehicle_id: vehicleId },
+            { onConflict: 'user_id,vehicle_id' }
+          );
 
-          if (insertError) throw insertError;
-
-          // Update local state
-          setFavorites(prev => [...prev, existingVehicle]);
-          toast.success('Added to favorites');
-        } catch (insertError) {
-          // Handle duplicate key error (409 conflict)
-          if (insertError.code === '23505' || insertError.status === 409) {
-            // Already exists, just update the UI
-            setFavorites(prev => [...prev, existingVehicle]);
-            toast.info('Already in favorites');
-          } else {
-            throw insertError;
+        if (upsertError) {
+          // If it's a duplicate error, we can ignore it since the favorite already exists
+          if (upsertError.code === '23505' || upsertError.status === 409) {
+            console.log('Duplicate favorite detected, ignoring');
+            return;
           }
+          throw upsertError;
         }
       }
+      
+      // Show success message based on the action
+      toast.success(
+        action === 'add' 
+          ? 'Added to favorites' 
+          : 'Removed from favorites'
+      );
+
+      // Refresh favorites from the database
+      const { data: favs, error: fetchError } = await supabase
+        .from('favorites')
+        .select('vehicle_id, vehicles(*)')
+        .eq('user_id', user.id);
+
+      if (fetchError) throw fetchError;
+
+      // Map the data to match the vehicle objects in the favorites array
+      const updatedFavorites = favs.map(fav => ({
+        ...fav.vehicles,
+        id: fav.vehicle_id
+      }));
+
+      setFavorites(updatedFavorites || []);
     } catch (error) {
-      console.error('Error toggling favorite:', error);
-      toast.error(error.message || 'Failed to update favorites');
+      console.error('Error toggling favorite:', error.message);
+      toast.error(error.message || 'An error occurred');
+      
+      // Re-fetch favorites to ensure UI is in sync with database
+      if (user?.id) {
+        const { data } = await supabase
+          .from('favorites')
+          .select('vehicle_id')
+          .eq('user_id', user.id);
+          
+        if (data) {
+          const vehicleIds = data.map(fav => fav.vehicle_id);
+          const { data: vehicles } = await supabase
+            .from('vehicles')
+            .select('*')
+            .in('id', vehicleIds);
+            
+          setFavorites(vehicles || []);
+        }
+      }
     }
   };
 

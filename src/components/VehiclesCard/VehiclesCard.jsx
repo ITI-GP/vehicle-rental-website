@@ -19,50 +19,66 @@ export default function VehiclesCard({
   // Get favorites and toggle function from context
   const { favorites = [], toggleFavorite: contextToggleFavorite } = useFavorites();
   
-  // Initialize local state based on initial favorites
-  const [isFavorited, setIsFavorited] = useState(() => {
-    // If isFavoriteProp is provided, use it directly
+  // Get the current favorite status from the context
+  const isFavorited = useMemo(() => {
     if (isFavoriteProp !== undefined) {
       return isFavoriteProp === vehicle?.id || 
              (Array.isArray(isFavoriteProp) && isFavoriteProp.includes(vehicle?.id));
     }
-    
-    // Otherwise, check the favorites array from context
     const vehicleId = vehicle?.id?.toString();
     return Array.isArray(favorites) && 
            favorites.some(v => v && v.id && v.id.toString() === vehicleId);
-  });
+  }, [favorites, vehicle?.id, isFavoriteProp]);
   
-  const toggleFavorite = toggleFavoriteProp || contextToggleFavorite || (() => {});
-
+  // Local state for UI
   const [showModal, setShowModal] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
+  
+  const toggleFavorite = toggleFavoriteProp || contextToggleFavorite || (() => {});
 
   if (!vehicle) return null;
 
   const handleFavoriteClick = async (e) => {
     e.preventDefault();
-    e.stopPropagation(); // Prevent link navigation
+    e.stopPropagation();
     
-    // Optimistically update the UI
-    const wasFavorited = isFavorited;
-    setIsFavorited(!wasFavorited);
+    console.log('=== Favorite Click ===');
+    console.log('Current isFavorited:', isFavorited);
+    console.log('Vehicle ID:', vehicle?.id);
+    
+    // Prevent multiple rapid clicks
+    if (isProcessing) {
+      console.log('Already processing, ignoring click');
+      return;
+    }
+    
+    setIsProcessing(true);
+    const newFavState = !isFavorited;
+    console.log('New favorite state will be:', newFavState);
     
     try {
+      console.log('Calling toggleFavorite with vehicle ID:', vehicle?.id);
       await toggleFavorite(vehicle.id);
       
-      if (onUnfavorite && wasFavorited) {
+      console.log('Toggle successful, context should update soon');
+      
+      // Only call onUnfavorite if we're actually removing a favorite
+      if (onUnfavorite && !newFavState) {
+        console.log('Calling onUnfavorite');
         onUnfavorite();
       }
     } catch (error) {
       console.error('Error toggling favorite:', error);
-      // Revert the UI if there was an error
-      setIsFavorited(wasFavorited);
+      // The context will handle reverting the state if needed
+      console.log('Error occurred, context will handle state reversion');
+    } finally {
+      console.log('Finished processing favorite click');
+      setIsProcessing(false);
     }
   };
 
   // formData و formErrors ممكن تعيد تعريفهم هنا أو تبسطها حسب الحاجة
-  // لكن هنا مثال بسيط مع البيانات الأساسية:
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
