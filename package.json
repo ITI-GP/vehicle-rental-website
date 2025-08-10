@@ -6,7 +6,7 @@
 "scripts": {
   "lint": "eslint .",
   "preview": "vite preview",
-  "build": "npm install @parcel/css-linux-x64-gnu --no-save && vite build",
+  "build": "npm install lightningcss-linux-x64-gnu --no-save && vite build",
   "dev": "vite"
 },
   "dependencies": {
