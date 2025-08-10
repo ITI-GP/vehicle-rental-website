@@ -5,6 +5,8 @@ export default function VehiclesList({
   currentPage,
   setCurrentPage,
   perPage = 6,
+  isFavorite,
+  toggleFavorite,
 }) {
   const indexOfLast = currentPage * perPage;
   const indexOfFirst = indexOfLast - perPage;
@@ -16,7 +18,12 @@ export default function VehiclesList({
       <div className="flex flex-wrap gap-6 justify-center">
         {currentVehicles.length > 0 ? (
           currentVehicles.map((vehicle) => (
-            <VehiclesCard key={vehicle.id} vehicle={vehicle} />
+            <VehiclesCard
+              key={vehicle.id}
+              vehicle={vehicle}
+              isFavorite={isFavorite}
+              toggleFavorite={toggleFavorite}
+            />
           ))
         ) : (
           <p>No vehicles found.</p>

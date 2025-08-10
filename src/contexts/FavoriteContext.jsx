@@ -45,102 +45,71 @@ export const FavoriteProvider = ({ user, children }) => {
     fetchFavorites();
   }, [user]);
 
-  // const toggleFavorite = async (vehicleId) => {
-  //   if (!user?.id) return;
-
-  //   const isAlreadyFavorite = favorites.some((v) => v.id === vehicleId);
-
-  //   if (isAlreadyFavorite) {
-  //     const { error } = await supabase
-  //       .from("favorites")
-  //       .delete()
-  //       .eq("user_id", user.id)
-  //       .eq("vehicle_id", vehicleId);
-
-  //     if (error) {
-  //       console.error("Error removing favorite:", error.message);
-  //     } else {
-  //       setFavorites((prev) => prev.filter((v) => v.id !== vehicleId));
-  //     }
-  //   } else {
-  //     const { error } = await supabase.from("favorites").insert([
-  //       {
-  //         user_id: user.id,
-  //         vehicle_id: vehicleId,
-  //       },
-  //     ]);
-
-  //     if (error) {
-  //       console.error("Error adding favorite:", error.message);
-  //     } else {
-  //       try {
-  //         const { data: newVehicle, error: vehicleError } = await supabase
-  //           .from("vehicles")
-  //           .select("*")
-  //           .eq("id", vehicleId)
-  //           .single();
-
-  //         if (vehicleError) throw vehicleError;
-
-  //         setFavorites((prev) => [...prev, newVehicle]);
-  //       } catch (error) {
-  //         console.error("Error fetching new favorite vehicle:", error.message);
-  //         setFavorites((prev) => [...prev, { id: vehicleId }]);
-  //       }
-  //     }
-  //   }
-  // };
-
-
   const toggleFavorite = async (vehicleId) => {
-  if (!user?.id) return;
+    if (!user?.id) return;
 
-  const isAlreadyFavorite = favorites.some((v) => v.id === vehicleId);
+    try {
+      // First, check if the vehicle is in the database
+      const { data: existingVehicle, error: vehicleError } = await supabase
+        .from('vehicles')
+        .select('*')
+        .eq('id', vehicleId)
+        .single();
 
-  if (isAlreadyFavorite) {
-    const { error } = await supabase
-      .from("favorites")
-      .delete()
-      .eq("user_id", user.id)
-      .eq("vehicle_id", vehicleId);
+      if (vehicleError) throw vehicleError;
+      if (!existingVehicle) throw new Error('Vehicle not found');
 
-    if (error) {
-      console.error("Error removing favorite:", error.message);
-      toast.error("Failed to remove from favorites");
-    } else {
-      setFavorites((prev) => prev.filter((v) => v.id !== vehicleId));
-      toast.success("Removed from favorites");
-    }
-  } else {
-    const { error } = await supabase.from("favorites").insert([
-      {
-        user_id: user.id,
-        vehicle_id: vehicleId,
-      },
-    ]);
+      // Check if already favorited using a direct query to avoid race conditions
+      const { data: existingFavorite, error: favCheckError } = await supabase
+        .from('favorites')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('vehicle_id', vehicleId)
+        .maybeSingle();
 
-    if (error) {
-      console.error("Error adding favorite:", error.message);
-      toast.error("Failed to add to favorites");
-    } else {
-      try {
-        const { data: newVehicle, error: vehicleError } = await supabase
-          .from("vehicles")
-          .select("*")
-          .eq("id", vehicleId)
-          .single();
+      if (favCheckError) throw favCheckError;
 
-        if (vehicleError) throw vehicleError;
+      if (existingFavorite) {
+        // Remove from favorites
+        const { error: deleteError } = await supabase
+          .from('favorites')
+          .delete()
+          .eq('id', existingFavorite.id);
 
-        setFavorites((prev) => [...prev, newVehicle]);
-      } catch (error) {
-        console.error("Error fetching new favorite vehicle:", error.message);
-        setFavorites((prev) => [...prev, { id: vehicleId }]);
+        if (deleteError) throw deleteError;
+
+        // Update local state
+        setFavorites(prev => prev.filter(v => v.id !== vehicleId));
+        toast.success('Removed from favorites');
+      } else {
+        // Add to favorites
+        try {
+          const { error: insertError } = await supabase
+            .from('favorites')
+            .insert([{ user_id: user.id, vehicle_id: vehicleId }]);
+
+          if (insertError) throw insertError;
+
+          // Update local state
+          setFavorites(prev => [...prev, existingVehicle]);
+          toast.success('Added to favorites');
+        } catch (insertError) {
+          // Handle duplicate key error (409 conflict)
+          if (insertError.code === '23505' || insertError.status === 409) {
+            // Already exists, just update the UI
+            setFavorites(prev => [...prev, existingVehicle]);
+            toast.info('Already in favorites');
+          } else {
+            throw insertError;
+          }
+        }
       }
-      toast.success("Added to favorites");
+    } catch (error) {
+      console.error('Error toggling favorite:', error);
+      toast.error(error.message || 'Failed to update favorites');
     }
-  }
-};
+  };
+
   const isFavorite = (vehicleId) => {
     return favorites.some((v) => v.id === vehicleId);
   };
