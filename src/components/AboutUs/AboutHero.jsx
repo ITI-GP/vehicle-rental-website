@@ -3,8 +3,13 @@ import { useTranslation } from "react-i18next";
 import carImage from "./abouthero.jpg"; // Ensure the image path is correct
 import Button from "../home/HeroSection/Button";
 import styles from "../home/HeroSection/Hero.module.css"; // Adjust the path if necessary
+import { useNavigate } from "react-router-dom";
 const AboutHero = () => {
   const { t } = useTranslation();
+    const navigate = useNavigate();
+     const handleClick = () => {
+    navigate("/vehicles"); // مثلاً صفحة المركبات
+  };
 
   return (
     <div
@@ -30,7 +35,7 @@ const AboutHero = () => {
           )}
         </p>
         <div className={styles.heroButtons}>
-            <Button className={styles.heroBtn}>{t("aboutHero.button")}</Button>
+            <Button className={styles.heroBtn} onClick={handleClick}>{t("aboutHero.button")}</Button>
           </div>
       </div>
     </div>
