@@ -60,7 +60,7 @@ export default function VehiclesCard({ vehicle, onUnfavorite }) {
           hover:scale-105 transition-all
         "
       >
-        <Link to={`/details/${vehicle.id}`}>
+        <Link to={`/details/${vehicle.id}`} >
           <div className="relative">
             <img
               src={vehicle.images?.[0] || "/placeholder.jpg"}
@@ -102,7 +102,7 @@ export default function VehiclesCard({ vehicle, onUnfavorite }) {
               </div>
               <div>
                 <p className="text-primary font-bold">
-                  {vehicle.price_per_day ? `${vehicle.price_per_day}$ `: "N/A"}
+                  {vehicle.price_per_day ? `${vehicle.price_per_day}$` : "N/A"}
                 </p>
                 <p className="text-sm text-gray-500">{t("vehicles.perDay")}</p>
               </div>
