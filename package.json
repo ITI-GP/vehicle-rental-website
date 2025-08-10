@@ -3,14 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "scripts": {
-    
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "vercel-build": "npm install @parcel/css-linux-x64-gnu --save-dev && npm run build",
-      "build": "npm rebuild lightningcss --platform=linux --arch=x64 --force && vite build",
-    "dev": "vite"
-  },
+"scripts": {
+  "lint": "eslint .",
+  "preview": "vite preview",
+  "build": "npm install @parcel/css-linux-x64-gnu --no-save && vite build",
+  "dev": "vite"
+},
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
