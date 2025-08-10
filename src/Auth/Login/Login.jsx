@@ -36,7 +36,7 @@ export default function LoginPage() {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success(t("login.success", "Login successful!"));
+      // toast.success(t("login.success", "Login successful!"));
       setShowModal(false);
       navigate("/");
     }
@@ -47,7 +47,7 @@ export default function LoginPage() {
       {/* ✅ Place ToastContainer at top-level (outside modal) */}
       <ToastContainer
         position="top-center"
-        autoClose={2000}
+        autoClose={1}
         newestOnTop
         hideProgressBar
         closeOnClick

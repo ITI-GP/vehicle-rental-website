@@ -281,7 +281,7 @@ export default function ReviewForm() {
             <p className="mt-4 text-lg text-gray-700">
               "{t(reviewObj.review)}"
             </p>
-            <button
+            {/* <button
               onClick={() => deleteReview(index)}
               className="absolute top-2 right-2 text-red-500"
               aria-label={t("reviewForm.deleteButton")}
@@ -289,7 +289,7 @@ export default function ReviewForm() {
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 bg-red-500 rounded" fill="none" viewBox="0 0 24 24" stroke="white">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
-            </button>
+            </button> */}
           </div>
         ))}
       </div>

@@ -98,7 +98,7 @@ export default function Header() {
                       </span>
                     </div>
                   )}
-                  <div
+                  {/* <div
                     style={{
                       display: user?.user_metadata?.avatar_url
                         ? "none"
@@ -109,7 +109,7 @@ export default function Header() {
                     <span className="text-white text-sm font-semibold">
                       {getUserDisplayName().charAt(0).toUpperCase()}
                     </span>
-                  </div>
+                  </div> */}
                   <span className="font-medium">{getUserDisplayName()}</span>
                 </Link>
 
