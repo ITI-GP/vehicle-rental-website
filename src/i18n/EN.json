@@ -2,7 +2,6 @@
   "aboutus": {
     "header": "About Us",
     "description": "We are committed to providing the best vehicle rental experience.",
-
     "leftTitle": "Where every drive feels extraordinary",
     "middle1Title": "Variety Brands",
     "middle1Desc": "Platea non auctor fermentum sollicitudin. Eget adipiscing augue sit quam natoque ornare cursus viverra odio.",
@@ -49,10 +48,8 @@
     "staticReview2": "What impressed me most was the wide range of vehicles available. Whether you need a compact car for city driving or a spacious SUV for a road trip, they have it all! The detailed descriptions and photos of each vehicle helped me make an informed choice.",
     "staticReview3": "Customer service was top-notch as well. I had a small issue with my initial booking, but the team was quick to respond and resolve the problem. They even offered an upgrade at no extra charge!"
   },
-
   "header": {
     "hello": "Hello, {{name}}",
-
     "home": "Home",
     "vehicles": "Vehicles",
     "rent_vehicle": "Add Your Vehicle",
@@ -103,41 +100,41 @@
     "downloadApp": "Download App",
     "companyDescription": "Faucibus faucibus pellentesque dictum turpis. Id pellentesque turpis massa a id iaculis lorem turpis euismod. Purus at quisque integer sit..."
   },
-"howToUse": {
-  "header":" How To Use",
-  "steps": [
-    {
-      "number": "1",
-      "title": "Create an Account",
-      "desc": "Sign up easily with your email or social media to start renting or listing vehicles in minutes."
-    },
-    {
-      "number": "2",
-      "title": "Complete Your Profile",
-      "desc": "Add your contact details, driver's license, and payment method to build trust and unlock full features."
-    },
-    {
-      "number": "3",
-      "title": "List or Browse Vehicles",
-      "desc": "Want to earn? List your vehicle with photos and pricing. Need a car? Browse by location, model, or price."
-    },
-    {
-      "number": "4",
-      "title": "Send Request or Accept Booking",
-      "desc": "Renters send a request with their rental dates. Owners review and accept bookings in one click."
-    },
-    {
-      "number": "5",
-      "title": "Pickup & Enjoy the Ride",
-      "desc": "Meet at the agreed location, inspect the car, and start your journey. Drive confidently with full support."
-    },
-    {
-      "number": "6",
-      "title": "Return & Rate",
-      "desc": "Return the vehicle on time and leave a rating. Help others make informed decisions in the community."
-    }
-  ]
-},
+  "howToUse": {
+    "header": " How To Use",
+    "steps": [
+      {
+        "number": "1",
+        "title": "Create an Account",
+        "desc": "Sign up easily with your email or social media to start renting or listing vehicles in minutes."
+      },
+      {
+        "number": "2",
+        "title": "Complete Your Profile",
+        "desc": "Add your contact details, driver's license, and payment method to build trust and unlock full features."
+      },
+      {
+        "number": "3",
+        "title": "List or Browse Vehicles",
+        "desc": "Want to earn? List your vehicle with photos and pricing. Need a car? Browse by location, model, or price."
+      },
+      {
+        "number": "4",
+        "title": "Send Request or Accept Booking",
+        "desc": "Renters send a request with their rental dates. Owners review and accept bookings in one click."
+      },
+      {
+        "number": "5",
+        "title": "Pickup & Enjoy the Ride",
+        "desc": "Meet at the agreed location, inspect the car, and start your journey. Drive confidently with full support."
+      },
+      {
+        "number": "6",
+        "title": "Return & Rate",
+        "desc": "Return the vehicle on time and leave a rating. Help others make informed decisions in the community."
+      }
+    ]
+  },
   "downloadAppTitle": "Download mobile app",
   "downloadAppDescription": "Imperdiet ut tristique viverra nunc. Ultrices orci vel auctor cursus turpis nibh placerat massa. Fermentum urna ut at et in. Turpis aliquet cras hendrerit enim condimentum. Condimentum interdum risus bibendum urna. Augue aliquet varius faucibus ut integer tristique ut....",
   "features": {
@@ -153,7 +150,7 @@
       "part1": "Facts in",
       "part2": "Numbers"
     },
-    "subtitle": "Amet cras hac orci lacus. Faucibus ipsum arcu lectus nibh sapien bibendum ullamcorper in. Diam tincidunt tincidunt erat at semper fermentum.",
+    "subtitle": "We are proud to have served over 15,000 customers across various cities, offering more than 2,300 vehicles ready for rental every day. We have achieved a 97% customer satisfaction rate, with vehicle delivery in less than 30 minutes from the time of booking. Our goal is to continuously expand our fleet and provide the latest models to meet all needs—whether for travel, business, or special occasions.",
     "cars": "Cars",
     "buses": "Buses",
     "bikes": "Bikes",
@@ -170,7 +167,6 @@
     "blog3": "Enjoy Speed, Choice & Total Control",
     "newsDate": "News / 12 April 2025"
   },
-
   "vehicles": {
     "perDay": "per day",
     "manual": "Manual",
@@ -196,7 +192,6 @@
       "Motorcycle": "Motorcycle"
     }
   },
-
   "aboutUs": {
     "title": "About Us"
   },
@@ -229,7 +224,6 @@
     "description2": "Turo gives budding entrepreneurs the tools and resources they need to build a small, successful portfolio of cars to share on the marketplace, and the opportunity to add thousands to their annual income.",
     "description3": "List your first car now to get started, then build your business plan and scale how you want!"
   },
-
   "benefits_section": {
     "title": "Built-in infrastructure to",
     "subtitle": "get you up & running",
@@ -313,7 +307,6 @@
     "manual": "Manual",
     "comprehensive": "Comprehensive",
     "thirdParty": "Third Party",
-
     "rentingInformation": "Renting Information",
     "dailyPrice": "Daily Price",
     "dailyPricePlaceholder": "Enter daily rental price",
@@ -358,7 +351,6 @@
     "insuranceCertificate": "Insurance Certificate",
     "companyLogo": "Company Logo",
     "companyImages": "Company Gallery",
-
     "companyRegistration": "Company Registration",
     "completeYourProfile": "Complete your profile to start renting vehicles",
     "completeCompanyProfile": "Complete your company profile to start offering rental services",
@@ -391,13 +383,11 @@
     "submit": "Submit",
     "submitting": "Submitting...",
     "vehicleRegisteredSuccessfully": "Vehicle registered successfully!",
-    "pricePerDay":"Price per day",
-    "uploadImages":"No file chosen",
-    "orDragAndDrop":"or Drag and Drop",
-    "imageRequirements":"Image Requirements",
-    "location":"Location"
-
-
+    "pricePerDay": "Price per day",
+    "uploadImages": "No file chosen",
+    "orDragAndDrop": "or Drag and Drop",
+    "imageRequirements": "Image Requirements",
+    "location": "Location"
   },
   "choose_user_type": {
     "subtitle": "Choose your registration type to get started with our vehicle rental platform",
@@ -415,7 +405,6 @@
     "feature_3_desc": "Get approved and start renting quickly",
     "title": "Choose your account type",
     "description": "Please select the type that best describes you",
-
     "image_alt": "Choose account type"
   },
   "validation": {
@@ -484,7 +473,7 @@
     "password": "Password",
     "confirmPassword": "Confirm Password",
     "selectRole": "Select Role",
-    "nationalId":"National ID/Passport",
+    "nationalId": "National ID/Passport",
     "registerBtn": "Register",
     "avatarUploadFail": "Avatar upload failed",
     "profileUpdateFail": "Failed to update profile",
@@ -495,7 +484,6 @@
     "passwordsNotMatch": "Passwords do not match.",
     "weakPassword": "Password is too weak."
   },
-
   "form": {
     "companyName": "Company Name",
     "commercialRegistrationNumber": "Commercial Registration Number",
@@ -552,7 +540,6 @@
     "avatar": "Profile Picture",
     "avatarUrlFailed": "Failed to get avatar URL",
     "profileUpdateFailed": "Failed to update profile"
-
   },
   "overview": {
     "welcome": "Welcome back",
@@ -606,11 +593,9 @@
     "dateOfBirth": "Date of Birth",
     "updateSuccess": "Profile updated successfully!",
     "updateError": "Failed to update profile",
-    
     "imageSizeError": "Image size should be less than 5MB",
     "imageTypeError": "Please select a valid image file",
     "imageUploadError": "Error uploading image",
-    
     "sidebar": {
       "navigation": "Profile navigation",
       "overview": "Overview",
@@ -620,7 +605,6 @@
       "notifications": "Notifications",
       "settings": "Settings"
     },
-    
     "myListings": {
       "title": "My Vehicle Listings",
       "description": "Manage your listed vehicles and view their performance",
@@ -633,7 +617,6 @@
       "getStarted": "List your first vehicle to start earning",
       "listNow": "List Now"
     },
-    
     "settings": {
       "title": "Account Settings",
       "general": "General",
@@ -653,14 +636,12 @@
       "saved": "Changes saved successfully",
       "errorSaving": "Error saving changes"
     },
-    
     "favorites": {
       "title": "Favorites",
       "noFavorites": "No favorites yet",
       "getStarted": "Save your favorite vehicles while browsing",
       "browseVehicles": "Browse Vehicles"
     },
-    
     "rentals": {
       "title": "Rented Cars",
       "noRentals": "You don't have any rentals yet",

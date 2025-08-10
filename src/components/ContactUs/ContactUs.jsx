@@ -1,23 +1,23 @@
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
+import choose from "../home/HeroSection/Images/choose.webp";
+import contact from "../home/HeroSection/Images/contactus.jpg";
+import how from "../home/HeroSection/Images/how.webp";
+import last from "../home/HeroSection/Images/last.avif";
+import EmailIcon from "./../../assets/EmailIcon.png";
 import LocationIcon from "./../../assets/LocationIcon.png";
 import PhoneIcon from "./../../assets/PhoneIcon.png";
-import EmailIcon from "./../../assets/EmailIcon.png";
 import TimeIcon from "./../../assets/TimeIcon.png";
-import HowToUse from "./../../assets/HowToUse.png";
-import BMW from "./../../assets/BMW.png";
-import Ford from "./../../assets/Ford.png";
-import Jeep from "./../../assets/Jeep.png";
-import Mercedes from "./../../assets/Mercedes.png";
-import { useTranslation } from "react-i18next";
-import FourFive from "./../../assets/FourFive.png";
-import Hyundai from "./../../assets/Hyundai.png";
-import contact from "../home/HeroSection/Images/contactus.jpg";
-import last from "../home/HeroSection/Images/last.avif";
-import how from "../home/HeroSection/Images/how.webp";
-import choose from "../home/HeroSection/Images/choose.webp";
 
 export default function Header() {
   const { t, i18n } = useTranslation();
   const isRTL = i18n.dir() === "rtl"; // Detect RTL direction
+
+  const [isFocused, setIsFocused] = useState(false);
+
+  const handleFocus = () => setIsFocused(true);
+  const handleBlur = () => setIsFocused(false);
+
   return (
     <>
       <div className="my-12">
@@ -30,9 +30,12 @@ export default function Header() {
 
           {/* RIGHT: Form */}
           <div
-            className={`w-full md:w-[360px] bg-primary text-white rounded-2xl p-6 shadow-xl transform ${
-              isRTL ? "-rotate-[10deg]" : "rotate-[10deg]"
-            }`}
+            className={`w-full md:w-[360px] bg-primary text-white rounded-2xl p-6 shadow-xl transform transition-transform duration-300 ${isFocused
+                ? "rotate-0"
+                : isRTL
+                  ? "-rotate-[10deg]"
+                  : "rotate-[10deg]"
+              }`}
           >
             <h2 className="text-xl md:text-2xl font-bold mb-6 text-center">
               {t("contact.title")}
@@ -42,21 +45,29 @@ export default function Header() {
               <input
                 type="text"
                 placeholder="Full Name"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 className="p-2 rounded-md border border-white text-black placeholder-gray-500 bg-white focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <input
                 type="email"
                 placeholder="Email"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 className="p-2 rounded-md border border-white text-black placeholder-gray-500 bg-white focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <input
                 type="text"
                 placeholder="Subject"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 className="p-2 rounded-md border border-white text-black placeholder-gray-500 bg-white focus:outline-none focus:ring-2 focus:ring-primary"
               />
               <textarea
                 placeholder="Message"
                 rows="3"
+                onFocus={handleFocus}
+                onBlur={handleBlur}
                 className="p-2 rounded-md border border-white text-black placeholder-gray-500 bg-white resize-none focus:outline-none focus:ring-2 focus:ring-primary"
               ></textarea>
 

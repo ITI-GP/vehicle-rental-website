@@ -1,11 +1,12 @@
-import { NavLink, Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useAuth } from "../../../contexts/AuthContext";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import TransButton from "../../TransButton";
 import CarIcon from "../../../assets/CarIcon.png";
-import { useState } from "react";
+import { useAuth } from "../../../contexts/AuthContext";
 import { useFavorites } from "../../../contexts/FavoriteContext";
+import { supabase } from "../../../Lib/supabaseClient";
+import TransButton from "../../TransButton";
 
 export default function Header() {
   const { t } = useTranslation();
@@ -13,6 +14,24 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
   const { favoriteCount } = useFavorites();
+  const [userData, setUserData] = useState(null);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (user) {
+        const { data, error } = await supabase
+          .from("users")
+          .select("avatar_url, name")
+          .eq("id", user.id)
+          .single();
+
+        if (!error && data) {
+          setUserData(data);
+        }
+      }
+    };
+    fetchUserData();
+  }, [user]);
 
   const handleLogout = async () => {
     const { error } = await signOut();
@@ -26,7 +45,7 @@ export default function Header() {
 
   const getUserDisplayName = () => {
     return (
-      user?.user_metadata?.name ||
+      userData?.name ||
       user?.email?.split("@")[0] ||
       t("profile.user")
     );
@@ -36,10 +55,7 @@ export default function Header() {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-white border-none">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <h3 className="font-bold text-[16px] font-inter">
-            {/* {t("footer.name")} */}
-            2GO
-          </h3>
+          <h3 className="font-bold text-[16px] font-inter">2GO</h3>
           <img src={CarIcon} alt="Car Icon" className="w-[30px] h-auto" />
         </Link>
 
@@ -73,20 +89,18 @@ export default function Header() {
 
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
-              // Logged in user
               <>
                 <Link
                   to="/profile"
                   className="flex items-center gap-2 text-gray-700 hover:text-black"
                 >
-                  {user?.user_metadata?.avatar_url ? (
+                  {userData?.avatar_url ? (
                     <img
-                      src={user.user_metadata.avatar_url}
+                      src={userData.avatar_url}
                       alt="Profile"
                       className="w-8 h-8 rounded-full object-cover border border-gray-200"
                       onError={(e) => {
                         e.target.style.display = "none";
-                        // Show fallback initials if image fails
                         const fallback = e.target.nextElementSibling;
                         if (fallback) fallback.style.display = "flex";
                       }}
@@ -100,9 +114,7 @@ export default function Header() {
                   )}
                   <div
                     style={{
-                      display: user?.user_metadata?.avatar_url
-                        ? "none"
-                        : "flex",
+                      display: userData?.avatar_url ? "none" : "flex",
                     }}
                     className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
                   >
@@ -122,7 +134,6 @@ export default function Header() {
                 </button>
               </>
             ) : (
-              // Not logged in
               <Link
                 className="flex items-center gap-1 text-gray-700 hover:text-black"
                 to="/login"
@@ -136,7 +147,6 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
       {menuOpen && (
         <div className="md:hidden px-4 pb-4 max-w-7xl mx-auto">
           <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
@@ -173,16 +183,15 @@ export default function Header() {
 
             <div className="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
               {isAuthenticated ? (
-                // Logged in user (mobile)
                 <>
                   <Link
                     to="/profile"
                     className="flex items-center gap-2 text-gray-700 hover:text-black"
                     onClick={() => setMenuOpen(false)}
                   >
-                    {user?.user_metadata?.avatar_url ? (
+                    {userData?.avatar_url ? (
                       <img
-                        src={user.user_metadata.avatar_url}
+                        src={userData.avatar_url}
                         alt="Profile"
                         className="w-8 h-8 rounded-full object-cover border border-gray-200"
                         onError={(e) => {
@@ -200,9 +209,7 @@ export default function Header() {
                     )}
                     <div
                       style={{
-                        display: user?.user_metadata?.avatar_url
-                          ? "none"
-                          : "flex",
+                        display: userData?.avatar_url ? "none" : "flex",
                       }}
                       className="w-8 h-8 bg-red-500 rounded-full flex items-center justify-center"
                     >
@@ -225,7 +232,6 @@ export default function Header() {
                   </button>
                 </>
               ) : (
-                // Not logged in (mobile)
                 <Link
                   to="/login"
                   className="flex items-center gap-1 text-gray-700 hover:text-black"
