@@ -141,11 +141,11 @@
 //     </>
 //   );
 // }
-import React, { useState } from "react";
+import React from "react";
 import { useTranslation } from "react-i18next";
 import { NavLink } from "react-router-dom";
 import { XMarkIcon, ShieldCheckIcon } from "@heroicons/react/24/outline";
-import VerificationModal from "./VerificationModal";
+import VerificationButtonWithModal from "./VerificationButtonWithModal";
 
 export default function ProfileSidebar({
   user,
@@ -157,7 +157,6 @@ export default function ProfileSidebar({
   isRTL = false,
 }) {
   const { t } = useTranslation();
-  const [showModal, setShowModal] = useState(false);
   const sidebarClasses = [
     "fixed inset-y-0 z-50 w-64 bg-white shadow-lg transition-transform duration-300 ease-in-out",
     "md:static md:inset-0 md:z-0",
@@ -169,15 +168,6 @@ export default function ProfileSidebar({
       : "-translate-x-full",
     "md:translate-x-0",
   ].join(" ");
-
-  // Check if user is verified
-  const isVerified = user?.user_metadata?.is_verified || false;
-
-  // Handle verification
-  const handleVerifyCode = (code) => {
-    console.log("Verification code submitted:", code);
-    // TODO: call your API to verify here
-  };
 
   return (
     <>
@@ -208,27 +198,11 @@ export default function ProfileSidebar({
 
           {/* Navigation */}
           <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
-            {/* Verification Status Button */}
-            <div
-              className={`flex items-center px-3 py-2.5 text-sm font-medium rounded-md cursor-pointer ${
-                isVerified
-                  ? "bg-green-50 text-green-700"
-                  : "bg-yellow-50 text-yellow-700 hover:bg-yellow-100"
-              }`}
-              onClick={() => {
-                setShowModal(true); // Open modal
-                onMobileMenuClose();
-              }}
-            >
-              <ShieldCheckIcon className="h-5 w-5 mr-3" />
-              <span className="flex-1">
-                {isVerified ? "Verified Account" : "Verify Your Account"}
-              </span>
-              {!isVerified && (
-                <span className="ml-2 inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
-                  Required
-                </span>
-              )}
+            {/* Verification Status Section */}
+            <div className="flex items-center px-3 py-2.5 text-sm font-medium rounded-md">
+              <ShieldCheckIcon className="h-5 w-5 mr-3 text-gray-600" />
+              <span className="flex-1 text-gray-700">Account Verification</span>
+              <VerificationButtonWithModal />
             </div>
 
             {navItems.map((item) => (
@@ -287,13 +261,6 @@ export default function ProfileSidebar({
           </div>
         </div>
       </aside>
-
-      {/* Combined Verification Modal */}
-      <VerificationModal
-        isOpen={showModal}
-        onClose={() => setShowModal(false)}
-        onVerify={handleVerifyCode}
-      />
     </>
   );
 }

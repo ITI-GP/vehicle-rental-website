@@ -1,9 +1,42 @@
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import Button from "../Button";
+import { useAuth } from "../../../contexts/AuthContext";
+import { useVerificationStatus } from "../../../hooks/useVerificationStatus";
+import VerificationModal from "../../Profile/VerificationModal";
+
 export default function RentHeader() {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const { user } = useAuth();
+  const { isVerified, needsVerification, verificationStatus } = useVerificationStatus();
+  const [showVerificationModal, setShowVerificationModal] = useState(false);
+
+  const handleGetStarted = () => {
+    // If user is not logged in, redirect to login/register
+    if (!user) {
+      navigate("/login"); // or wherever you want non-authenticated users to go
+      return;
+    }
+
+    // If user is verified, proceed normally
+    if (isVerified) {
+      navigate("/ChooseUserType");
+      return;
+    }
+
+    // If user needs verification, show the modal
+    if (needsVerification) {
+      setShowVerificationModal(true);
+      return;
+    }
+  };
+
+  const handleVerificationSubmitted = () => {
+    setShowVerificationModal(false);
+    // Optionally show a success message or redirect
+  };
   return (
     <div>
       {/* Header */}
@@ -14,7 +47,7 @@ export default function RentHeader() {
           </h1>
         </div>
 
-        <Button onClick={() => navigate("/ChooseUserType")}>
+        <Button onClick={handleGetStarted}>
           {t("rent_your_vehicle.get_started")}
         </Button>
         
@@ -35,12 +68,20 @@ export default function RentHeader() {
           <p className="mb-4">{t("rent_your_vehicle.description2")}</p>
           <p className="mb-6">{t("rent_your_vehicle.description3")}</p>
           <div className="text-center">
-            <Button onClick={() => navigate("/ChooseUserType")}>
+            <Button onClick={handleGetStarted}>
               {t("rent_your_vehicle.get_started")}
             </Button>
           </div>
         </div>
       </div>
+
+      {/* Verification Modal */}
+      <VerificationModal
+        isOpen={showVerificationModal}
+        onClose={() => setShowVerificationModal(false)}
+        onVerified={handleVerificationSubmitted}
+        currentStatus={verificationStatus}
+      />
     </div>
   );
 }
