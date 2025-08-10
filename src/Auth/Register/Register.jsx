@@ -276,7 +276,7 @@ export default function RegisterPage() {
       }
 
       toast.success(t("register.success"));
-      setTimeout(() => navigate("/login"), 10);
+      setTimeout(() => navigate("/login"), 100);
     } catch (error) {
       console.error('Registration error:', error);
       setMessage(`${t("register.signUpFailed")}: ${error.message}`);

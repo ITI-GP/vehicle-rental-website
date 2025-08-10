@@ -161,7 +161,7 @@ export default function VerificationModal({
                 }`}
               >
                 {verified
-                  ? "✅ Verified Successfully"
+                  ? "✅ Applied Successfully"
                   : currentStatus === "rejected"
                   ? "🔄 Resubmit Verification"
                   : "🔐 Verify Your Account"}
@@ -273,7 +273,7 @@ export default function VerificationModal({
                 <div className="mt-8 p-6 text-center bg-green-50 rounded-xl border border-green-200">
                   <div className="text-6xl mb-4">🎉</div>
                   <div className="text-lg font-semibold text-green-800 mb-2">
-                    Account Successfully Verified!
+           You Applied Successfully!
                   </div>
                   <div className="text-sm text-green-600">
                     You can now access all features of our platform.

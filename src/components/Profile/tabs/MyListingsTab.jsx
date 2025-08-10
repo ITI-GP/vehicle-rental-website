@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
+
 import { useTranslation } from "react-i18next";
 import { supabase } from "../../../Lib/supabaseClient";
 import VehiclesCard2 from "../../../components/VehiclesCard/VehiclesCard2";
@@ -6,8 +7,62 @@ import VehiclesCard2 from "../../../components/VehiclesCard/VehiclesCard2";
 export default function MyListingsTab({ user, isFavorite, toggleFavorite }) {
   const { t } = useTranslation();
   const [vehicles, setVehicles] = useState([]);
+   const [rentals, setRentals] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const perPage = 6;
+    const fetchRentals = useCallback(async () => {
+      if (!user?.id) {
+        setLoading(false);
+        return;
+      }
+      try {
+        setLoading(true);
+        // Fetch rental requests for this user
+        const { data: rentalsData, error: rentalsError } = await supabase
+          .from("rental_requests")
+          .select("*")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false });
+        if (rentalsError) throw rentalsError;
+        if (!rentalsData || rentalsData.length === 0) {
+          setRentals([]);
+          setError(null);
+          return;
+        }
+        const vehicleIds = [...new Set(rentalsData.map((r) => r.vehicle_id))];
+        const { data: vehiclesData, error: vehiclesError } = await supabase
+          .from("vehicles")
+          .select("*")
+          .in("id", vehicleIds);
+        if (vehiclesError) throw vehiclesError;
+        const vehiclesMap = vehiclesData.reduce((acc, v) => {
+          acc[v.id] = v;
+          return acc;
+        }, {});
+        const rentalsWithVehicles = rentalsData.map((r) => ({
+          ...r,
+          vehicles: vehiclesMap[r.vehicle_id] || null,
+          total_price: r.total_cost, // If you use total_cost in rental_requests
+        }));
+        setRentals(rentalsWithVehicles);
+        setError(null);
+      } catch (err) {
+        console.error("Error fetching rentals:", err);
+        setError(
+          t(
+            "profile.rentedCars.fetchError",
+            "Failed to load your rentals. Please try again."
+          )
+        );
+      } finally {
+        setLoading(false);
+      }
+    }, [user?.id, t]);
+  
+    useEffect(() => {
+      fetchRentals();
+    }, [fetchRentals]);
+  
 
   useEffect(() => {
     const fetchUserVehicles = async () => {
