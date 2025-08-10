@@ -132,7 +132,7 @@ export default function VehiclesCard({
                 w-full h-full transition-all duration-300 ease-in-out
                 ${isFavorited 
                   ? 'text-red-500 fill-red-500 scale-110' 
-                  : 'text-gray-600 fill-transparent hover:fill-gray-200'}
+                  : 'text-gray-600 fill-gray-400 '}
               `}
             >
               <path
